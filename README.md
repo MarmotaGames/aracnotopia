@@ -1,0 +1,2 @@
+# aracnotopia
+Spiders. Spiders everywhere! Earth belongs to them now, and these just-gone-self-aware arthropods have developed sophisticated Math and a complex mithology revolving around the powers of two. But something is off in this eight legged utopia. As the last spider able to cast threads of silk, will you be able to weave together your decaying Empire, or will you let it be stricken by the same fate that befell the biped giants in aeons past?
