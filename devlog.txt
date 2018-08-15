@@ -1,1 +1,7 @@
-13/08:
+1° Semana (12/08 a 18/08)
+	-Criação do projeto na engine Godot
+	-Organização das pastas básicas do projeto
+	-Criação de um Sprite prototípico da aranha
+	-Criação de um Sprite prototípico do background
+	-Criação das cenas do Player e da Main
+	-Criação da mecânica básica de movimento do player

@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/araineaTransparenteFinal.png-445b858269441bf5185847ec674eeb87.stex"
+path="res://.import/araineaTransparenteFinal.png-b9551c78ff4cef353a4b48f79e8bce79.stex"
 
 [deps]
 
-source_file="res://araineaTransparenteFinal.png"
-dest_files=[ "res://.import/araineaTransparenteFinal.png-445b858269441bf5185847ec674eeb87.stex" ]
+source_file="res://assets/player/araineaTransparenteFinal.png"
+dest_files=[ "res://.import/araineaTransparenteFinal.png-b9551c78ff4cef353a4b48f79e8bce79.stex" ]
 
 [params]
 
