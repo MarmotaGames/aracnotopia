@@ -4,6 +4,9 @@ var speed = 200
 var direction = Vector2(0,0)
 var angle = 0
 var spiderAngle = 0
+var fall = false
+var velocity = Vector2(0, 250)
+var gravity = 300
 
 func _physics_process(delta):
 	direction = Vector2(0,0)
@@ -11,6 +14,10 @@ func _physics_process(delta):
 	update_direction()
 	
 	move_and_slide(direction*speed)
+	
+	if fall:
+		velocity.y += gravity * delta
+		velocity = move_and_slide(velocity, Vector2(0, -1))
 	
 func update_direction():
 	if Input.is_action_pressed("ui_up"):
@@ -58,8 +65,4 @@ func update_direction():
 			fator = -1
 			if (0 <= angle and angle < 90) and (spiderAngle > 180):
 				fator = 1
-		print("Angulo desejado",angle)
 		$SpiderSprite.rotation_degrees += 5*fator
-		print("Angulo aranha",spiderAngle)
-
-		
