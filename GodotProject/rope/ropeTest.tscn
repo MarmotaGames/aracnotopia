@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://rope/rope.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ball/Ball.tscn" type="PackedScene" id=2]
+
+[node name="Node2D" index="0" instance=ExtResource( 1 )]
+
+position = Vector2( 476.647, 219.442 )
+pieces = 15
+
+[node name="Ball" parent="." index="2" instance=ExtResource( 2 )]
+
+position = Vector2( 195.326, 171.111 )
+
+
