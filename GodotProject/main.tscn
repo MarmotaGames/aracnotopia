@@ -15,7 +15,7 @@ _sections_unfolded = [ "Offset", "Z Index" ]
 
 [node name="Spider" parent="." index="0" instance=ExtResource( 2 )]
 
-position = Vector2( 499.803, 302.174 )
+position = Vector2( 584.746, 646.115 )
 
 [node name="Area2D" type="Area2D" parent="." index="1"]
 

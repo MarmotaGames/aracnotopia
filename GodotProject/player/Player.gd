@@ -11,6 +11,7 @@ var back = 180
 var step = 1
 var rotationSpeed = 15
 var mustRotate = false 
+var isRotating = false
 
 func _physics_process(delta):
 	direction = Vector2(0,0)
@@ -23,9 +24,12 @@ func _physics_process(delta):
 
 		
 	if front < (angle-5) or front > (angle+5):
-		$SpiderSprite.rotation_degrees += (step * rotationSpeed)
+		isRotating = true
+		$AnimatedSprite.rotation_degrees += (step * rotationSpeed)
+		$AnimatedSprite.playing = true
 	else:
-		$SpiderSprite.rotation_degrees = angle
+		$AnimatedSprite.rotation_degrees = angle
+		isRotating = false
 	move_and_slide(direction*speed)
 	
 	if fall:
@@ -36,18 +40,25 @@ func update_direction():
 	if Input.is_action_pressed("ui_up"):
 		direction.y -= 1
 		mustRotate = true
+		$AnimatedSprite.playing = true
 		
 	if Input.is_action_pressed("ui_down"):
 		direction.y += 1
 		mustRotate = true
+		$AnimatedSprite.playing = true
 	
 	if Input.is_action_pressed("ui_left"):
 		direction.x -= 1
 		mustRotate = true
+		$AnimatedSprite.playing = true
 	
 	if Input.is_action_pressed("ui_right"):
 		direction.x += 1
 		mustRotate = true
+		$AnimatedSprite.playing = true
+		
+	if !Input.is_action_pressed("ui_up") and !Input.is_action_pressed("ui_right") and !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_down") and !isRotating:
+		$AnimatedSprite.playing = false
 
 func getRotation():
 	if direction.x == 0:
@@ -73,10 +84,10 @@ func getRotation():
 			angle = 45
 
 func evalRotation():
-	front = int($SpiderSprite.rotation_degrees)%360
+	front = int($AnimatedSprite.rotation_degrees)%360
 	back = (front+180)%360
 
-	print("Angulo desejado:", angle, "Angulo atual:", front, "Rotation:", $SpiderSprite.rotation_degrees)
+	print("Angulo desejado:", angle, "Angulo atual:", front, "Rotation:", $AnimatedSprite.rotation_degrees)
 
 	if front < 180:
 		if angle <= back and angle > front:
@@ -89,6 +100,6 @@ func evalRotation():
 		else:
 			step = 1
 	
-	if $SpiderSprite.rotation_degrees == 0 and step == -1:
-		$SpiderSprite.rotation_degrees = 360
+	if $AnimatedSprite.rotation_degrees == 0 and step == -1:
+		$AnimatedSprite.rotation_degrees = 360
 		
