@@ -6,7 +6,8 @@
 [node name="Node2D" index="0" instance=ExtResource( 1 )]
 
 position = Vector2( 476.647, 219.442 )
-pieces = 15
+_sections_unfolded = [ "Transform" ]
+pieces = 35
 
 [node name="Ball" parent="." index="2" instance=ExtResource( 2 )]
 

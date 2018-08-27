@@ -1,6 +1,6 @@
 extends Node2D
 
-var PIECE = preload("res://rope//longPiece.tscn")
+var PIECE = preload("res://rope//smallPiece.tscn")
 
 export (int) var pieces = 1
 

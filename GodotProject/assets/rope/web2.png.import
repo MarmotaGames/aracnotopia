@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/webThreadTransparency.png-4b91e9a3bcd325e9940cce6e59979ebd.stex"
+path="res://.import/web2.png-5de1962a8e0d79f637c24ffa2b206ef5.stex"
 
 [deps]
 
-source_file="res://assets/webThreadTransparency.png"
-dest_files=[ "res://.import/webThreadTransparency.png-4b91e9a3bcd325e9940cce6e59979ebd.stex" ]
+source_file="res://assets/rope/web2.png"
+dest_files=[ "res://.import/web2.png-5de1962a8e0d79f637c24ffa2b206ef5.stex" ]
 
 [params]
 
