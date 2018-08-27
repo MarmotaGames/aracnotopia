@@ -37,28 +37,32 @@ func _physics_process(delta):
 		velocity = move_and_slide(velocity, Vector2(0, -1))
 		
 func update_direction():
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("ui_up") and not fall:
 		direction.y -= 1
 		mustRotate = true
 		$AnimatedSprite.playing = true
 		
-	if Input.is_action_pressed("ui_down"):
+	if Input.is_action_pressed("ui_down") and not fall:
 		direction.y += 1
 		mustRotate = true
 		$AnimatedSprite.playing = true
 	
-	if Input.is_action_pressed("ui_left"):
+	if Input.is_action_pressed("ui_left") and not fall:
 		direction.x -= 1
 		mustRotate = true
 		$AnimatedSprite.playing = true
 	
-	if Input.is_action_pressed("ui_right"):
+	if Input.is_action_pressed("ui_right") and not fall:
 		direction.x += 1
 		mustRotate = true
 		$AnimatedSprite.playing = true
 		
 	if !Input.is_action_pressed("ui_up") and !Input.is_action_pressed("ui_right") and !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_down") and !isRotating:
 		$AnimatedSprite.playing = false
+		
+	if Input.is_action_pressed("ui_accept") and fall:
+		if $"/root/BackgroundSprite/Area2D".spiderInArea == true:
+			fall = false
 
 func getRotation():
 	if direction.x == 0:
@@ -86,8 +90,6 @@ func getRotation():
 func evalRotation():
 	front = int($AnimatedSprite.rotation_degrees)%360
 	back = (front+180)%360
-
-	print("Angulo desejado:", angle, "Angulo atual:", front, "Rotation:", $AnimatedSprite.rotation_degrees)
 
 	if front < 180:
 		if angle <= back and angle > front:
