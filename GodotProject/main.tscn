@@ -16,6 +16,8 @@ _sections_unfolded = [ "Offset", "Z Index" ]
 [node name="Spider" parent="." index="0" instance=ExtResource( 2 )]
 
 position = Vector2( 584.746, 646.115 )
+z_index = 1
+_sections_unfolded = [ "Z Index" ]
 
 [node name="Area2D" type="Area2D" parent="." index="1"]
 
@@ -27,6 +29,7 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 3 )
+_sections_unfolded = [ "Collision" ]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" index="0"]
 

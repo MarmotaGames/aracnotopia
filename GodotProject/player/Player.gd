@@ -21,7 +21,7 @@ func _physics_process(delta):
 		getRotation()
 		mustRotate = false
 	evalRotation()
-
+	excretWeb()
 		
 	if front < (angle-5) or front > (angle+5):
 		isRotating = true
@@ -105,3 +105,7 @@ func evalRotation():
 	if $AnimatedSprite.rotation_degrees == 0 and step == -1:
 		$AnimatedSprite.rotation_degrees = 360
 		
+func excretWeb():
+	if Input.is_action_just_pressed("excret_web"):
+		var parent = $AnimatedSprite/Fieira.parent
+		parent = $AnimatedSprite/Fieira.addPiece(parent)

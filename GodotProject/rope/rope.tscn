@@ -15,7 +15,10 @@ pieces = 5
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
+visible = false
+scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="Anchor" type="StaticBody2D" parent="." index="1"]
 

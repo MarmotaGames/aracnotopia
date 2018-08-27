@@ -4,8 +4,10 @@ var PIECE = preload("res://rope//smallPiece.tscn")
 
 export (int) var pieces = 1
 
+var parent
+
 func _ready():
-	var parent = $Anchor
+	parent = $Anchor
 	for i in range(pieces):
 		parent = addPiece(parent)
 		

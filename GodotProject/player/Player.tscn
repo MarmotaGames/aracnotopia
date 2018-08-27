@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/araineaTransparenteFinal.png" type="Texture" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://player/walk_cycle/07.png" type="Texture" id=9]
 [ext_resource path="res://player/walk_cycle/08.png" type="Texture" id=10]
 [ext_resource path="res://player/walk_cycle/09.png" type="Texture" id=11]
+[ext_resource path="res://rope/rope.tscn" type="PackedScene" id=12]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -38,6 +39,7 @@ collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
+_sections_unfolded = [ "Collision" ]
 
 [node name="SpiderSprite" type="Sprite" parent="." index="0"]
 
@@ -61,6 +63,13 @@ animation = "default"
 frame = 5
 _sections_unfolded = [ "Transform" ]
 
+[node name="Fieira" parent="AnimatedSprite" index="0" instance=ExtResource( 12 )]
+
+position = Vector2( -8.72628, -256.684 )
+rotation = -3.14159
+scale = Vector2( 3.33333, 3.33333 )
+_sections_unfolded = [ "Transform" ]
+
 [node name="Area2D" type="Area2D" parent="." index="3"]
 
 scale = Vector2( 0.5, 0.5 )
@@ -71,7 +80,7 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
 
