@@ -11,9 +11,6 @@
 [ext_resource path="res://assets/player/walk_cycle/08.png" type="Texture" id=9]
 [ext_resource path="res://assets/player/walk_cycle/09.png" type="Texture" id=10]
 
-
-
-
 [sub_resource type="CapsuleShape2D" id=1]
 
 custom_solver_bias = 0.0
@@ -77,5 +74,38 @@ position = Vector2( -1.78256, 1.73304 )
 scale = Vector2( 3.03858, 1.20858 )
 shape = SubResource( 3 )
 _sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="Camera2D" type="Camera2D" parent="." index="2"]
+
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit_left = 0
+limit_top = 0
+limit_right = 2050
+limit_bottom = 1200
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = false
+smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+_sections_unfolded = [ "Limit" ]
+
+[node name="StickTimer" type="Timer" parent="." index="3"]
+
+process_mode = 1
+wait_time = 0.1
+one_shot = true
+autostart = false
 
 

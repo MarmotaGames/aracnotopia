@@ -64,9 +64,15 @@ func update_direction():
 	if !Input.is_action_pressed("ui_up") and !Input.is_action_pressed("ui_right") and !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_down") and !isRotating:
 		$AnimatedSprite.playing = false
 		
-	if Input.is_action_pressed("ui_accept") and fall:
-		if $"/root/Root/BackgroundSprite/Area2D".spiderInArea == true:
-			fall = false
+	if Input.is_action_just_pressed("ui_accept") and not $StickTimer.time_left:
+		if fall:
+			if $"/root/Root/BackgroundSprite/Area2D".spiderInArea == true:
+				fall = false
+				$StickTimer.start()
+		else:
+			fall = true
+			$StickTimer.start()
+	
 
 func getRotation():
 	if direction.x == 0:
