@@ -7,8 +7,7 @@ var init = true
 func _physics_process(delta):
 	if get_overlapping_areas():
 		spiderInArea = true
-		#print(get_overlapping_bodies())
-		if init:
+		if init: #Semi-gambiarra. Precisa inicializar como falso
 			$"/root/Root/Spider".fall = false
 			init = false
 	else:
