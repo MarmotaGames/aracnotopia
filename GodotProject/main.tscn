@@ -1,24 +1,33 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/background/background.png" type="Texture" id=1]
-[ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/background/background.png" type="Texture" id=2]
 [ext_resource path="res://Area2D.gd" type="Script" id=3]
 
-[node name="BackgroundSprite" type="Sprite"]
+[node name="Root" type="Sprite" index="0"]
 
 position = Vector2( -0.747841, -0.676454 )
 scale = Vector2( 0.800754, 0.834559 )
 z_index = -1
-texture = ExtResource( 1 )
 centered = false
 _sections_unfolded = [ "Offset", "Z Index" ]
 
-[node name="Spider" parent="." index="0" instance=ExtResource( 2 )]
+[node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
-position = Vector2( 584.746, 646.115 )
+position = Vector2( 800, 300 )
+_sections_unfolded = [ "Transform" ]
 
-[node name="Area2D" type="Area2D" parent="." index="1"]
+[node name="BackgroundSprite" type="Sprite" parent="." index="1"]
 
+show_behind_parent = true
+position = Vector2( 1212.7, 139.526 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="Area2D" type="Area2D" parent="BackgroundSprite" index="0"]
+
+position = Vector2( -643.864, -361.127 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -28,13 +37,14 @@ audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 3 )
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" index="0"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BackgroundSprite/Area2D" index="0"]
 
+position = Vector2( -6.79542, 1.60933e-06 )
 build_mode = 0
-polygon = PoolVector2Array( 7.17801, 5.60348, 841.392, 3.20701, 836.396, 30.7665, 87.1027, 48.74, 73.734, 146.233, 91.4626, 185.014, 173.457, 218.255, 222.211, 234.875, 350.354, 226.071, 414.62, 244.907, 450.465, 288.061, 467.086, 358.975, 473.734, 404.404, 482.598, 455.374, 522.487, 514.1, 576.781, 528.504, 597.834, 489.723, 594.51, 425.457, 598.942, 372.271, 625.535, 331.274, 643.263, 373.379, 648.803, 435.429, 667.64, 526.288, 689.8, 613.823, 722.653, 718.037, 498.83, 716.929, 438.996, 642.691, 337.057, 596.154, 241.767, 589.506, 117.667, 611.666, 7.97153, 671.5, 6.86349, 573.993, 56.725, 544.076, 1.32333, 511.943, 3.30173, 428.782, 98.8303, 491.999, 153.124, 507.511, 247.307, 505.295, 333.733, 540.752, 378.055, 528.564, 402.431, 477.594, 381.379, 414.436, 321.545, 362.359, 197.445, 330.226, 89.966, 291.445, 7.97153, 232.719 )
+polygon = PoolVector2Array( 7.17801, 5.60348, 841.392, 3.20701, 836.396, 30.7665, 87.1027, 48.74, 82.3938, 140, 93.9492, 148.87, 117.06, 178.806, 160.971, 204.307, 230.304, 229.808, 330.84, 218.718, 371.471, 218.718, 419.001, 233.43, 446.599, 259.174, 469.598, 282.712, 490.296, 345.235, 497.534, 428.732, 513.447, 487.15, 550.808, 519.678, 574.332, 521.67, 596.471, 509.057, 597.834, 489.723, 594.51, 425.457, 598.942, 372.271, 613.076, 329.819, 628.977, 321.642, 647.67, 325.172, 658.77, 354.312, 661.607, 419.651, 678.631, 512.216, 714.099, 608.864, 748.148, 720.486, 498.83, 716.929, 426.932, 639.581, 338.141, 606.142, 245.925, 596.613, 180.555, 608.542, 118.241, 627.922, 56.5924, 652.285, 7.58157, 685.094, 7.58157, 565.304, 56.725, 544.076, 1.32333, 511.943, 3.32545, 423.735, 98.379, 482.269, 154.038, 499.232, 228.9, 497.242, 281.148, 505.885, 323.954, 529.912, 378.055, 528.564, 402.431, 477.594, 381.379, 414.436, 308.348, 361.118, 190.595, 332.532, 74.261, 286.25, 7.97153, 232.719 )
 
-[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="BackgroundSprite/Area2D" to="BackgroundSprite/Area2D" method="_on_Area2D_body_entered"]
 
-[connection signal="body_exited" from="Area2D" to="Area2D" method="_on_Area2D_body_exited"]
+[connection signal="body_exited" from="BackgroundSprite/Area2D" to="BackgroundSprite/Area2D" method="_on_Area2D_body_exited"]
 
 

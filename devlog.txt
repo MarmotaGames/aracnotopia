@@ -17,7 +17,7 @@
 3° Semana (26/08 a 01/09)
 	-Desenvolvimento do sprite final da aranha e sua animação
 	-Conclusão do desenvolvimento da física de corda, adaptada para a temática da aranha, pra servir como teia
-	-
+	-Implementação de botão para grudar na parede durante a queda 
 
 4° Semana (02/09 a 08/09)
 
