@@ -5,5 +5,6 @@ func _process(delta):
 		self.animation = "falling"
 		self.playing = true
 		get_parent().rotation = 0
+		get_parent().angle = 0
 	else:
 		self.animation = "default"
