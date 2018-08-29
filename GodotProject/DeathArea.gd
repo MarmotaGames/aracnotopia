@@ -8,7 +8,6 @@ func _process(delta):
 	if $"/root/Root/Spider".fall:
 		if not timer:
 			# O tempo desse timer é o tempo máximo de queda
-			# Teste
 			$Timer.start()
 			timer = true
 	else:
