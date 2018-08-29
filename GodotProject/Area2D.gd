@@ -13,8 +13,5 @@ func _physics_process(delta):
 	else:
 		spiderInArea = false
 		$"/root/Root/Spider".fall = true
-
-#func _on_Area2D_body_exited(body):
-#	body.fall = true
-#	if body.position.y > 700:
-#		body.fall = false
+		$"/root/Root/Spider".direction = Vector2(0, 1)
+	

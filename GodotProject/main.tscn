@@ -74,7 +74,7 @@ shape = SubResource( 1 )
 [node name="Timer" type="Timer" parent="BackgroundSprite/DeathArea" index="1"]
 
 process_mode = 1
-wait_time = 1.0
+wait_time = 3.0
 one_shot = true
 autostart = false
 

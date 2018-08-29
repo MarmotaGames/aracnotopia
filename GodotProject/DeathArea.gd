@@ -22,7 +22,7 @@ func _process(delta):
 		$"/root/Root/Spider".fall = false
 		$"/root/Root/Spider".rotation = 0
 		$"/root/Root/Spider".angle = 0
-
+		
 func _on_DeathArea_body_exited(body):
 	gameover = true
 
