@@ -12,15 +12,28 @@ var step = 1
 var rotationSpeed = 15
 var mustRotate = true 
 var isRotating = false
+onready var web_scene = preload("res://web//web.tscn")
+onready var web_resource = 0
+onready var web_parent = null
+onready var web = null
+var bunda_position = Vector2(800, 600-45)
 
 func _physics_process(delta):
+#	print(web_parent)
 	direction = Vector2(0,0)
 	
 	update_direction()
+	
+	if direction != Vector2(0,0):
+		bunda_position.x = self.position.x + direction.x*-50
+		bunda_position.y = self.position.y + direction.y*-50
+		
 	if mustRotate:
 		getRotation()
 		mustRotate = false
 	evalRotation()
+	excretWeb(web_parent)
+	
 
 	if angle == -179:
 		if front < -165 or front > 170:
@@ -74,7 +87,6 @@ func update_direction():
 			fall = true
 			$StickTimer.start()
 	
-
 func getRotation():
 	if direction.x == 0:
 		if direction.y == -1:
@@ -135,4 +147,31 @@ func evalRotation():
 				step = -1
 			else:
 				step = 1
+
+func stickWeb():
+	web = web_scene.instance()
+	web.position = bunda_position
+	get_node("/root/Root/").add_child(web)
 	
+	web_resource += 1
+	
+	var anchor = get_node("/root/Root/Web/Anchor")
+	web_parent = web.addPiece(anchor)
+	
+func excretWeb(parent):
+	if Input.is_action_just_pressed("excret_web"):
+		if web_resource == 0:
+			stickWeb()
+			
+		else:
+#			parent = $AnimatedSprite/Fieira.parent
+			web_parent = web.addPiece(parent)
+			web_resource += 1
+			
+
+
+
+
+
+
+

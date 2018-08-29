@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/web3.png-db9afa5b2abfc3821745292bd1a69621.stex"
+path="res://.import/ropeLinkLong.png-0bfe6cce0631ab2eb28a6d07edb7daa9.stex"
 
 [deps]
 
-source_file="res://assets/rope/web3.png"
-dest_files=[ "res://.import/web3.png-db9afa5b2abfc3821745292bd1a69621.stex" ]
+source_file="res://assets/web/ropeLinkLong.png"
+dest_files=[ "res://.import/ropeLinkLong.png-0bfe6cce0631ab2eb28a6d07edb7daa9.stex" ]
 
 [params]
 
