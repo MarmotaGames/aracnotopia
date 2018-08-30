@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/background/background.png" type="Texture" id=2]
 [ext_resource path="res://Area2D.gd" type="Script" id=3]
+[ext_resource path="res://DeathArea.gd" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
 
 [node name="Root" type="Sprite" index="0"]
 
@@ -15,7 +21,9 @@ _sections_unfolded = [ "Offset", "Z Index" ]
 [node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
 position = Vector2( 800, 600 )
-_sections_unfolded = [ "Transform" ]
+collision_layer = 16401
+collision_mask = 16401
+_sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="BackgroundSprite" type="Sprite" parent="." index="1"]
 
@@ -43,8 +51,39 @@ position = Vector2( -6.79542, 1.60933e-06 )
 build_mode = 0
 polygon = PoolVector2Array( 7.17801, 5.60348, 841.392, 3.20701, 836.396, 30.7665, 87.1027, 48.74, 82.3938, 140, 93.9492, 148.87, 117.06, 178.806, 160.971, 204.307, 230.304, 229.808, 330.84, 218.718, 371.471, 218.718, 419.001, 233.43, 446.599, 259.174, 469.598, 282.712, 490.296, 345.235, 497.534, 428.732, 513.447, 487.15, 550.808, 519.678, 574.332, 521.67, 596.471, 509.057, 597.834, 489.723, 594.51, 425.457, 598.942, 372.271, 613.076, 329.819, 628.977, 321.642, 647.67, 325.172, 658.77, 354.312, 661.607, 419.651, 678.631, 512.216, 714.099, 608.864, 748.148, 720.486, 498.83, 716.929, 426.932, 639.581, 338.141, 606.142, 245.925, 596.613, 180.555, 608.542, 118.241, 627.922, 56.5924, 652.285, 7.58157, 685.094, 7.58157, 565.304, 56.725, 544.076, 1.32333, 511.943, 3.32545, 423.735, 98.379, 482.269, 154.038, 499.232, 228.9, 497.242, 281.148, 505.885, 323.954, 529.912, 378.055, 528.564, 402.431, 477.594, 381.379, 414.436, 308.348, 361.118, 190.595, 332.532, 74.261, 286.25, 7.97153, 232.719 )
 
+[node name="DeathArea" type="Area2D" parent="BackgroundSprite" index="1"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 16400
+collision_mask = 0
+audio_bus_override = false
+audio_bus_name = "Master"
+script = ExtResource( 4 )
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BackgroundSprite/DeathArea" index="0"]
+
+position = Vector2( 0.0355663, 1.34028 )
+scale = Vector2( 64.1589, 36.0266 )
+shape = SubResource( 1 )
+
+[node name="Timer" type="Timer" parent="BackgroundSprite/DeathArea" index="1"]
+
+process_mode = 1
+wait_time = 3.0
+one_shot = true
+autostart = false
+
 [connection signal="body_entered" from="BackgroundSprite/Area2D" to="BackgroundSprite/Area2D" method="_on_Area2D_body_entered"]
 
 [connection signal="body_exited" from="BackgroundSprite/Area2D" to="BackgroundSprite/Area2D" method="_on_Area2D_body_exited"]
+
+[connection signal="body_exited" from="BackgroundSprite/DeathArea" to="BackgroundSprite/DeathArea" method="_on_DeathArea_body_exited"]
+
+[connection signal="timeout" from="BackgroundSprite/DeathArea/Timer" to="BackgroundSprite/DeathArea" method="_on_Timer_timeout"]
 
 

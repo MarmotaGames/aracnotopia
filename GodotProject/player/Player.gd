@@ -12,19 +12,20 @@ var step = 1
 var rotationSpeed = 15
 var mustRotate = true 
 var isRotating = false
+var dirKeys = [0, 0, 0, 0]
 
 func _physics_process(delta):
-	direction = Vector2(0,0)
 	
 	update_direction()
-	if mustRotate:
-		getRotation()
-		mustRotate = false
+	getRotation()
 	evalRotation()
-
+	#Esse bloco elimina ambiguidades, pois a direcao Cima pode ser
+	#tanto 180 como -180
 	if angle == -179:
 		if front < -165 or front > 170:
-			self.rotation_degrees = -179	
+			self.rotation_degrees = -179
+			
+	#Rotaciona a aranha	
 	if front < (angle-5) or front > (angle+5):
 		isRotating = true
 		self.rotation_degrees += (step * rotationSpeed)
@@ -32,34 +33,59 @@ func _physics_process(delta):
 	else:
 		self.rotation_degrees = angle
 		isRotating = false
-	move_and_slide(direction*speed)
+		
+	if 1 in dirKeys and not fall:
+		#Verifica se alguma das teclas direcionais está apertada e processa o movimento
+		move_and_slide(direction.normalized()*speed)
 	
 	if fall:
+		direction.x = 0
+		direction.y = 1
 		#velocity.y += gravity * delta
 		#velocity = move_and_slide(velocity, Vector2(0, -1))
 		velocity.y = gravity
-		move_and_slide(velocity, Vector2(0, -1))
+		move_and_slide(direction.normalized()*velocity)
 		
 func update_direction():
 	if Input.is_action_pressed("ui_up") and not fall:
-		direction.y -= 1
-		mustRotate = true
+		direction.y = -1
+		dirKeys[0] = 1
+		if not dirKeys[2] and not dirKeys[3]:
+			direction.x = 0
 		$AnimatedSprite.playing = true
 		
 	if Input.is_action_pressed("ui_down") and not fall:
-		direction.y += 1
-		mustRotate = true
+		direction.y = 1
+		dirKeys[1] = 1
+		if not dirKeys[2] and not dirKeys[3]:
+			direction.x = 0
 		$AnimatedSprite.playing = true
 	
 	if Input.is_action_pressed("ui_left") and not fall:
-		direction.x -= 1
-		mustRotate = true
+		direction.x = -1
+		dirKeys[2] = 1
+		if not dirKeys[0] and not dirKeys[1]:
+			direction.y = 0
 		$AnimatedSprite.playing = true
 	
 	if Input.is_action_pressed("ui_right") and not fall:
-		direction.x += 1
-		mustRotate = true
+		direction.x = 1
+		dirKeys[3] = 1
+		if not dirKeys[0] and not dirKeys[1]:
+			direction.y = 0
 		$AnimatedSprite.playing = true
+		
+	if Input.is_action_just_released("ui_up"):
+		dirKeys[0] = 0
+
+	if Input.is_action_just_released("ui_down"):
+		dirKeys[1] = 0
+
+	if Input.is_action_just_released("ui_left"):
+		dirKeys[2] = 0
+
+	if Input.is_action_just_released("ui_right"):
+		dirKeys[3] = 0
 		
 	if !Input.is_action_pressed("ui_up") and !Input.is_action_pressed("ui_right") and !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_down") and !isRotating and !fall:
 		$AnimatedSprite.playing = false
@@ -68,6 +94,9 @@ func update_direction():
 		if fall:
 			if $"/root/Root/BackgroundSprite/Area2D".spiderInArea == true:
 				fall = false
+				direction.x = 0
+				direction.y = 1
+				angle = 0
 				$AnimatedSprite.playing = false
 				$StickTimer.start()
 		else:
