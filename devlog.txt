@@ -1,23 +1,28 @@
 1° Semana (12/08 a 18/08)
 	-Criação do projeto na engine Godot
 	-Organização das pastas básicas do projeto
-	-Criação de um Sprite prototípico da aranha
-	-Criação de um Sprite prototípico do background
-	-Criação das cenas do Player e da Main
-	-Criação da mecânica básica de movimento do player
-	-Início do desenvolvimento da rotação do sprite do player ao mudar de direção
-	-Início do desenvolvimento da física de corda
+	-Sprite prototípico da aranha
+	-Sprite prototípico do background
+	-Cenas do Player e da Main
+	-Mecânica básica de movimento do player
+	-Início da rotação do sprite do player ao mudar de direção
+	-Início da física de corda
 
 2° Semana (19/08 a 25/08)
-	-Desenvolvimento da rotação do player
-	-Desenvolvimento da física de corda
-	-Desenvolvimento da colisão da aranha com as plataformas (galhos) e da física de gravidade
+	-Rotação do player ao mudar de direção enquanto anda
+	-Continuação da física de corda
+	-Colisão da aranha com as plataformas (galhos) e da física de gravidade
 	-Criação do "Game Design Document" do projeto
 
 3° Semana (26/08 a 01/09)
-	-Desenvolvimento do sprite final da aranha e sua animação
-	-Conclusão do desenvolvimento da física de corda, adaptada para a temática da aranha, pra servir como teia
-	-Implementação de botão para grudar na parede durante a queda 
+	-Sprite final da aranha e sua animação
+	-Conclusão da física de corda, adaptada para a temática da aranha, para servir como teia
+	-Botão e mecânica para grudar na parede durante a queda
+	-Game Over quando a aranha cai além dos limites do cenário ou de uma distância grande
+	-Animação alternativa da aranha em estado de queda
+	-Câmera scrolla quando o jogador se aproxima da borda da tela
+	-Se grudar no tronco enquanto cai
+	-Grudar a teia no tronco
 
 4° Semana (02/09 a 08/09)
 
