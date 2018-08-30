@@ -8,7 +8,7 @@
 custom_solver_bias = 0.0
 radius = 10.0
 
-[node name="Web" type="Node2D"]
+[node name="Web" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 

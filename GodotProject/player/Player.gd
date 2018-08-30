@@ -12,10 +12,10 @@ var step = 1
 var rotationSpeed = 15
 var mustRotate = true 
 var isRotating = false
-onready var web_scene = preload("res://web//web.tscn")
-onready var web_resource = 0
-onready var web_parent = null
-onready var web = null
+var web_scene = preload("res://web//web.tscn")
+var web_resource = 0
+var web_parent = null
+var web = null
 var bunda_position = Vector2(800, 600-45)
 
 func _physics_process(delta):
@@ -164,7 +164,6 @@ func excretWeb(parent):
 			stickWeb()
 			
 		else:
-#			parent = $AnimatedSprite/Fieira.parent
 			web_parent = web.addPiece(parent)
 			web_resource += 1
 			

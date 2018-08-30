@@ -9,12 +9,9 @@ var piece_scene = preload("res://web//smallPiece.tscn")
 #		parent = addPiece(parent)
 		
 func addPiece(parent):
-#	print(parent)
 	var joint = parent.get_node("CollisionShape2D/Joint")
 	var new_piece = piece_scene.instance()
 	joint.add_child(new_piece)
 	joint.node_a = parent.get_path()
-#	print("node a: ", joint.node_a)
 	joint.node_b = new_piece.get_path()
-#	print("node b: ", joint.node_b)
 	return new_piece
