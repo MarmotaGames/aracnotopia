@@ -18,9 +18,14 @@ var web_parent = null
 var web = null
 var bunda_position = Vector2(800, 600-45)
 var dirKeys = [0, 0, 0, 0]
+var fora = false
 
 func _physics_process(delta):
-#	print(web_parent)
+	if fora and dirKeys[0]:
+		speed = 0
+	else:
+		speed = 300
+	
 	direction = Vector2(0,0)
 	
 	update_direction()
@@ -200,11 +205,4 @@ func excretWeb(parent):
 		else:
 			web_parent = web.addPiece(parent)
 			web_resource += 1
-			
-
-
-
-
-
-
 
