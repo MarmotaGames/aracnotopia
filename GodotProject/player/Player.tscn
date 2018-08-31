@@ -69,7 +69,6 @@ _sections_unfolded = [ "Transform" ]
 [node name="SecurityBar" type="CollisionShape2D" parent="FrontArea" index="0"]
 
 position = Vector2( 0, 80 )
-scale = Vector2( 4, 1 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 

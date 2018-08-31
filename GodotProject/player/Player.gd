@@ -19,9 +19,14 @@ var web = null
 var bunda_position = Vector2(800, 600-45)
 var dirKeys = [0, 0, 0, 0]
 var fora = false
+var up_just_released = false
 
 func _physics_process(delta):
-	if fora and dirKeys[0]:
+	var a = $FrontArea/SecurityBar.get_global_transform().get_origin().y
+	var b = $AnimatedSprite/DetectBranch/CollisionShape2D.get_global_transform().get_origin().y
+	print("SecurityBar: ", a, "Colisao", b)
+	#if fora and (dirKeys[0] or up_just_released):
+	if fora and a < b:
 		speed = 0
 	else:
 		speed = 300
@@ -100,6 +105,7 @@ func update_direction():
 		
 	if Input.is_action_just_released("ui_up"):
 		dirKeys[0] = 0
+		up_just_released = 1
 
 	if Input.is_action_just_released("ui_down"):
 		dirKeys[1] = 0
