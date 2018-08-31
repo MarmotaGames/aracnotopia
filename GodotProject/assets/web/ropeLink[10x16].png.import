@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/webThreadTransparency.png-8e2600afaa91e62f8bdfc69fe1528686.stex"
+path="res://.import/ropeLink[10x16].png-2183cf04013fda8075fe9845ce43fc52.stex"
 
 [deps]
 
-source_file="res://assets/rope/webThreadTransparency.png"
-dest_files=[ "res://.import/webThreadTransparency.png-8e2600afaa91e62f8bdfc69fe1528686.stex" ]
+source_file="res://assets/web/ropeLink[10x16].png"
+dest_files=[ "res://.import/ropeLink[10x16].png-2183cf04013fda8075fe9845ce43fc52.stex" ]
 
 [params]
 

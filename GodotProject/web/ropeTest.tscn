@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://web/web.tscn" type="PackedScene" id=1]
+[ext_resource path="res://web/ball/Ball.tscn" type="PackedScene" id=2]
+[ext_resource path="res://web/ball/Ball.gd" type="Script" id=3]
+
+[node name="Node2D" instance=ExtResource( 1 )]
+
+position = Vector2( 476.647, 219.442 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Ball" parent="." index="2" instance=ExtResource( 2 )]
+
+position = Vector2( 291.139, 116.098 )
+script = ExtResource( 3 )
+
+
