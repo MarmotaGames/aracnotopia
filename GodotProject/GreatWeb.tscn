@@ -1,5 +1,22 @@
-[gd_scene format=2]
+[gd_scene load_steps=3 format=2]
 
-[node name="Node2D" type="Node2D" index="0"]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://spider-web-Wallpaper-For-Mac-number-WH1.jpg" type="Texture" id=2]
+
+[node name="Root" type="Node2D" index="0"]
+
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
+
+position = Vector2( 531.127, 279.443 )
+
+[node name="THE web" type="Sprite" parent="." index="1"]
+
+show_behind_parent = true
+position = Vector2( 1050, 600 )
+scale = Vector2( 1.5, 1.35 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform", "Z Index" ]
 
 
