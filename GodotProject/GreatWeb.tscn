@@ -9,9 +9,9 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
-position = Vector2( 531.127, 279.443 )
+position = Vector2( 673.127, 530.443 )
 
-[node name="THE web" type="Sprite" parent="." index="1"]
+[node name="TheWebSprite" type="Sprite" parent="." index="1"]
 
 show_behind_parent = true
 position = Vector2( 1050, 600 )
