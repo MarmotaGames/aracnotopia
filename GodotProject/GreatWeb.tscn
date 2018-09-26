@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://spider-web-Wallpaper-For-Mac-number-WH1.jpg" type="Texture" id=2]
+[ext_resource path="res://UP.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[node name="Root" type="Node2D" index="0"]
+
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
+
+position = Vector2( 673.127, 530.443 )
+
+[node name="TheWebSprite" type="Sprite" parent="." index="1"]
+
+show_behind_parent = true
+position = Vector2( 1050, 605 )
+scale = Vector2( 1.5, 1.35 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="UP" type="Area2D" parent="." index="2"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+script = ExtResource( 3 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="LevelUP" type="CollisionShape2D" parent="UP" index="0"]
+
+position = Vector2( 1050, 0 )
+scale = Vector2( 50, 3 )
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[connection signal="body_entered" from="UP" to="UP" method="_on_UP_body_entered"]
+
+
