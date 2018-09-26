@@ -24,17 +24,31 @@
 	-Se grudar no tronco enquanto cai
 	-Grudar a teia no tronco
 
-4° Semana (02/09 a 08/09)
+4° Semana (02/09 a 08/09) [Break]
+	-Encontramos muitos problemas ao lidar com a teia que utilizava uma física próxima a de uma corda real.
+	-O principal problema é que não conseguíamos grudar a teia, dinamincamente, às duas âncoras: o galho e a fieira da aranha. Ela só ficava ligada em uma delas.
+	-Tentamos desenvolver uma alternativa que, ao criar a teia, removia a aranha do jogo e criava uma cena com todos os elementos juntos: aranha e a teia ligada previamente às duas âncoras.
+	-Isso resolver o problema, a teia ficava ligada às duas agora. Porém, por remover a aranha do jogo, mesmo que por um breve momento, todas as referências à ela quebravam. Surgiram inúmeros erros.
 
 5° Semana (09/09 a 15/09)
+	-Tela de menu
+	-Hub central
+	-Um portal que conecta o Hub ao primeiro level
 
 6° Semana (16/09 a 22/09)
+	-(Não houve desenvolvimento nesta semana, devido à acumulação de provas e trabalhos)
 
 7° Semana (23/09 a 29/09)
+	-Redesign da teia: decidimos que, do jeito que havíamos planejado, a implementação ficaria extremamente complexa e além das nossas atuais capacidades.
+	-Portanto, decidimos simplificar a mecânica da teia. Agora ela se aproximará ao funcionamento da corda do jogo "Worms Armageddon":
+		-O jogador clica em um lugar do cenário e a teia, que será representada por uma barra, aparece e se esticará até a sua máxima extensão.
+		-Se a teia se esticar até o máximo e não encontrar nenhum objeto no caminho, ela simplesmente some e o jogador podera lançar novamente.
+		-Se a teia encontrar um objeto pelo caminho, ela se gruda nele e a aranha poderá se balançar com ela.
+
 
 8° Semana (30/09 a 06/10)
 
-9° Semana (07/10 a 13/10)
+9° Semana (07/10 a 13/10) [Break]
 
 10° Semana (14/10 a 20/10)
 
@@ -44,7 +58,7 @@
 
 13° Semana (04/11 a 10/11)
 
-14° Semana (11/11 a 17/11)
+14° Semana (11/11 a 17/11) [Break]
 
 15° Semana (18/11 a 24/11)
 
