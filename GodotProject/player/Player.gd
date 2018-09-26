@@ -19,17 +19,71 @@ var web = null
 var bunda_position = Vector2(800, 600-45)
 var dirKeys = [0, 0, 0, 0]
 var fora = false
-var up_just_released = false
+var foraRight = false
+var foraLeft = false
+var foraBack = false
+var justPressedUp = false
+var posAnterior = [0, 0]
+
+var grudando = false
+
 
 func _physics_process(delta):
+	if posAnterior[0] != 0:
+		if position.x != posAnterior[0] and position.y != posAnterior[1]:
+			if justPressedUp:
+				justPressedUp = false
+	posAnterior[0] = position.x
+	posAnterior[1] = position.y
+		
 	var a = $FrontArea/SecurityBar.get_global_transform().get_origin().y
 	var b = $AnimatedSprite/DetectBranch/CollisionShape2D.get_global_transform().get_origin().y
-	print("SecurityBar: ", a, "Colisao", b)
+	var c = $RightArea/SecurityBarRight.get_global_transform().get_origin().y
+	var d = $LeftArea/SecurityBarLeft.get_global_transform().get_origin().y
+	var e = $BackArea/SecurityBarBack.get_global_transform().get_origin().y
+	
+
+	#print("SecurityBar: ", a, "Colisao", b)
 	#if fora and (dirKeys[0] or up_just_released):
-	if fora and a < b:
-		speed = 0
-	else:
-		speed = 300
+	speed = 300
+	if fora:
+		if a < b:
+			speed = 0
+
+		else:
+			speed = 300
+	
+	if (foraRight and c < b):
+		if dirKeys[0]:
+			speed = 0
+			
+		else:
+			speed = 300
+	if foraLeft and (rotation_degrees < - 45) and (rotation_degrees > - 135):
+		if dirKeys[0] or justPressedUp:
+			speed = 0
+			
+
+	if (foraBack and e < a):
+		if dirKeys[0]:
+			speed = 0
+			
+		else:
+			speed = 300
+	 
+#	elif not foraRight:
+#		speed = 300
+		
+	
+#	if :
+#		if dirKeys[0]:
+#			speed = 0
+#		else:
+#			speed = 300
+#	elif not fora:
+#		speed = 300
+		
+
 	
 	direction = Vector2(0,0)
 	
@@ -105,7 +159,6 @@ func update_direction():
 		
 	if Input.is_action_just_released("ui_up"):
 		dirKeys[0] = 0
-		up_just_released = 1
 
 	if Input.is_action_just_released("ui_down"):
 		dirKeys[1] = 0
@@ -131,6 +184,9 @@ func update_direction():
 		else:
 			fall = true
 			$StickTimer.start()
+	
+	if Input.is_action_pressed("secretar"):
+		grudando = true
 	
 func getRotation():
 	if direction.x == 0:
