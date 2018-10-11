@@ -80,7 +80,7 @@ _sections_unfolded = [ "Transform" ]
 
 position = Vector2( 354.636, 161.935 )
 mass = 800.0
-friction = 0.0
+gravity_scale = 10.0
 _sections_unfolded = [ "Linear", "Transform" ]
 
 [node name="Sprite" parent="Web" index="0"]
@@ -96,14 +96,13 @@ scale = Vector2( 1, 0.8 )
 position = Vector2( -0.797363, 83.9259 )
 node_a = NodePath("..")
 node_b = NodePath("../../Spider")
-bias = 0.0
+bias = 0.9
 disable_collision = true
 softness = 0.0
 
 [node name="SpiderDummy" parent="." index="4" instance=ExtResource( 4 )]
 
-visible = false
-position = Vector2( 558.259, 254.603 )
+position = Vector2( -180.165, 352.303 )
 _sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="Spider" parent="." index="5" instance=ExtResource( 5 )]
