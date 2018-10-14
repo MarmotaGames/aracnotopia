@@ -1,15 +1,16 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://web/ball/Ball.tscn" type="PackedScene" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
-[ext_resource path="res://web/newWeb/Web.tscn" type="PackedScene" id=3]
-[ext_resource path="res://web/newWeb/SpiderDummy.tscn" type="PackedScene" id=4]
-[ext_resource path="res://player/Player_rigido.tscn" type="PackedScene" id=5]
+[ext_resource path="res://ContactArea.gd" type="Script" id=3]
+[ext_resource path="res://web/newWeb/Web.tscn" type="PackedScene" id=4]
+[ext_resource path="res://web/newWeb/SpiderDummy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://player/Player_rigido.tscn" type="PackedScene" id=6]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
-extents = Vector2( 160, 30 )
+extents = Vector2( 212, 187 )
 
 [sub_resource type="RectangleShape2D" id=2]
 
@@ -24,26 +25,30 @@ position = Vector2( 813.978, 156.441 )
 collision_layer = 1
 collision_mask = 1
 
-[node name="Platform" type="StaticBody2D" parent="." index="1"]
+[node name="Sprite" type="Sprite" parent="." index="1"]
 
-position = Vector2( -190.611, 466.732 )
-input_pickable = false
-collision_layer = 1
-collision_mask = 1
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
-friction = 1.0
-bounce = 0.0
-
-[node name="Sprite" type="Sprite" parent="Platform" index="0"]
-
-scale = Vector2( 5, 1 )
+position = Vector2( 797.196, 398.64 )
+scale = Vector2( 6.71281, 5.94738 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform" index="1"]
+[node name="ContactArea" type="Area2D" parent="Sprite" index="0"]
 
-shape = SubResource( 1 )
+position = Vector2( 0.543182, -0.901497 )
+scale = Vector2( 0.148969, 0.168141 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/ContactArea" index="0"]
+
+position = Vector2( -2.11267, 7.36642 )
+shape = SubResource( 3 )
 
 [node name="Stone" type="StaticBody2D" parent="." index="2"]
 
@@ -76,12 +81,15 @@ disable_collision = true
 softness = 0.0
 _sections_unfolded = [ "Transform" ]
 
-[node name="Web" parent="." index="3" instance=ExtResource( 3 )]
+[node name="Web" parent="." index="3" instance=ExtResource( 4 )]
 
 position = Vector2( 354.636, 161.935 )
+collision_layer = 0
+collision_mask = 0
 mass = 800.0
 gravity_scale = 10.0
-_sections_unfolded = [ "Linear", "Transform" ]
+linear_velocity = Vector2( -400, 0 )
+_sections_unfolded = [ "Collision", "Linear", "Transform" ]
 
 [node name="Sprite" parent="Web" index="0"]
 
@@ -100,15 +108,17 @@ bias = 0.9
 disable_collision = true
 softness = 0.0
 
-[node name="SpiderDummy" parent="." index="4" instance=ExtResource( 4 )]
+[node name="SpiderDummy" parent="." index="4" instance=ExtResource( 5 )]
 
-position = Vector2( -180.165, 352.303 )
+position = Vector2( -92.8142, 257.118 )
+gravity_scale = 10.0
 _sections_unfolded = [ "Collision", "Transform" ]
 
-[node name="Spider" parent="." index="5" instance=ExtResource( 5 )]
+[node name="Spider" parent="." index="5" instance=ExtResource( 6 )]
 
-position = Vector2( 355.565, 261.185 )
+position = Vector2( 357.538, 245.878 )
 rotation = 3.14159
+mode = 2
 _sections_unfolded = [ "Collision", "Transform" ]
 
 

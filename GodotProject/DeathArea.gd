@@ -5,7 +5,7 @@ var gameover = false
 var timer = false
 
 func _process(delta):
-	if $"/root/Root/Spider2".fall:
+	if $"/root/Root/Spider".fall:
 		if not timer:
 			# O tempo desse timer é o tempo máximo de queda
 			$Timer.start()
@@ -17,11 +17,11 @@ func _process(delta):
 	
 	
 	if gameover:
-		$"/root/Root/Spider2".position.x = spawn.x
-		$"/root/Root/Spider2".position.y = spawn.y
-		$"/root/Root/Spider2".fall = false
-		$"/root/Root/Spider2".rotation = 0
-		$"/root/Root/Spider2".angle = 0
+		$"/root/Root/Spider".position.x = spawn.x
+		$"/root/Root/Spider".position.y = spawn.y
+		$"/root/Root/Spider".fall = false
+		$"/root/Root/Spider".rotation = 0
+		$"/root/Root/Spider".angle = 0
 		
 func _on_DeathArea_body_exited(body):
 	gameover = true
