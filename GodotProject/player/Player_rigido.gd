@@ -21,7 +21,7 @@ func _physics_process(delta):
 		if fallInit:
 #			set_linear_velocity(Vector2(0,0))
 			fallInit = false
-		gravity_scale = 10
+		gravity_scale = 15
 #		self.rotation = 5
 		self.angle = 0
 	else:

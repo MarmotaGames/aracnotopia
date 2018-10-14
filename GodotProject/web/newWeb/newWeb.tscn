@@ -74,12 +74,13 @@ shape = SubResource( 2 )
 [node name="PinJoint2D" type="PinJoint2D" parent="Stone" index="2"]
 
 position = Vector2( 0, 16.5856 )
+z_index = 1
 node_a = NodePath("..")
 node_b = NodePath("../../Web")
 bias = 0.9
 disable_collision = true
 softness = 0.0
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="Web" parent="." index="3" instance=ExtResource( 4 )]
 
@@ -88,8 +89,8 @@ collision_layer = 0
 collision_mask = 0
 mass = 800.0
 gravity_scale = 10.0
-linear_velocity = Vector2( -400, 0 )
-_sections_unfolded = [ "Collision", "Linear", "Transform" ]
+linear_velocity = Vector2( -450, 0 )
+_sections_unfolded = [ "Applied Forces", "Collision", "Linear", "Transform" ]
 
 [node name="Sprite" parent="Web" index="0"]
 
@@ -116,10 +117,11 @@ _sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="Spider" parent="." index="5" instance=ExtResource( 6 )]
 
-position = Vector2( 357.538, 245.878 )
+visible = false
+position = Vector2( 354.884, 263.127 )
 rotation = 3.14159
 mode = 2
-_sections_unfolded = [ "Collision", "Transform" ]
+_sections_unfolded = [ "Applied Forces", "Collision", "Linear", "Transform" ]
 
 
 [editable path="Web"]

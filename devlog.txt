@@ -32,8 +32,8 @@
 
 5° Semana (09/09 a 15/09)
 	-Tela de menu
-	-Hub central
-	-Um portal que conecta o Hub ao primeiro level
+	-"Hub" central
+	-Um portal que conecta o "Hub" ao primeiro level
 
 6° Semana (16/09 a 22/09)
 	-(Não houve desenvolvimento nesta semana, devido à acumulação de provas e trabalhos)
@@ -42,13 +42,20 @@
 	-Redesign da teia: decidimos que, do jeito que havíamos planejado, a implementação ficaria extremamente complexa e além das nossas atuais capacidades.
 	-Portanto, decidimos simplificar a mecânica da teia. Agora ela se aproximará ao funcionamento da corda do jogo "Worms Armageddon":
 		-O jogador clica em um lugar do cenário e a teia, que será representada por uma barra, aparece e se esticará até a sua máxima extensão.
-		-Se a teia se esticar até o máximo e não encontrar nenhum objeto no caminho, ela simplesmente some e o jogador podera lançar novamente.
+		-Se a teia se esticar até o máximo e não encontrar nenhum objeto no caminho, ela simplesmente some e o jogador poderá lançá-la novamente.
 		-Se a teia encontrar um objeto pelo caminho, ela se gruda nele e a aranha poderá se balançar com ela.
-
+		-Ao se soltar da teia, a aranha se movimentará com inércia.
 
 8° Semana (30/09 a 06/10)
+	-(Não houve desenvolvimento nesta semana, devido à acumulação de provas e trabalhos)
 
 9° Semana (07/10 a 13/10) [Break]
+	-Alteração da estrutura da aranha para responder à física (gravidade, inércia)
+
+	-Protótipo de teia conectada na extremidade superior a uma pedra e, na outra extremidade, à aranha.
+		-Mecânica de balanço da teia com a aranha acompanhando o movimento pendular.
+		-Mecânica de "esticamento" da teia com a aranha pendurada.
+		-Mecânica em que a aranha de destaca da teia, assumindo um movimento inercial.
 
 10° Semana (14/10 a 20/10)
 
