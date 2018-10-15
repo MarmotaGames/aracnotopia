@@ -52,10 +52,10 @@
 9° Semana (07/10 a 13/10) [Break]
 	-Alteração da estrutura da aranha para responder à física (gravidade, inércia)
 
-	-Protótipo de teia conectada na extremidade superior a uma pedra e, na outra extremidade, à aranha.
+	-Protótipo de teia conectada na extremidade superior a um objeto estático e, na outra extremidade, à aranha.
 		-Mecânica de balanço da teia com a aranha acompanhando o movimento pendular.
 		-Mecânica de "esticamento" da teia com a aranha pendurada.
-		-Mecânica em que a aranha de destaca da teia, assumindo um movimento inercial.
+		-Mecânica em que a aranha se destaca da teia, assumindo um movimento inercial.
 
 10° Semana (14/10 a 20/10)
 

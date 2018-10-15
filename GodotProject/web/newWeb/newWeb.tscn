@@ -1,13 +1,14 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://web/ball/Ball.tscn" type="PackedScene" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 [ext_resource path="res://ContactArea.gd" type="Script" id=3]
 [ext_resource path="res://web/newWeb/Web.tscn" type="PackedScene" id=4]
-[ext_resource path="res://web/newWeb/SpiderDummy.tscn" type="PackedScene" id=5]
-[ext_resource path="res://player/Player_rigido.tscn" type="PackedScene" id=6]
+[ext_resource path="res://debug.gd" type="Script" id=5]
+[ext_resource path="res://web/newWeb/SpiderDummy.tscn" type="PackedScene" id=6]
+[ext_resource path="res://player/Player_rigido.tscn" type="PackedScene" id=7]
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 212, 187 )
@@ -21,18 +22,18 @@ extents = Vector2( 31, 31 )
 
 [node name="Ball" parent="." index="0" instance=ExtResource( 1 )]
 
-position = Vector2( 813.978, 156.441 )
+position = Vector2( 51.5235, 545.071 )
 collision_layer = 1
 collision_mask = 1
 
-[node name="Sprite" type="Sprite" parent="." index="1"]
+[node name="Plataforma" type="Sprite" parent="." index="1"]
 
-position = Vector2( 797.196, 398.64 )
-scale = Vector2( 6.71281, 5.94738 )
+position = Vector2( 767.909, 347.961 )
+scale = Vector2( 7.62804, 7.53109 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="ContactArea" type="Area2D" parent="Sprite" index="0"]
+[node name="ContactArea" type="Area2D" parent="Plataforma" index="0"]
 
 position = Vector2( 0.543182, -0.901497 )
 scale = Vector2( 0.148969, 0.168141 )
@@ -45,10 +46,10 @@ audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/ContactArea" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Plataforma/ContactArea" index="0"]
 
 position = Vector2( -2.11267, 7.36642 )
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 
 [node name="Stone" type="StaticBody2D" parent="." index="2"]
 
@@ -87,14 +88,27 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 position = Vector2( 354.636, 161.935 )
 collision_layer = 0
 collision_mask = 0
-mass = 800.0
-gravity_scale = 10.0
-linear_velocity = Vector2( -450, 0 )
-_sections_unfolded = [ "Applied Forces", "Collision", "Linear", "Transform" ]
+mass = 250.0
+gravity_scale = 5.0
+linear_damp = 0.1
+angular_velocity = 15.0
+angular_damp = 0.1
+_sections_unfolded = [ "Angular", "Applied Forces", "Collision", "Linear", "Transform" ]
 
 [node name="Sprite" parent="Web" index="0"]
 
 scale = Vector2( 1, 0.8 )
+
+[node name="Position2D" type="Position2D" parent="Web/Sprite" index="0"]
+
+position = Vector2( 0, 105.954 )
+scale = Vector2( 1, 1.25 )
+
+[node name="Sprite" type="Sprite" parent="Web/Sprite/Position2D" index="0"]
+
+scale = Vector2( 0.114981, 0.125492 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" parent="Web" index="1"]
 
@@ -109,19 +123,25 @@ bias = 0.9
 disable_collision = true
 softness = 0.0
 
-[node name="SpiderDummy" parent="." index="4" instance=ExtResource( 5 )]
+[node name="Node2D" type="Node2D" parent="Web" index="3"]
 
-position = Vector2( -92.8142, 257.118 )
-gravity_scale = 10.0
-_sections_unfolded = [ "Collision", "Transform" ]
+position = Vector2( 2.85352, 89.8182 )
+script = ExtResource( 5 )
 
-[node name="Spider" parent="." index="5" instance=ExtResource( 6 )]
+[node name="SpiderDummy" parent="." index="4" instance=ExtResource( 6 )]
 
-visible = false
-position = Vector2( 354.884, 263.127 )
+position = Vector2( -127.113, 209.42 )
+mode = 2
+gravity_scale = 6.0
+_sections_unfolded = [ "Angular", "Applied Forces", "Collision", "Linear", "Transform" ]
+
+[node name="Spider" parent="." index="5" instance=ExtResource( 7 )]
+
+position = Vector2( 356.143, 247.22 )
 rotation = 3.14159
 mode = 2
-_sections_unfolded = [ "Applied Forces", "Collision", "Linear", "Transform" ]
+gravity_scale = 5.0
+_sections_unfolded = [ "Angular", "Applied Forces", "Collision", "Linear", "Transform" ]
 
 
 [editable path="Web"]

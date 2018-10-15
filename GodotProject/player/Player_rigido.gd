@@ -21,7 +21,7 @@ func _physics_process(delta):
 		if fallInit:
 #			set_linear_velocity(Vector2(0,0))
 			fallInit = false
-		gravity_scale = 15
+		gravity_scale = 8
 #		self.rotation = 5
 		self.angle = 0
 	else:
@@ -99,20 +99,20 @@ func update_direction():
 		
 	if !Input.is_action_pressed("ui_up") and !Input.is_action_pressed("ui_right") and !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_down") and !fall:
 		$AnimatedSprite.playing = false
-		
-	if Input.is_action_just_pressed("attachOrDetach") and not $StickTimer.time_left:
-		if fall:
-			if spiderInArea:
+	
+	if spiderInArea and not $StickTimer.time_left and Input.is_action_just_pressed("attachOrDetach"):
+			if fall:
+				set_linear_velocity(Vector2(0,0))
 				fall = false
 				direction.x = 0
 				direction.y = -1
 				angle = 0
 				$AnimatedSprite.playing = false
 				$StickTimer.start()
-		else:
-			fall = true
-#			spiderOnWeb = false
-			$StickTimer.start()
+				
+			else:
+				fall = true
+				$StickTimer.start()
 
 	
 func getRotation():
