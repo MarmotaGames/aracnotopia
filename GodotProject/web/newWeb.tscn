@@ -17,7 +17,7 @@ extents = Vector2( 212, 187 )
 custom_solver_bias = 0.0
 extents = Vector2( 31, 31 )
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" index="0"]
 
 [node name="Ball" parent="." index="0" instance=ExtResource( 1 )]
 

@@ -7,33 +7,25 @@ var speed = 300
 var direction = Vector2(0,-1)
 var angle = 0
 var fall = false
-var front = 0
-var back = 180
-var step = 1
 var dirKeys = [0, 0, 0, 0]
 var fallInit = true
-var test = true
+var init = false
+onready var webNode = get_node("../Web")
+
+func _ready():
+	init = true
+	
 
 func _integrate_forces(state):
 	var positionNode = get_node("../Web/Sprite/Position2D")
-	var webNode = get_node("../Web")
 	var pointPosition = positionNode.get_global_position()
 	var xform = state.get_transform()
-	
-	
+		
 	if webNode.isStretching:
-#	if test:
 		get_node("../Web/PinJoint2D").set_node_b("")
-		print("lul")
-#		xform.origin.x = 788
-#		xform.origin.y = 500
 		xform.origin = pointPosition
-		print("spider point: ", pointPosition)
-#		print(xform.origin)
 		state.set_transform(xform)
 		get_node("../Web/PinJoint2D").set_node_b("../../Spider")
-#		test = false
-	
 	
 func _physics_process(delta):
 	if fall:
@@ -46,6 +38,7 @@ func _physics_process(delta):
 		fallInit = true
 	
 	update_direction()
+	update_rotation()
 	
 	
 		
@@ -99,7 +92,7 @@ func update_direction():
 		$AnimatedSprite.playing = false
 	
 	if spiderInArea and not $StickTimer.time_left and Input.is_action_just_pressed("attachOrDetach"):
-			if fall:
+			if fall or spiderOnWeb:
 				set_linear_velocity(Vector2(0,0))
 				fall = false
 				direction.x = 0
@@ -107,7 +100,46 @@ func update_direction():
 				angle = 0
 				$AnimatedSprite.playing = false
 				$StickTimer.start()
+				if spiderOnWeb:
+					spiderOnWeb = false
+					get_node("../Web").isStretching = false
+					get_node("../Web/PinJoint2D").set_node_b("")
 				
 			else:
 				fall = true
 				$StickTimer.start()
+				
+func update_rotation():
+	if spiderOnWeb:
+		if init:
+			self.rotation_degrees = get_node("../Web").rotation_degrees
+		else:
+			self.rotation_degrees = 0
+	else:
+		
+		if direction.x == 0:
+			if direction.y == -1:
+				#angle = 180
+				self.rotation_degrees = -179
+			if direction.y == 1:
+				self.rotation_degrees = 0
+	
+		if direction.x == 1:
+			if direction.y == -1:
+				#angle = 225
+				self.rotation_degrees = -135
+			if direction.y == 0:
+				#angle = 270
+				self.rotation_degrees = -90
+			if direction.y == 1:
+				#angle = 315
+				self.rotation_degrees = -45
+				
+	
+		if direction.x == -1:
+			if direction.y == -1:
+				self.rotation_degrees = 135
+			if direction.y == 0:
+				self.rotation_degrees = 90
+			if direction.y == 1:
+				self.rotation_degrees = 45

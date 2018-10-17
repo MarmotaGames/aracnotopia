@@ -18,12 +18,17 @@ func _physics_process(delta):
 		else:
 			isStretching = false
 		
-	if Input.is_action_just_pressed("attachOrDetach") and spiderNode.spiderOnWeb:
-		isStretching = false
-		$PinJoint2D.set_node_b("")
-		spiderNode.spiderOnWeb = false
-		spiderNode.fall = true
-		
+	if Input.is_action_just_pressed("secretar"):
+		if spiderNode.spiderOnWeb:
+			isStretching = false
+			$PinJoint2D.set_node_b("")
+			spiderNode.spiderOnWeb = false
+			spiderNode.fall = true
+		elif not spiderNode.fall: 
+			#iniciar secrecão
+			#spiderNode.spiderOnWeb = true DESCOMENDAR QUANDO IMPLEMENTAR
+			pass
+			
 func stretch(direction):
 	hasStretched = true
 	isStretching = true
@@ -71,5 +76,4 @@ func stretch(direction):
 	var jointPosition = $PinJoint2D.get_global_position()
 	
 	var pointPosition = $Sprite/Position2D.get_global_position()
-	print("web point: ", pointPosition)
 	$PinJoint2D.set_global_position(pointPosition)
