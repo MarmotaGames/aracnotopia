@@ -1,21 +1,22 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://spider-web-Wallpaper-For-Mac-number-WH1.jpg" type="Texture" id=2]
-[ext_resource path="res://UP.gd" type="Script" id=3]
+[ext_resource path="res://player/Player_rigido.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/levels/GreatWebBackground.jpg" type="Texture" id=2]
+[ext_resource path="res://levels/hub/UP.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[node name="Root" type="Node2D" index="0"]
+[node name="Root" type="Node2D"]
 
 _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
 position = Vector2( 673.127, 530.443 )
+_sections_unfolded = [ "Collision" ]
 
 [node name="TheWebSprite" type="Sprite" parent="." index="1"]
 
@@ -35,7 +36,7 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 3 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Collision", "Material", "Transform" ]
 
 [node name="LevelUP" type="CollisionShape2D" parent="UP" index="0"]
 
@@ -44,6 +45,6 @@ scale = Vector2( 50, 3 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
-[connection signal="body_entered" from="UP" to="UP" method="_on_UP_body_entered"]
+[connection signal="area_entered" from="UP" to="UP" method="_on_UP_area_entered"]
 
 

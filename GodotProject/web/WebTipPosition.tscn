@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+
+[node name="Position2D" type="Position2D"]
+
+position = Vector2( 0, 105.954 )
+scale = Vector2( 1, 1.25 )
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+scale = Vector2( 0.114981, 0.125492 )
+texture = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+
