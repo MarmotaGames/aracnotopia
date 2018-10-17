@@ -10,46 +10,44 @@ var fall = false
 var front = 0
 var back = 180
 var step = 1
-#var rotationSpeed = 15
-#var mustRotate = true 
-#var isRotating = false
 var dirKeys = [0, 0, 0, 0]
 var fallInit = true
+var test = true
 
+func _integrate_forces(state):
+	var positionNode = get_node("../Web/Sprite/Position2D")
+	var webNode = get_node("../Web")
+	var pointPosition = positionNode.get_global_position()
+	var xform = state.get_transform()
+	
+	
+	if webNode.isStretching:
+#	if test:
+		get_node("../Web/PinJoint2D").set_node_b("")
+		print("lul")
+#		xform.origin.x = 788
+#		xform.origin.y = 500
+		xform.origin = pointPosition
+		print("spider point: ", pointPosition)
+#		print(xform.origin)
+		state.set_transform(xform)
+		get_node("../Web/PinJoint2D").set_node_b("../../Spider")
+#		test = false
+	
+	
 func _physics_process(delta):
 	if fall:
 		if fallInit:
-#			set_linear_velocity(Vector2(0,0))
 			fallInit = false
 		gravity_scale = 8
-#		self.rotation = 5
 		self.angle = 0
 	else:
 		gravity_scale = 0
 		fallInit = true
 	
 	update_direction()
-#	getRotation()
-		
-#	if mustRotate:
-#		getRotation()
-#		mustRotate = false
-#	evalRotation()
-
-#	#Esse bloco elimina ambiguidades, pois a direcao Cima pode ser
-#	#tanto 180 como -180
-#	if angle == -179:
-#		if front < -165 or front > 170:
-#			self.rotation_degrees = -179
-#
-#	#Rotaciona a aranha	
-#	if front < (angle-5) or front > (angle+5):
-#		isRotating = true
-#		self.rotation_degrees += (step * rotationSpeed)
-#		$AnimatedSprite.playing = true
-#	else:
-#		self.rotation_degrees = angle
-#		isRotating = false
+	
+	
 		
 	if 1 in dirKeys and not fall:
 		#Verifica se alguma das teclas direcionais está apertada e processa o movimento
@@ -113,65 +111,3 @@ func update_direction():
 			else:
 				fall = true
 				$StickTimer.start()
-
-	
-func getRotation():
-	if direction.x == 0:
-		if direction.y == -1:
-			#angle = 180
-			angle = -179
-		if direction.y == 1:
-			angle = 0
-
-	if direction.x == 1:
-		if direction.y == -1:
-			#angle = 225
-			angle = -135
-		if direction.y == 0:
-			#angle = 270
-			angle = -90
-		if direction.y == 1:
-			#angle = 315
-			angle = -45
-			
-
-	if direction.x == -1:
-		if direction.y == -1:
-			angle = 135
-		if direction.y == 0:
-			angle = 90
-		if direction.y == 1:
-			angle = 45
-
-func evalRotation():
-	front = int(self.rotation_degrees)
-	
-	var fator
-	if front >= 0:
-		fator = -1
-	else:
-		fator = 1
-	back = front+(180 * fator)
-
-	if front >= 0:
-		if angle > 0:
-			if angle < front:
-				step = -1
-			else:
-				step = 1
-		else:
-			if angle < back:
-				step = 1
-			else:
-				step = -1
-	else:
-		if angle > 0:
-			if angle > back:
-				step = -1
-			else:
-				step = 1
-		else:
-			if angle < front:
-				step = -1
-			else:
-				step = 1

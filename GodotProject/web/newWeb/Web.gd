@@ -3,42 +3,30 @@ extends RigidBody2D
 onready var spiderNode = get_node("../Spider")
 onready var spiderDummyNode = get_node("../SpiderDummy")
 
-#var whichSpider = "dummy"
-var whichSpider = "spider"
 var hasStretched = false
+var isStretching = false
 
 func _ready():
 	spiderNode.spiderOnWeb = true
 	
-
 func _physics_process(delta):
 	if spiderNode.spiderOnWeb:
 		if Input.is_action_pressed("ui_down"):
 			stretch("down")
 		elif Input.is_action_pressed("ui_up"):
 			stretch("up")
+		else:
+			isStretching = false
 		
-		if hasStretched:
-			var jointPosition = $PinJoint2D.get_global_position()
-			
-			if whichSpider == "spider":
-				spiderNode.set_global_position(jointPosition)
-			elif whichSpider == "dummy":
-				spiderDummyNode.set_global_position(jointPosition)
-	
 	if Input.is_action_just_pressed("attachOrDetach") and spiderNode.spiderOnWeb:
+		isStretching = false
 		$PinJoint2D.set_node_b("")
 		spiderNode.spiderOnWeb = false
 		spiderNode.fall = true
 		
-		
-#func _integrate_forces(state):
-#	if Input.is_action_pressed("ui_right"):
-#
-#	elif Input.is_action_pressed("ui_left"):
-	
 func stretch(direction):
 	hasStretched = true
+	isStretching = true
 	
 	var rot = self.rotation_degrees
 	var yPercentage = 1
@@ -46,10 +34,7 @@ func stretch(direction):
 	var inferiorLimit = 0.22
 	var superiorLimit = 1.5
 	
-	print("rot: ", rot)
-	
 	var scale = $Sprite.get_scale()
-	print("scale: ", scale)
 	
 	if direction == "down" and scale.y < superiorLimit:
 		scale.y += 0.001*3
@@ -86,8 +71,5 @@ func stretch(direction):
 	var jointPosition = $PinJoint2D.get_global_position()
 	
 	var pointPosition = $Sprite/Position2D.get_global_position()
+	print("web point: ", pointPosition)
 	$PinJoint2D.set_global_position(pointPosition)
-	if whichSpider == "spider":
-		spiderNode.set_global_position(pointPosition)
-	elif whichSpider == "dummy":
-		spiderDummyNode.set_global_position(pointPosition)
