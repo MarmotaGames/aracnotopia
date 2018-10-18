@@ -1,31 +1,33 @@
 extends RigidBody2D
 
+onready var webNode = get_node("../Web")
+onready var pinJointNode = get_node("../Web/PinJoint2D")
+onready var positionNode = get_node("../Web/Sprite/Position2D")
+
 var spiderInArea = true
 var spiderOnWeb = false
+var fallInit = true
+var fall = false
+var init = false
 
-var speed = 300
+export (int) var speed = 300
 var direction = Vector2(0,-1)
 var angle = 0
-var fall = false
 var dirKeys = [0, 0, 0, 0]
-var fallInit = true
-var init = false
-onready var webNode = get_node("../Web")
 
 func _ready():
 	init = true
 	
-
 func _integrate_forces(state):
-	var positionNode = get_node("../Web/Sprite/Position2D")
-	var pointPosition = positionNode.get_global_position()
-	var xform = state.get_transform()
-		
-	if webNode.isStretching:
-		get_node("../Web/PinJoint2D").set_node_b("")
-		xform.origin = pointPosition
-		state.set_transform(xform)
-		get_node("../Web/PinJoint2D").set_node_b("../../Spider")
+	if spiderOnWeb:
+		var pointPosition = positionNode.get_global_position()
+		var xform = state.get_transform()
+			
+		if webNode.isStretching:
+			pinJointNode.set_node_b("")
+			xform.origin = pointPosition
+			state.set_transform(xform)
+			pinJointNode.set_node_b("../../Spider")
 	
 func _physics_process(delta):
 	if fall:
@@ -40,10 +42,9 @@ func _physics_process(delta):
 	update_direction()
 	update_rotation()
 	
-	
-		
 	if 1 in dirKeys and not fall:
-		#Verifica se alguma das teclas direcionais está apertada e processa o movimento
+		#Verifica se alguma das teclas direcionais está apertada 
+		#e processa o movimento
 		set_linear_velocity(direction.normalized()*speed)
 	else:
 		if not fall:
@@ -91,7 +92,7 @@ func update_direction():
 	if !Input.is_action_pressed("ui_up") and !Input.is_action_pressed("ui_right") and !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_down") and !fall:
 		$AnimatedSprite.playing = false
 	
-	if spiderInArea and not $StickTimer.time_left and Input.is_action_just_pressed("attachOrDetach"):
+	if spiderInArea and not $StickTimer.time_left and Input.is_action_just_pressed("attachOrDetachFromArea"):
 			if fall or spiderOnWeb:
 				set_linear_velocity(Vector2(0,0))
 				fall = false
@@ -102,8 +103,8 @@ func update_direction():
 				$StickTimer.start()
 				if spiderOnWeb:
 					spiderOnWeb = false
-					get_node("../Web").isStretching = false
-					get_node("../Web/PinJoint2D").set_node_b("")
+					webNode.isStretching = false
+					pinJointNode.set_node_b("")
 				
 			else:
 				fall = true
@@ -112,11 +113,10 @@ func update_direction():
 func update_rotation():
 	if spiderOnWeb:
 		if init:
-			self.rotation_degrees = get_node("../Web").rotation_degrees
+			self.rotation_degrees = webNode.rotation_degrees
 		else:
 			self.rotation_degrees = 0
 	else:
-		
 		if direction.x == 0:
 			if direction.y == -1:
 				#angle = 180
@@ -134,7 +134,6 @@ func update_rotation():
 			if direction.y == 1:
 				#angle = 315
 				self.rotation_degrees = -45
-				
 	
 		if direction.x == -1:
 			if direction.y == -1:

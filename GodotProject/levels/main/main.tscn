@@ -5,7 +5,6 @@
 [ext_resource path="res://areas/ContactArea.gd" type="Script" id=3]
 [ext_resource path="res://areas/DeathArea.gd" type="Script" id=4]
 
-
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
@@ -22,6 +21,7 @@ _sections_unfolded = [ "Offset", "Z Index" ]
 [node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
 position = Vector2( 731.377, 601.121 )
+speed = 300
 
 [node name="BackgroundSprite" type="Sprite" parent="." index="1"]
 

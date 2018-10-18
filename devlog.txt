@@ -1,38 +1,60 @@
 1° Semana (12/08 a 18/08)
 	-Criação do projeto na engine Godot
+
 	-Organização das pastas básicas do projeto
+
 	-Sprite prototípico da aranha
+
 	-Sprite prototípico do background
+
 	-Cenas do Player e da Main
+
 	-Mecânica básica de movimento do player
+
 	-Início da rotação do sprite do player ao mudar de direção
+
 	-Início da física de corda
 
 2° Semana (19/08 a 25/08)
 	-Rotação do player ao mudar de direção enquanto anda
+
 	-Continuação da física de corda
+
 	-Colisão da aranha com as plataformas (galhos) e da física de gravidade
+
 	-Criação do "Game Design Document" do projeto
 
 3° Semana (26/08 a 01/09)
 	-Sprite final da aranha e sua animação
+
 	-Conclusão da física de corda, adaptada para a temática da aranha, para servir como teia
+
 	-Botão e mecânica para grudar na parede durante a queda
+
 	-Game Over quando a aranha cai além dos limites do cenário ou de uma distância grande
+
 	-Animação alternativa da aranha em estado de queda
+
 	-Câmera scrolla quando o jogador se aproxima da borda da tela
+
 	-Se grudar no tronco enquanto cai
+
 	-Grudar a teia no tronco
 
 4° Semana (02/09 a 08/09) [Break]
 	-Encontramos muitos problemas ao lidar com a teia que utilizava uma física próxima a de uma corda real.
+
 	-O principal problema é que não conseguíamos grudar a teia, dinamincamente, às duas âncoras: o galho e a fieira da aranha. Ela só ficava ligada em uma delas.
+
 	-Tentamos desenvolver uma alternativa que, ao criar a teia, removia a aranha do jogo e criava uma cena com todos os elementos juntos: aranha e a teia ligada previamente às duas âncoras.
-	-Isso resolver o problema, a teia ficava ligada às duas agora. Porém, por remover a aranha do jogo, mesmo que por um breve momento, todas as referências à ela quebravam. Surgiram inúmeros erros.
+
+	-Isso resolveu o problema, a teia ficava ligada às duas agora. Porém, por remover a aranha do jogo, mesmo que por um breve momento, todas as referências à ela quebravam. Surgiram inúmeros erros.
 
 5° Semana (09/09 a 15/09)
 	-Tela de menu
+
 	-"Hub" central
+
 	-Um portal que conecta o "Hub" ao primeiro level
 
 6° Semana (16/09 a 22/09)
@@ -40,10 +62,14 @@
 
 7° Semana (23/09 a 29/09)
 	-Redesign da teia: decidimos que, do jeito que havíamos planejado, a implementação ficaria extremamente complexa e além das nossas atuais capacidades.
+
 	-Portanto, decidimos simplificar a mecânica da teia. Agora ela se aproximará ao funcionamento da corda do jogo "Worms Armageddon":
 		-O jogador clica em um lugar do cenário e a teia, que será representada por uma barra, aparece e se esticará até a sua máxima extensão.
+
 		-Se a teia se esticar até o máximo e não encontrar nenhum objeto no caminho, ela simplesmente some e o jogador poderá lançá-la novamente.
+
 		-Se a teia encontrar um objeto pelo caminho, ela se gruda nele e a aranha poderá se balançar com ela.
+
 		-Ao se soltar da teia, a aranha se movimentará com inércia.
 
 8° Semana (30/09 a 06/10)
@@ -54,10 +80,17 @@
 
 	-Protótipo de teia conectada na extremidade superior a um objeto estático e, na outra extremidade, à aranha.
 		-Mecânica de balanço da teia com a aranha acompanhando o movimento pendular.
-		-Mecânica de "esticamento" da teia com a aranha pendurada.
+
+		-Mecânica de "esticamento" da teia com a aranha pendurada, porém, só está funcionando visualmente, a física está quebrada.
+
 		-Mecânica em que a aranha se destaca da teia, assumindo um movimento inercial.
 
 10° Semana (14/10 a 20/10)
+	-Física funciona da maneira esperada quando a teia estica
+
+	-Organização de arquivos e pastas
+
+	-Aranha rotaciona da maneira esperada, tanto pendurada na teia, quanto andando pelo cenário.
 
 11° Semana (21/10 a 27/10)
 

@@ -1,11 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://web/ball/Ball.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ball/Ball.tscn" type="PackedScene" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 [ext_resource path="res://areas/ContactArea.gd" type="Script" id=3]
 [ext_resource path="res://web/Web.tscn" type="PackedScene" id=4]
-[ext_resource path="res://web/SpiderDummy.tscn" type="PackedScene" id=5]
-[ext_resource path="res://player/Player_rigido.tscn" type="PackedScene" id=6]
+[ext_resource path="res://player/Player_rigido.tscn" type="PackedScene" id=5]
+
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -87,25 +87,21 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 position = Vector2( 354.636, 161.935 )
 angular_velocity = 15.0
 _sections_unfolded = [ "Angular", "Applied Forces", "Collision", "Linear", "Pickable", "Transform" ]
+inferiorStretchLimit = 0.35
+superiorStretchLimit = 1.5
 
 [node name="PinJoint2D" parent="Web" index="2"]
 
 node_b = NodePath("../../Spider")
 
-[node name="SpiderDummy" parent="." index="4" instance=ExtResource( 5 )]
-
-position = Vector2( -127.113, 209.42 )
-mode = 2
-gravity_scale = 6.0
-_sections_unfolded = [ "Angular", "Applied Forces", "Collision", "Linear", "Transform" ]
-
-[node name="Spider" parent="." index="5" instance=ExtResource( 6 )]
+[node name="Spider" parent="." index="4" instance=ExtResource( 5 )]
 
 position = Vector2( 355.406, 245.263 )
 rotation = 3.14159
 mode = 2
 gravity_scale = 5.0
 _sections_unfolded = [ "Angular", "Applied Forces", "Collision", "Linear", "Transform" ]
+speed = 300
 
 
 [editable path="Web"]
