@@ -33,7 +33,7 @@ func _physics_process(delta):
 	if fall:
 		if fallInit:
 			fallInit = false
-			self.rotation_degrees = 0 # NÃO TÁ FUNFANDO!
+			self.rotation_degrees = 0 
 			set_linear_velocity(Vector2(self.linear_velocity.x,0)) 
 		gravity_scale = 8
 		
@@ -118,7 +118,7 @@ func update_rotation():
 			self.rotation_degrees = webNode.rotation_degrees
 		else:
 			self.rotation_degrees = 0
-	else:
+	elif not fall:
 		if direction.x == 0:
 			if direction.y == -1:
 				#angle = 180
