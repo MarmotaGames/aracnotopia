@@ -33,8 +33,10 @@ func _physics_process(delta):
 	if fall:
 		if fallInit:
 			fallInit = false
+			self.rotation_degrees = 0 # NÃO TÁ FUNFANDO!
+			set_linear_velocity(Vector2(self.linear_velocity.x,0)) 
 		gravity_scale = 8
-		self.angle = 0
+		
 	else:
 		gravity_scale = 0
 		fallInit = true

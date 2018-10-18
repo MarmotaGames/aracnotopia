@@ -42,7 +42,7 @@ custom_solver_bias = 0.0
 radius = 10.0
 height = 20.0
 
-[node name="Spider" type="RigidBody2D"]
+[node name="Spider" type="RigidBody2D" index="0"]
 
 input_pickable = false
 collision_layer = 1
@@ -63,6 +63,8 @@ linear_damp = -1.0
 angular_velocity = 0.0
 angular_damp = -1.0
 script = ExtResource( 1 )
+_sections_unfolded = [ "Linear", "Transform" ]
+speed = 300
 
 [node name="SpiderCollision" type="CollisionShape2D" parent="." index="0"]
 
