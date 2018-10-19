@@ -6,7 +6,6 @@
 [ext_resource path="res://web/Web.tscn" type="PackedScene" id=4]
 [ext_resource path="res://player/Player_rigido.tscn" type="PackedScene" id=5]
 
-
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
@@ -21,9 +20,7 @@ extents = Vector2( 31, 31 )
 
 [node name="Ball" parent="." index="0" instance=ExtResource( 1 )]
 
-position = Vector2( 51.5235, 545.071 )
-collision_layer = 1
-collision_mask = 1
+position = Vector2( 52.6, 458.923 )
 
 [node name="Plataforma" type="Sprite" parent="." index="1"]
 
@@ -84,11 +81,11 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="Web" parent="." index="3" instance=ExtResource( 4 )]
 
-position = Vector2( 354.636, 161.935 )
-angular_velocity = 15.0
+position = Vector2( 355.1, 167.358 )
+collision_layer = 16
+collision_mask = 16
+angular_velocity = 16.0
 _sections_unfolded = [ "Angular", "Applied Forces", "Collision", "Linear", "Pickable", "Transform" ]
-inferiorStretchLimit = 0.35
-superiorStretchLimit = 1.5
 
 [node name="PinJoint2D" parent="Web" index="2"]
 
@@ -96,12 +93,11 @@ node_b = NodePath("../../Spider")
 
 [node name="Spider" parent="." index="4" instance=ExtResource( 5 )]
 
-position = Vector2( 355.406, 245.263 )
+position = Vector2( 355.807, 251.607 )
 rotation = 3.14159
 mode = 2
 gravity_scale = 5.0
 _sections_unfolded = [ "Angular", "Applied Forces", "Collision", "Linear", "Transform" ]
-speed = 300
 
 
 [editable path="Web"]

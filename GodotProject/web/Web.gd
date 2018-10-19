@@ -3,6 +3,8 @@ extends RigidBody2D
 onready var spiderNode = get_node("../Spider")
 
 var isStretching = false
+
+export var stretchSpeed = 5
 export var inferiorStretchLimit = 0.35
 export var superiorStretchLimit = 1.5
 
@@ -35,9 +37,9 @@ func stretch(direction):
 	var scale = $Sprite.get_scale()
 	
 	if direction == "down" and scale.y < superiorStretchLimit:
-		scale.y += 0.001*3
+		scale.y += 0.001*stretchSpeed
 	elif direction == "up" and scale.y > inferiorStretchLimit:
-		scale.y -= 0.001*3
+		scale.y -= 0.001*stretchSpeed
 		
 	$Sprite.set_scale(scale)
 	$CollisionShape2D.set_scale(scale)
@@ -50,31 +52,26 @@ func stretch(direction):
 func positionSprite(direction, spriteScale):
 	if spriteScale.y > superiorStretchLimit or spriteScale.y < inferiorStretchLimit:
 		return
-		
-	var yPercentage = 1
-	var xPercentage = 1
+
+#	var yMagicNumber = (0.116-((abs(rot)/10)*0.0130 - 0.022))*3
+#	var xMagicNumber = (0.0055-(((abs(rot)/10)*0.0115 - 0.040)/100)*1.3)*rot
+	
+#	var bottomPosition = $Sprite/Position2DBottom.get_global_position()
+#	var rayVector = spritePosition - topPosition
+#	var rayModule = sqrt(pow(rayVector.x, 2) + pow(rayVector.y, 2))
+#	var webVector = bottomPosition - topPosition
+	
+	var topPosition = $Sprite/Position2DTop.get_global_position()
+	var stonePinJointPosition = get_node("../Stone/PinJoint2D").get_global_position()
+	var topDifference = stonePinJointPosition - topPosition
+	
 	var spritePosition = $Sprite.get_global_position()
-	var rot = self.rotation_degrees
-	
-	if abs(rot) > 60:
-		yPercentage = 0.94
-		xPercentage = 0.93
-	elif abs(rot) > 30:
-		yPercentage = 1
-		xPercentage = 0.98
-	else:
-		yPercentage = 0.85
-		xPercentage = 1
-		
-	var yMagicNumber = (0.116-((abs(rot)/10)*0.0130 - 0.022))*3
-	var xMagicNumber = (0.0055-(((abs(rot)/10)*0.0115 - 0.040)/100)*1.3)*rot
-	
 	if direction == "down":
-		spritePosition.y += yMagicNumber*yPercentage
-		spritePosition.x -= xMagicNumber*xPercentage
+		spritePosition.y += topDifference.y
+		spritePosition.x += topDifference.x
 	elif direction == "up":
-		spritePosition.y -= yMagicNumber*yPercentage
-		spritePosition.x += xMagicNumber*xPercentage
-	
+		spritePosition.y += topDifference.y
+		spritePosition.x += topDifference.x
+
 	$Sprite.set_global_position(spritePosition)
 	$CollisionShape2D.set_global_position(spritePosition)
