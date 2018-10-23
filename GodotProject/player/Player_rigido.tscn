@@ -42,7 +42,7 @@ custom_solver_bias = 0.0
 radius = 10.0
 height = 20.0
 
-[node name="Spider" type="RigidBody2D" index="0"]
+[node name="Spider" type="RigidBody2D"]
 
 input_pickable = false
 collision_layer = 1
@@ -76,14 +76,13 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="." index="1"]
 
-editor/display_folded = true
 scale = Vector2( 0.3, 0.3 )
 frames = SubResource( 2 )
 animation = "default"
 script = ExtResource( 15 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="DetectBranch" type="Area2D" parent="AnimatedSprite" index="0"]
+[node name="SpiderArea" type="Area2D" parent="AnimatedSprite" index="0"]
 
 position = Vector2( 0, 50 )
 scale = Vector2( 1.66667, 1.66667 )
@@ -96,7 +95,7 @@ audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Transform" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite/DetectBranch" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite/SpiderArea" index="0"]
 
 position = Vector2( -1.78256, 1.73304 )
 scale = Vector2( 3.03858, 1.20858 )

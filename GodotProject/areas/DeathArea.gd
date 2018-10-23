@@ -26,6 +26,5 @@ func _process(delta):
 func _on_DeathArea_body_exited(body):
 	gameover = true
 
-
 func _on_Timer_timeout():
 	gameover = true

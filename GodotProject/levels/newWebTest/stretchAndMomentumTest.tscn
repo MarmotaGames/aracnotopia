@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://objects/Ball.tscn" type="PackedScene" id=1]
+[ext_resource path="res://objects/Stone.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/Plataforma.tscn" type="PackedScene" id=3]
+[ext_resource path="res://web/Web.tscn" type="PackedScene" id=4]
+[ext_resource path="res://player/Player_rigido.tscn" type="PackedScene" id=5]
+
+[node name="Node2D" type="Node2D" index="0"]
+
+[node name="Ball" parent="." index="0" instance=ExtResource( 1 )]
+
+position = Vector2( 52.6, 458.923 )
+
+[node name="Stone" parent="." index="1" instance=ExtResource( 2 )]
+
+[node name="Plataforma" parent="." index="2" instance=ExtResource( 3 )]
+
+position = Vector2( 755.884, 340.736 )
+
+[node name="Web" parent="." index="3" instance=ExtResource( 4 )]
+
+position = Vector2( 355.1, 167.358 )
+collision_layer = 16
+collision_mask = 16
+angular_velocity = 16.0
+_sections_unfolded = [ "Angular", "Applied Forces", "Collision", "Linear", "Pickable", "Transform" ]
+
+[node name="PinJoint2D" parent="Web" index="2"]
+
+node_b = NodePath("../../Spider")
+
+[node name="Spider" parent="." index="4" instance=ExtResource( 5 )]
+
+position = Vector2( 355.807, 251.607 )
+rotation = 3.14159
+mode = 2
+gravity_scale = 5.0
+_sections_unfolded = [ "Angular", "Applied Forces", "Collision", "Linear", "Transform" ]
+
+
+[editable path="Web"]

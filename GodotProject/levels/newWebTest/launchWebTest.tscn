@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://player/Player_rigido.tscn" type="PackedScene" id=1]
+[ext_resource path="res://objects/Plataforma.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/Stone.tscn" type="PackedScene" id=3]
+
+[node name="Node2D" type="Node2D" index="0"]
+
+[node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
+
+position = Vector2( 225.855, 442.582 )
+_sections_unfolded = [ "Collision", "Linear", "Transform", "Z Index" ]
+
+[node name="Plataforma" parent="." index="1" instance=ExtResource( 2 )]
+
+position = Vector2( 226.117, 475 )
+scale = Vector2( 3.5, 3.5 )
+z_index = -1
+_sections_unfolded = [ "Region", "Transform", "Visibility", "Z Index" ]
+
+[node name="Plataforma2" parent="." index="2" instance=ExtResource( 2 )]
+
+position = Vector2( 503.709, 475 )
+scale = Vector2( 3.5, 3.5 )
+z_index = -1
+_sections_unfolded = [ "Region", "Transform", "Visibility", "Z Index" ]
+
+[node name="Stone" parent="." index="3" instance=ExtResource( 3 )]
+
+position = Vector2( 224.636, 265 )
+_sections_unfolded = [ "Collision", "Transform" ]
+
+[node name="Stone2" parent="." index="4" instance=ExtResource( 3 )]
+
+position = Vector2( 485.925, 265 )
+_sections_unfolded = [ "Collision", "Transform" ]
+
+[node name="Stone3" parent="." index="5" instance=ExtResource( 3 )]
+
+position = Vector2( 769.933, 265 )
+_sections_unfolded = [ "Collision", "Transform" ]
+
+

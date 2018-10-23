@@ -21,6 +21,7 @@ _sections_unfolded = [ "Offset", "Z Index" ]
 [node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
 position = Vector2( 731.377, 601.121 )
+_sections_unfolded = [ "Linear", "Transform", "Z Index" ]
 
 [node name="BackgroundSprite" type="Sprite" parent="." index="1"]
 
@@ -28,7 +29,7 @@ show_behind_parent = true
 position = Vector2( 1281.33, 720.982 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
-_sections_unfolded = [ "Transform", "Visibility" ]
+_sections_unfolded = [ "Transform", "Visibility", "Z Index" ]
 
 [node name="ContactArea" type="Area2D" parent="BackgroundSprite" index="0"]
 
@@ -74,6 +75,10 @@ process_mode = 1
 wait_time = 3.0
 one_shot = true
 autostart = false
+
+[connection signal="area_entered" from="BackgroundSprite/ContactArea" to="BackgroundSprite/ContactArea" method="_on_ContactArea_area_entered"]
+
+[connection signal="area_exited" from="BackgroundSprite/ContactArea" to="BackgroundSprite/ContactArea" method="_on_ContactArea_area_exited"]
 
 [connection signal="body_entered" from="BackgroundSprite/ContactArea" to="BackgroundSprite/ContactArea" method="_on_Area2D_body_entered"]
 
