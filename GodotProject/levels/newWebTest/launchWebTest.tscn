@@ -8,32 +8,32 @@
 
 [node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
-position = Vector2( 225.855, 442.582 )
+position = Vector2( 225.855, 428.95 )
 z_index = 1
 _sections_unfolded = [ "Collision", "Linear", "Transform", "Z Index" ]
 
 [node name="Plataforma" parent="." index="1" instance=ExtResource( 2 )]
 
-position = Vector2( 226.117, 475 )
+position = Vector2( 226.117, 436.375 )
 scale = Vector2( 3.5, 3.5 )
 z_index = -1
 _sections_unfolded = [ "Region", "Transform", "Visibility", "Z Index" ]
 
 [node name="Plataforma2" parent="." index="2" instance=ExtResource( 2 )]
 
-position = Vector2( 751.692, 475 )
+position = Vector2( 608.551, 554.522 )
 scale = Vector2( 3.5, 3.5 )
 z_index = -1
 _sections_unfolded = [ "Region", "Transform", "Visibility", "Z Index" ]
 
 [node name="Stone" parent="." index="3" instance=ExtResource( 3 )]
 
-position = Vector2( 224.636, 265 )
+position = Vector2( 224.636, 233.191 )
 _sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="Stone2" parent="." index="4" instance=ExtResource( 3 )]
 
-position = Vector2( 485.925, 265 )
+position = Vector2( 501.829, 317.258 )
 _sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="Stone3" parent="." index="5" instance=ExtResource( 3 )]
