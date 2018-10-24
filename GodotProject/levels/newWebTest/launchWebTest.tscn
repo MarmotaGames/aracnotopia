@@ -9,6 +9,7 @@
 [node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
 position = Vector2( 225.855, 442.582 )
+z_index = 1
 _sections_unfolded = [ "Collision", "Linear", "Transform", "Z Index" ]
 
 [node name="Plataforma" parent="." index="1" instance=ExtResource( 2 )]
@@ -20,7 +21,7 @@ _sections_unfolded = [ "Region", "Transform", "Visibility", "Z Index" ]
 
 [node name="Plataforma2" parent="." index="2" instance=ExtResource( 2 )]
 
-position = Vector2( 503.709, 475 )
+position = Vector2( 751.692, 475 )
 scale = Vector2( 3.5, 3.5 )
 z_index = -1
 _sections_unfolded = [ "Region", "Transform", "Visibility", "Z Index" ]
@@ -41,3 +42,4 @@ position = Vector2( 769.933, 265 )
 _sections_unfolded = [ "Collision", "Transform" ]
 
 
+[editable path="Stone"]

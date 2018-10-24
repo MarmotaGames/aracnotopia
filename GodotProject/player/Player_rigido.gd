@@ -1,11 +1,15 @@
 extends RigidBody2D
 
+onready var web_scene = preload("res://web//Web.tscn")
 onready var webNode
 onready var pinJointNode
 onready var positionNode
 
+var webInstance
 var spiderInArea = true
 var spiderOnWeb = false
+var spiderIsLaunchingWeb = false
+
 var fallInit = true
 var fall = false
 var init = false
@@ -17,10 +21,8 @@ var dirKeys = [0, 0, 0, 0]
 
 func _ready():
 	if spiderOnWeb:
-		webNode = get_node("../Web")
-		pinJointNode = get_node("../Web/PinJoint2D")
-		positionNode = get_node("../Web/Sprite/Position2D")
-	
+		loadWebNodes()
+		
 	init = true
 	
 func _integrate_forces(state):
@@ -49,14 +51,34 @@ func _physics_process(delta):
 	update_direction()
 	update_rotation()
 	
-	if 1 in dirKeys and not fall:
-		#Verifica se alguma das teclas direcionais está apertada 
-		#e processa o movimento
-		set_linear_velocity(direction.normalized()*speed)
-	else:
-		if not fall:
+	if not fall:
+		if 1 in dirKeys and not fall:
+			#Verifica se alguma das teclas direcionais está apertada 
+			#e processa o movimento
+			set_linear_velocity(direction.normalized()*speed)
+		else:
 			set_linear_velocity(Vector2(0,0))
 	
+	if not spiderOnWeb:
+		if Input.is_action_pressed("launchWeb"):
+			if spiderIsLaunchingWeb:
+				webNode.stretch("launch")
+			else:
+				spiderIsLaunchingWeb = true
+				
+				webInstance = web_scene.instance()
+				get_parent().add_child(webInstance)
+				loadWebNodes()
+					
+				var webPosition = self.global_position
+				webPosition.y -= 56
+				webNode.position = webPosition
+				webNode.set_gravity_scale(0)
+	#			pinJointNode.set_node_b("../../Spider")
+				
+		elif Input.is_action_just_released("launchWeb"):
+			spiderIsLaunchingWeb = false
+			webInstance.queue_free()
 	
 func update_direction():
 	if Input.is_action_pressed("ui_up") and not fall:
@@ -149,3 +171,12 @@ func update_rotation():
 				self.rotation_degrees = 90
 			if direction.y == 1:
 				self.rotation_degrees = 45
+				 
+func loadWebNodes():
+#	webNode = get_node("Web")
+#	pinJointNode = get_node("Web/PinJoint2D")
+#	positionNode = get_node("Web/Sprite/Position2D")
+	
+	webNode = get_node("../Web")
+	pinJointNode = get_node("../Web/PinJoint2D")
+	positionNode = get_node("../Web/Sprite/Position2D")
