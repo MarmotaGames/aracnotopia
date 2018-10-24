@@ -8,37 +8,38 @@
 
 [node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
+modulate = Color( 1, 1, 1, 0.176784 )
 position = Vector2( 225.855, 428.95 )
 z_index = 1
-_sections_unfolded = [ "Collision", "Linear", "Transform", "Z Index" ]
+_sections_unfolded = [ "Collision", "Linear", "Transform", "Visibility", "Z Index" ]
 
 [node name="Plataforma" parent="." index="1" instance=ExtResource( 2 )]
 
-position = Vector2( 226.117, 436.375 )
-scale = Vector2( 3.5, 3.5 )
+position = Vector2( 230.362, 511.267 )
+scale = Vector2( 0.612234, 0.792547 )
 z_index = -1
 _sections_unfolded = [ "Region", "Transform", "Visibility", "Z Index" ]
 
 [node name="Plataforma2" parent="." index="2" instance=ExtResource( 2 )]
 
-position = Vector2( 608.551, 554.522 )
-scale = Vector2( 3.5, 3.5 )
+position = Vector2( 668.601, 567.069 )
+scale = Vector2( 0.582676, 0.696957 )
 z_index = -1
 _sections_unfolded = [ "Region", "Transform", "Visibility", "Z Index" ]
 
 [node name="Stone" parent="." index="3" instance=ExtResource( 3 )]
 
-position = Vector2( 224.636, 233.191 )
+position = Vector2( 224.636, 270.203 )
 _sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="Stone2" parent="." index="4" instance=ExtResource( 3 )]
 
-position = Vector2( 501.829, 317.258 )
+position = Vector2( 461.933, 234.275 )
 _sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="Stone3" parent="." index="5" instance=ExtResource( 3 )]
 
-position = Vector2( 769.933, 265 )
+position = Vector2( 705.996, 187.459 )
 _sections_unfolded = [ "Collision", "Transform" ]
 
 

@@ -28,11 +28,12 @@ node_b = NodePath("../../Web")
 
 [node name="Plataforma" parent="." index="2" instance=ExtResource( 3 )]
 
-position = Vector2( 755.884, 340.736 )
+position = Vector2( 775.493, 302.712 )
+scale = Vector2( 0.874704, 0.928921 )
 
 [node name="Web" type="RigidBody2D" parent="." index="3"]
 
-position = Vector2( 355.1, 167.358 )
+position = Vector2( 354.827, 180.391 )
 input_pickable = false
 collision_layer = 16
 collision_mask = 16
@@ -54,9 +55,10 @@ angular_damp = 0.1
 script = ExtResource( 4 )
 _sections_unfolded = [ "Angular", "Applied Forces", "Collision", "Linear", "Pickable", "Transform", "Z Index" ]
 stretchSpeed = 5
-inferiorStretchLimit = 0.35
-superiorStretchLimit = 1.5
-launchLimit = 50
+webLaunchSpeed = 3
+inferiorStretchLimit = 0.2
+superiorStretchLimit = 30
+launchLimit = 30
 
 [node name="Sprite" type="Sprite" parent="Web" index="0"]
 
@@ -100,8 +102,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Spider" parent="." index="4" instance=ExtResource( 6 )]
 
-position = Vector2( 355.807, 251.607 )
-rotation = 3.14159
+position = Vector2( 354.726, 318.071 )
 mode = 2
 gravity_scale = 5.0
 _sections_unfolded = [ "Angular", "Applied Forces", "Collision", "Linear", "Transform" ]
