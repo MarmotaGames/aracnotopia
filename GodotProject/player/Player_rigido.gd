@@ -63,12 +63,16 @@ func _physics_process(delta):
 		if Input.is_action_pressed("launchWeb"):
 			if spiderIsLaunchingWeb:
 				webNode.stretch("launch")
+				$AnimatedSprite.playing = true
+				webNode.show()
+				
 			else:
 				spiderIsLaunchingWeb = true
 				
 				webInstance = web_scene.instance()
 				get_parent().add_child(webInstance)
 				loadWebNodes()
+				webNode.hide()
 					
 				var webPosition = self.global_position
 				webPosition.y -= 56
@@ -118,8 +122,9 @@ func update_direction():
 	if Input.is_action_just_released("ui_right"):
 		dirKeys[3] = 0
 		
-	if !Input.is_action_pressed("ui_up") and !Input.is_action_pressed("ui_right") and !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_down") and !fall:
-		$AnimatedSprite.playing = false
+	if not spiderIsLaunchingWeb:
+		if !Input.is_action_pressed("ui_up") and !Input.is_action_pressed("ui_right") and !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_down") and !fall:
+			$AnimatedSprite.playing = false
 	
 	if spiderInArea and not $StickTimer.time_left and Input.is_action_just_pressed("attachOrDetachFromArea"):
 		if fall or spiderOnWeb:

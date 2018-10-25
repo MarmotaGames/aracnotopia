@@ -25,7 +25,7 @@ func _physics_process(delta):
 #	elif spiderNode.spiderIsLaunchingWeb:
 #		stretch("launch")
 	
-	if Input.is_action_just_pressed("excreteOrLeaveWeb"):
+	if Input.is_action_just_pressed("dropFromWeb"):
 		if spiderNode.spiderOnWeb:
 			isStretching = false
 			$PinJoint2D.set_node_b("")

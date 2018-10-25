@@ -3,12 +3,12 @@
 [ext_resource path="res://web/Web.gd" type="Script" id=1]
 [ext_resource path="res://assets/web/newWeb.png" type="Texture" id=2]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 7.5, 116.5 )
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
 extents = Vector2( 7.5, 116.5 )
@@ -78,13 +78,13 @@ audio_bus_name = "Master"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/WebArea" index="0"]
 
 scale = Vector2( 0.3, 0.45 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
 scale = Vector2( 0.3, 0.45 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="PinJoint2D" type="PinJoint2D" parent="." index="2"]
