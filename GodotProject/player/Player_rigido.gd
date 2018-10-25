@@ -2,8 +2,10 @@ extends RigidBody2D
 
 onready var web_scene = preload("res://web//Web.tscn")
 onready var webNode
-onready var pinJointNode
+onready var stonePinJointNode
+onready var webPinJointNode
 onready var positionNode
+onready var bottomNode
 
 var webInstance
 var spiderInArea = true
@@ -27,14 +29,16 @@ func _ready():
 	
 func _integrate_forces(state):
 	if spiderOnWeb:
+		loadWebNodes()
 		var pointPosition = positionNode.get_global_position()
+		var bottomPosition = bottomNode.get_global_position()
 		var xform = state.get_transform()
 			
-		if webNode.isStretching:
-			pinJointNode.set_node_b("")
-			xform.origin = pointPosition
-			state.set_transform(xform)
-			pinJointNode.set_node_b("../../Spider")
+#		if webNode.isStretching:
+		webPinJointNode.set_node_b("")
+		xform.origin = bottomPosition
+		state.set_transform(xform)
+		webPinJointNode.set_node_b("../../Spider")
 	
 func _physics_process(delta):
 	if fall:
@@ -68,7 +72,7 @@ func _physics_process(delta):
 				
 			else:
 				spiderIsLaunchingWeb = true
-				
+
 				webInstance = web_scene.instance()
 				get_parent().add_child(webInstance)
 				loadWebNodes()
@@ -77,9 +81,8 @@ func _physics_process(delta):
 				var webPosition = self.global_position
 				webPosition.y -= 56
 				webNode.position = webPosition
-				webNode.set_gravity_scale(0)
-	#			pinJointNode.set_node_b("../../Spider")
 				
+				webNode.set_gravity_scale(0)
 		elif Input.is_action_just_released("launchWeb"):
 			spiderIsLaunchingWeb = false
 			webInstance.queue_free()
@@ -121,12 +124,12 @@ func update_direction():
 		dirKeys[2] = 0
 	if Input.is_action_just_released("ui_right"):
 		dirKeys[3] = 0
-		
+	
 	if not spiderIsLaunchingWeb:
 		if !Input.is_action_pressed("ui_up") and !Input.is_action_pressed("ui_right") and !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_down") and !fall:
 			$AnimatedSprite.playing = false
 	
-	if spiderInArea and not $StickTimer.time_left and Input.is_action_just_pressed("attachOrDetachFromArea"):
+	if Input.is_action_just_pressed("attachOrDetachFromArea") and spiderInArea and not $StickTimer.time_left:
 		if fall or spiderOnWeb:
 			set_linear_velocity(Vector2(0,0))
 			fall = false
@@ -136,9 +139,12 @@ func update_direction():
 			$AnimatedSprite.playing = false
 			$StickTimer.start()
 			if spiderOnWeb:
-				spiderOnWeb = false
 				webNode.isStretching = false
-				pinJointNode.set_node_b("")
+				spiderOnWeb = false
+				
+				webPinJointNode.set_node_b("")
+				stonePinJointNode.set_node_b("")
+				webNode.queue_free()
 			
 		else:
 			fall = true
@@ -179,9 +185,10 @@ func update_rotation():
 				 
 func loadWebNodes():
 #	webNode = get_node("Web")
-#	pinJointNode = get_node("Web/PinJoint2D")
+#	webPinJointNode = get_node("Web/PinJoint2D")
 #	positionNode = get_node("Web/Sprite/Position2D")
 	
 	webNode = get_node("../Web")
-	pinJointNode = get_node("../Web/PinJoint2D")
+	webPinJointNode = get_node("../Web/PinJoint2D")
 	positionNode = get_node("../Web/Sprite/Position2D")
+	bottomNode = get_node("../Web/Sprite/Position2DBottom")
