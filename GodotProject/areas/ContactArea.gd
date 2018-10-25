@@ -24,6 +24,7 @@ func _on_StoneArea_area_entered(area):
 		spiderNode.stonePinJointNode = stonePinJointNode
 		webNode.stonePinJointNode = stonePinJointNode
 
+		webNode.positionSprite("down")
 		stonePinJointNode.set_global_position(webNode.topPosition)
 		
 		spiderNode.spiderOnWeb = true

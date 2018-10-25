@@ -35,11 +35,6 @@ angular_velocity = 0.0
 angular_damp = 0.1
 script = ExtResource( 1 )
 _sections_unfolded = [ "Angular", "Collision", "Linear", "Pickable", "Transform" ]
-stretchSpeed = 10
-webLaunchSpeed = 3
-inferiorStretchLimit = 0.3
-superiorStretchLimit = 2
-launchLimit = 1
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 

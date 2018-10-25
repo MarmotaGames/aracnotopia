@@ -80,7 +80,7 @@ func _physics_process(delta):
 					
 				var webPosition = self.global_position
 				webPosition.y -= 56
-				webNode.position = webPosition
+				webNode.set_global_position(webPosition)
 				
 				webNode.set_gravity_scale(0)
 		elif Input.is_action_just_released("launchWeb"):

@@ -3,20 +3,17 @@ extends RigidBody2D
 onready var spiderNode = get_node("../Spider")
 onready var stonePinJointNode = null
 
-var isStretching = false
+onready var spriteScale = $Sprite.get_scale()
 onready var topPosition = $Sprite/Position2DTop.get_global_position()
 onready var bottomPosition = $Sprite/Position2DBottom.get_global_position()
 
-export var stretchSpeed = 10
-export var webLaunchSpeed = 20
-export var inferiorStretchLimit = 0.3
-export var superiorStretchLimit = 3
-export var launchLimit = 5
+var isStretching = false
+var stretchSpeed = 10
+var webLaunchSpeed = 7
+var inferiorStretchLimit = 0.3
+var superiorStretchLimit = 2
+var launchLimit = 3
 
-#func _ready():
-#	spiderNode.spiderOnWeb = true
-#	spiderNode.spiderIsLaunchingWeb = true
-	
 func _physics_process(delta):
 	if spiderNode.spiderOnWeb:
 		if Input.is_action_pressed("ui_down"):
@@ -39,24 +36,24 @@ func _physics_process(delta):
 func stretch(direction):
 	isStretching = true
 
-	var scale = $Sprite.get_scale()
+	spriteScale = $Sprite.get_scale()
 	
-	if direction == "down" and scale.y < superiorStretchLimit:
-		scale.y += 0.001*stretchSpeed
-	elif direction == "up" and scale.y > inferiorStretchLimit:
-		scale.y -= 0.001*stretchSpeed
-	elif direction == "launch" and scale.y < launchLimit:
-		scale.y += 0.01*webLaunchSpeed
+	if direction == "down" and spriteScale.y < superiorStretchLimit:
+		spriteScale.y += 0.001*stretchSpeed
+	elif direction == "up" and spriteScale.y > inferiorStretchLimit:
+		spriteScale.y -= 0.001*stretchSpeed
+	elif direction == "launch" and spriteScale.y < launchLimit:
+		spriteScale.y += 0.01*webLaunchSpeed
 		
-	$Sprite.set_scale(scale)
-	$CollisionShape2D.set_scale(scale)
+	$Sprite.set_scale(spriteScale)
+	$CollisionShape2D.set_scale(spriteScale)
 	
-	positionSprite(direction, scale)
+	positionSprite(direction)
 	
 	var pointPosition = $Sprite/Position2D.get_global_position()
 	$PinJoint2D.set_global_position(bottomPosition)
 	
-func positionSprite(direction, spriteScale):
+func positionSprite(direction):
 	if spiderNode.spiderIsLaunchingWeb:
 		if spriteScale.y > launchLimit:
 			return
