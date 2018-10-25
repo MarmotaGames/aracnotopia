@@ -13,7 +13,7 @@ extents = Vector2( 7.5, 116.5 )
 custom_solver_bias = 0.0
 extents = Vector2( 7.5, 116.5 )
 
-[node name="Web" type="RigidBody2D" index="0"]
+[node name="Web" type="RigidBody2D"]
 
 input_pickable = false
 collision_layer = 16
@@ -35,15 +35,15 @@ angular_velocity = 0.0
 angular_damp = 0.1
 script = ExtResource( 1 )
 _sections_unfolded = [ "Angular", "Collision", "Linear", "Pickable", "Transform" ]
-stretchSpeed = 5
+stretchSpeed = 10
 webLaunchSpeed = 3
-inferiorStretchLimit = 0.05
-superiorStretchLimit = 30
-launchLimit = 30
+inferiorStretchLimit = 0.3
+superiorStretchLimit = 2
+launchLimit = 1
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
-scale = Vector2( 0.3, 0.2 )
+scale = Vector2( 0.3, 0.05 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
@@ -83,14 +83,14 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
-scale = Vector2( 0.3, 0.2 )
+scale = Vector2( 0.3, 0.05 )
 shape = SubResource( 2 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="PinJoint2D" type="PinJoint2D" parent="." index="2"]
 
-position = Vector2( 0, 23.143 )
-scale = Vector2( 0.5, 0.5 )
+position = Vector2( 0, 5.29616 )
+scale = Vector2( 0.2, 0.2 )
 node_a = NodePath("..")
 node_b = NodePath("")
 bias = 0.9

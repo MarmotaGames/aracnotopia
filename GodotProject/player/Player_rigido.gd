@@ -5,6 +5,7 @@ onready var webNode
 onready var stonePinJointNode
 onready var webPinJointNode
 onready var positionNode
+onready var bottomNode
 
 var webInstance
 var spiderInArea = true
@@ -30,11 +31,12 @@ func _integrate_forces(state):
 	if spiderOnWeb:
 		loadWebNodes()
 		var pointPosition = positionNode.get_global_position()
+		var bottomPosition = bottomNode.get_global_position()
 		var xform = state.get_transform()
 			
 #		if webNode.isStretching:
 		webPinJointNode.set_node_b("")
-		xform.origin = pointPosition
+		xform.origin = bottomPosition
 		state.set_transform(xform)
 		webPinJointNode.set_node_b("../../Spider")
 	
@@ -70,12 +72,16 @@ func _physics_process(delta):
 				
 			else:
 				spiderIsLaunchingWeb = true
-				
+
 				webInstance = web_scene.instance()
 				get_parent().add_child(webInstance)
 				loadWebNodes()
 				webNode.hide()
 					
+				var webPosition = self.global_position
+				webPosition.y -= 56
+				webNode.position = webPosition
+				
 				webNode.set_gravity_scale(0)
 		elif Input.is_action_just_released("launchWeb"):
 			spiderIsLaunchingWeb = false
@@ -185,3 +191,4 @@ func loadWebNodes():
 	webNode = get_node("../Web")
 	webPinJointNode = get_node("../Web/PinJoint2D")
 	positionNode = get_node("../Web/Sprite/Position2D")
+	bottomNode = get_node("../Web/Sprite/Position2DBottom")

@@ -2,17 +2,16 @@ extends RigidBody2D
 
 onready var spiderNode = get_node("../Spider")
 onready var stonePinJointNode = null
-#onready var bundaPositionNode = get_node("../Spider/BundaPosition")
 
 var isStretching = false
 onready var topPosition = $Sprite/Position2DTop.get_global_position()
 onready var bottomPosition = $Sprite/Position2DBottom.get_global_position()
 
-export var stretchSpeed = 5
+export var stretchSpeed = 10
 export var webLaunchSpeed = 20
-export var inferiorStretchLimit = 0.05
-export var superiorStretchLimit = 30
-export var launchLimit = 30
+export var inferiorStretchLimit = 0.3
+export var superiorStretchLimit = 3
+export var launchLimit = 5
 
 #func _ready():
 #	spiderNode.spiderOnWeb = true
@@ -58,14 +57,10 @@ func stretch(direction):
 	$PinJoint2D.set_global_position(bottomPosition)
 	
 func positionSprite(direction, spriteScale):
-	if spriteScale.y > superiorStretchLimit or spriteScale.y < inferiorStretchLimit:
-		print("ta retornando nadaaa")
-		return
+	if spiderNode.spiderIsLaunchingWeb:
+		if spriteScale.y > launchLimit:
+			return
 
-#	var rayVector = spritePosition - topPosition
-#	var rayModule = sqrt(pow(rayVector.x, 2) + pow(rayVector.y, 2))
-#	var webVector = bottomPosition - topPosition
-	
 	var spiderPosition = spiderNode.get_global_position()
 	var spritePosition = $Sprite.get_global_position()
 	
@@ -80,8 +75,6 @@ func positionSprite(direction, spriteScale):
 			spritePosition.y += topDifference.y
 			spritePosition.x += topDifference.x
 	else:
-#		var bundaPosition = bundaPositionNode.get_global_position()
-#		var botDifference = bundaPosition - bottomPosition
 		var botDifference = spiderPosition - bottomPosition
 		
 		if direction == "launch":
