@@ -6,12 +6,10 @@ onready var webNode
 onready var webPinJointNode
 
 func _on_ContactArea_area_entered(area):
-#	print(area.name, " entrouuu")
 	if area.name == "SpiderArea":
 		spiderNode.spiderInArea = true
 		
 func _on_ContactArea_area_exited(area):
-#	print(area.name, " saiuuu")
 	if area.name == "SpiderArea":
 		spiderNode.spiderInArea = false
 		if not spiderNode.spiderOnWeb:
@@ -22,7 +20,12 @@ func _on_StoneArea_area_entered(area):
 		stonePinJointNode = get_node("../PinJoint2D")
 		webNode = get_node("../../Web")
 		webPinJointNode = get_node("../../Web/PinJoint2D")
+		
+		spiderNode.stonePinJointNode = stonePinJointNode
+		webNode.stonePinJointNode = stonePinJointNode
 
+		stonePinJointNode.set_global_position(webNode.topPosition)
+		
 		spiderNode.spiderOnWeb = true
 		spiderNode.spiderIsLaunchingWeb = false
 		stonePinJointNode.set_node_b("../../Web")

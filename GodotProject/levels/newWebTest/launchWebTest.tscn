@@ -8,7 +8,7 @@
 
 [node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
-modulate = Color( 1, 1, 1, 0.176784 )
+modulate = Color( 1, 1, 1, 0.370157 )
 position = Vector2( 225.855, 428.95 )
 z_index = 1
 _sections_unfolded = [ "Collision", "Linear", "Transform", "Visibility", "Z Index" ]
@@ -43,4 +43,3 @@ position = Vector2( 705.996, 187.459 )
 _sections_unfolded = [ "Collision", "Transform" ]
 
 
-[editable path="Stone"]
