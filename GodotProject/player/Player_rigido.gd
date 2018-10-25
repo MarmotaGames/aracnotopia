@@ -52,11 +52,15 @@ func _physics_process(delta):
 		gravity_scale = 0
 		fallInit = true
 	
-	update_direction()
 	update_rotation()
 	
-	if not fall:
-		if 1 in dirKeys and not fall:
+	if not spiderIsLaunchingWeb:
+		checkAttachOrDettach()
+		
+	if not fall and not spiderIsLaunchingWeb:
+		update_direction()
+		
+		if 1 in dirKeys:
 			#Verifica se alguma das teclas direcionais está apertada 
 			#e processa o movimento
 			set_linear_velocity(direction.normalized()*speed)
@@ -88,28 +92,28 @@ func _physics_process(delta):
 			webInstance.queue_free()
 	
 func update_direction():
-	if Input.is_action_pressed("ui_up") and not fall:
+	if Input.is_action_pressed("ui_up"):
 		direction.y = -1
 		dirKeys[0] = 1
 		if not dirKeys[2] and not dirKeys[3]:
 			direction.x = 0
 		$AnimatedSprite.playing = true
 		
-	if Input.is_action_pressed("ui_down") and not fall:
+	if Input.is_action_pressed("ui_down"):
 		direction.y = 1
 		dirKeys[1] = 1
 		if not dirKeys[2] and not dirKeys[3]:
 			direction.x = 0
 		$AnimatedSprite.playing = true
 		
-	if Input.is_action_pressed("ui_left") and not fall:
+	if Input.is_action_pressed("ui_left"):
 		direction.x = -1
 		dirKeys[2] = 1
 		if not dirKeys[0] and not dirKeys[1]:
 			direction.y = 0
 		$AnimatedSprite.playing = true
 		
-	if Input.is_action_pressed("ui_right") and not fall:
+	if Input.is_action_pressed("ui_right"):
 		direction.x = 1
 		dirKeys[3] = 1
 		if not dirKeys[0] and not dirKeys[1]:
@@ -125,10 +129,10 @@ func update_direction():
 	if Input.is_action_just_released("ui_right"):
 		dirKeys[3] = 0
 	
-	if not spiderIsLaunchingWeb:
-		if !Input.is_action_pressed("ui_up") and !Input.is_action_pressed("ui_right") and !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_down") and !fall:
-			$AnimatedSprite.playing = false
-	
+	if !Input.is_action_pressed("ui_up") and !Input.is_action_pressed("ui_right") and !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_down"):
+		$AnimatedSprite.playing = false
+		
+func checkAttachOrDettach():
 	if Input.is_action_just_pressed("attachOrDetachFromArea") and spiderInArea and not $StickTimer.time_left:
 		if fall or spiderOnWeb:
 			set_linear_velocity(Vector2(0,0))
@@ -145,7 +149,6 @@ func update_direction():
 				webPinJointNode.set_node_b("")
 				stonePinJointNode.set_node_b("")
 				webNode.queue_free()
-			
 		else:
 			fall = true
 			$StickTimer.start()
@@ -156,6 +159,14 @@ func update_rotation():
 			self.rotation_degrees = webNode.rotation_degrees
 		else:
 			self.rotation_degrees = 0
+	elif spiderIsLaunchingWeb:
+		self.rotation_degrees = 0
+		direction.y = 1
+		dirKeys[1] = 1
+		if not dirKeys[2] and not dirKeys[3]:
+			direction.x = 0
+		dirKeys[1] = 0
+		
 	elif not fall:
 		if direction.x == 0:
 			if direction.y == -1:

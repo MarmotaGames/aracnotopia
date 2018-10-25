@@ -8,22 +8,21 @@
 
 [node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
-modulate = Color( 1, 1, 1, 0.265176 )
 position = Vector2( 225.855, 428.95 )
 z_index = 1
 _sections_unfolded = [ "Collision", "Linear", "Transform", "Visibility", "Z Index" ]
 
 [node name="Plataforma" parent="." index="1" instance=ExtResource( 2 )]
 
-position = Vector2( 230.362, 511.267 )
-scale = Vector2( 0.612234, 0.792547 )
+position = Vector2( 230.362, 579.981 )
+scale = Vector2( 0.612234, 1.06096 )
 z_index = -1
 _sections_unfolded = [ "Region", "Transform", "Visibility", "Z Index" ]
 
 [node name="Plataforma2" parent="." index="2" instance=ExtResource( 2 )]
 
-position = Vector2( 668.601, 567.069 )
-scale = Vector2( 0.582676, 0.696957 )
+position = Vector2( 668.601, 572.637 )
+scale = Vector2( 0.582676, 1.03517 )
 z_index = -1
 _sections_unfolded = [ "Region", "Transform", "Visibility", "Z Index" ]
 
