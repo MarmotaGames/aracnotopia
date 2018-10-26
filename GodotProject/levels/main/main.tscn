@@ -22,6 +22,7 @@ _sections_unfolded = [ "Offset", "Z Index" ]
 [node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
 position = Vector2( 731.377, 601.121 )
+z_index = 2
 _sections_unfolded = [ "Linear", "Transform", "Z Index" ]
 
 [node name="BackgroundSprite" type="Sprite" parent="." index="1"]

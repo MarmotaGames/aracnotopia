@@ -69,14 +69,12 @@ func positionSprite(direction):
 		var topDifference = stonePinJointPosition - topPosition
 		
 		if direction == "down" or direction == "up":
-			spritePosition.y += topDifference.y
-			spritePosition.x += topDifference.x
+			spritePosition += topDifference
 	else:
 		var botDifference = spiderPosition - bottomPosition
 		
 		if direction == "launch":
-			spritePosition.y += botDifference.y
-			spritePosition.x += botDifference.x
+			spritePosition += botDifference
 
 	$Sprite.set_global_position(spritePosition)
 	$CollisionShape2D.set_global_position(spritePosition)

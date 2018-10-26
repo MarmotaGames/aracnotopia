@@ -34,7 +34,6 @@ func _integrate_forces(state):
 		var bottomPosition = bottomNode.get_global_position()
 		var xform = state.get_transform()
 			
-#		if webNode.isStretching:
 		webPinJointNode.set_node_b("")
 		xform.origin = bottomPosition
 		state.set_transform(xform)
