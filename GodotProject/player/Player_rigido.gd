@@ -19,7 +19,11 @@ var init = false
 export (int) var speed = 300
 var direction = Vector2(0,-1)
 var angle = 0
-var dirKeys = [0, 0, 0, 0]
+var moving #verifica se o player está andando nesse momento
+
+var dirKeys = [0, 0, 0, 0] 
+#Guarda as teclas direcionais que estão sendo apertadas (1: apertado 0: não)
+#up, down, left, right, nessa ordem
 
 func _ready():
 	if spiderOnWeb:
@@ -40,21 +44,36 @@ func _integrate_forces(state):
 		webPinJointNode.set_node_b("../../Spider")
 	
 func _physics_process(delta):
+	if spiderIsLaunchingWeb:
+		alignWithMouse()
+	
 	if fall:
+		var sinal 
+		if linear_velocity.x > 0:
+			sinal = 1
+		elif linear_velocity.x < 0:
+			sinal = -1
+		else:
+			sinal = 0
+		set_angular_velocity(5*sinal)
 		if fallInit:
 			fallInit = false
 			self.rotation_degrees = 0 
 			set_linear_velocity(Vector2(self.linear_velocity.x,0)) 
 		gravity_scale = 8
+	if fall or spiderIsLaunchingWeb:
+		resetInput()
 		
 	else:
 		gravity_scale = 0
 		fallInit = true
+		set_angular_velocity(0)
 	
 	update_rotation()
 	
 	if not spiderIsLaunchingWeb:
 		checkAttachOrDettach()
+		#update_rotation()
 		
 	if not fall and not spiderIsLaunchingWeb:
 		update_direction()
@@ -63,8 +82,10 @@ func _physics_process(delta):
 			#Verifica se alguma das teclas direcionais está apertada 
 			#e processa o movimento
 			set_linear_velocity(direction.normalized()*speed)
+			moving = true
 		else:
 			set_linear_velocity(Vector2(0,0))
+			moving = false
 	
 	if not spiderOnWeb:
 		if Input.is_action_pressed("launchWeb"):
@@ -74,8 +95,11 @@ func _physics_process(delta):
 				webNode.show()
 				
 			else:
+				if moving:
+					moving = false
+					resetInput()
+				set_linear_velocity(Vector2(0,0))
 				spiderIsLaunchingWeb = true
-
 				webInstance = web_scene.instance()
 				get_parent().add_child(webInstance)
 				loadWebNodes()
@@ -86,7 +110,7 @@ func _physics_process(delta):
 				webNode.set_global_position(webPosition)
 				
 				webNode.set_gravity_scale(0)
-		elif Input.is_action_just_released("launchWeb"):
+		elif Input.is_action_just_released("launchWeb") and spiderIsLaunchingWeb:
 			spiderIsLaunchingWeb = false
 			webInstance.queue_free()
 	
@@ -159,12 +183,9 @@ func update_rotation():
 		else:
 			self.rotation_degrees = 0
 	elif spiderIsLaunchingWeb:
-		self.rotation_degrees = 0
-		direction.y = 1
-		dirKeys[1] = 1
-		if not dirKeys[2] and not dirKeys[3]:
-			direction.x = 0
-		dirKeys[1] = 0
+		alignWithMouse()
+		#direction.y = 1
+		#direction.x = 0
 		
 	elif not fall:
 		if direction.x == 0:
@@ -202,3 +223,17 @@ func loadWebNodes():
 	webPinJointNode = get_node("../Web/PinJoint2D")
 	positionNode = get_node("../Web/Sprite/Position2D")
 	bottomNode = get_node("../Web/Sprite/Position2DBottom")
+	
+func resetInput():
+	for i in range(0,4):
+		dirKeys[i] = 0
+		
+func alignWithMouse():
+	var mousePos = get_viewport().get_mouse_position()
+	var deltaX =  mousePos.x - self.position.x
+	var deltaY =  -1*(mousePos.y - self.position.y)
+#	if deltaY == 0:
+#		deltaY = 0.001
+	var angle = (atan(deltaX/deltaY))
+	#print(angulo)	
+	self.rotation = angle
