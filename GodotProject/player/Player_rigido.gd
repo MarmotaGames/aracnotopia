@@ -1,6 +1,7 @@
 extends RigidBody2D
 
 onready var web_scene = preload("res://web//Web.tscn")
+#onready var spiderAreaNode = $AnimatedSprite/SpiderArea
 onready var webNode
 onready var stonePinJointNode
 onready var webPinJointNode
@@ -49,6 +50,8 @@ func _physics_process(delta):
 	
 	if fall:
 		$SpiderCollisionShape.rotation_degrees = 90
+		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 90
+		
 		var sinal 
 		if linear_velocity.x > 0:
 			sinal = 1
@@ -67,6 +70,8 @@ func _physics_process(delta):
 		
 	else:
 		$SpiderCollisionShape.rotation_degrees = 0
+		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 0
+		
 		gravity_scale = 0
 		fallInit = true
 		set_angular_velocity(0)

@@ -6,7 +6,7 @@ onready var webNode
 onready var webPinJointNode
 
 func _on_ContactArea_area_entered(area):
-	if area.name == "SpiderArea":
+	if area.name == "SpiderArea" or area.name == "SpiderFallingArea":
 		spiderNode.spiderInArea = true
 		
 func _on_ContactArea_area_exited(area):

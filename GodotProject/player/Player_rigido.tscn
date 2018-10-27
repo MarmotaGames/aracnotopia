@@ -19,8 +19,8 @@
 [sub_resource type="CapsuleShape2D" id=1]
 
 custom_solver_bias = 0.0
-radius = 16.0
-height = 125.0
+radius = 8.0
+height = 140.0
 
 [sub_resource type="SpriteFrames" id=2]
 
@@ -35,6 +35,7 @@ animations = [ {
 "name": "falling",
 "speed": 15.0
 } ]
+_sections_unfolded = [ "Resource" ]
 
 [sub_resource type="CapsuleShape2D" id=3]
 
@@ -42,7 +43,7 @@ custom_solver_bias = 0.0
 radius = 11.5
 height = 20.0
 
-[node name="Spider" type="RigidBody2D"]
+[node name="Spider" type="RigidBody2D" index="0"]
 
 input_pickable = false
 collision_layer = 2
@@ -68,13 +69,35 @@ speed = 300
 
 [node name="SpiderCollisionShape" type="CollisionShape2D" parent="." index="0"]
 
+visible = false
 position = Vector2( 0, -6.68369 )
 scale = Vector2( 1.51929, 0.604291 )
 z_index = 1
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="." index="1"]
+[node name="SpiderFallingArea" type="Area2D" parent="." index="1"]
+
+position = Vector2( 0, 26.3761 )
+scale = Vector2( 0.500001, 0.500001 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Collision", "Transform" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpiderFallingArea" index="0"]
+
+position = Vector2( 14.3699, -43.3673 )
+scale = Vector2( 3.03857, 1.20858 )
+z_index = 1
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="." index="2"]
 
 scale = Vector2( 0.3, 0.3 )
 frames = SubResource( 2 )
@@ -102,7 +125,7 @@ scale = Vector2( 3.03858, 1.20858 )
 shape = SubResource( 3 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="Camera2D" type="Camera2D" parent="." index="2"]
+[node name="Camera2D" type="Camera2D" parent="." index="3"]
 
 anchor_mode = 1
 rotating = false
@@ -128,7 +151,7 @@ editor_draw_limits = false
 editor_draw_drag_margin = false
 _sections_unfolded = [ "Limit" ]
 
-[node name="StickTimer" type="Timer" parent="." index="3"]
+[node name="StickTimer" type="Timer" parent="." index="4"]
 
 process_mode = 1
 wait_time = 0.1
