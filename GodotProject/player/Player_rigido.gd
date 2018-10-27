@@ -41,6 +41,7 @@ func _integrate_forces(state):
 	
 func _physics_process(delta):
 	if fall:
+		$SpiderCollisionShape.rotation_degrees = 90
 		if fallInit:
 			fallInit = false
 			self.rotation_degrees = 0 
@@ -48,6 +49,7 @@ func _physics_process(delta):
 		gravity_scale = 8
 		
 	else:
+		$SpiderCollisionShape.rotation_degrees = 0
 		gravity_scale = 0
 		fallInit = true
 	
@@ -75,7 +77,7 @@ func _physics_process(delta):
 				
 			else:
 				spiderIsLaunchingWeb = true
-
+				
 				webInstance = web_scene.instance()
 				get_parent().add_child(webInstance)
 				loadWebNodes()
@@ -86,6 +88,7 @@ func _physics_process(delta):
 				webNode.set_global_position(webPosition)
 				
 				webNode.set_gravity_scale(0)
+				
 		elif Input.is_action_just_released("launchWeb"):
 			spiderIsLaunchingWeb = false
 			webInstance.queue_free()
@@ -194,10 +197,6 @@ func update_rotation():
 				self.rotation_degrees = 45
 				 
 func loadWebNodes():
-#	webNode = get_node("Web")
-#	webPinJointNode = get_node("Web/PinJoint2D")
-#	positionNode = get_node("Web/Sprite/Position2D")
-	
 	webNode = get_node("../Web")
 	webPinJointNode = get_node("../Web/PinJoint2D")
 	positionNode = get_node("../Web/Sprite/Position2D")

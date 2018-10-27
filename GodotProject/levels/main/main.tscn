@@ -23,7 +23,7 @@ _sections_unfolded = [ "Offset", "Z Index" ]
 
 position = Vector2( 731.377, 601.121 )
 z_index = 2
-_sections_unfolded = [ "Linear", "Transform", "Z Index" ]
+_sections_unfolded = [ "Collision", "Linear", "Transform", "Z Index" ]
 
 [node name="BackgroundSprite" type="Sprite" parent="." index="1"]
 

@@ -8,6 +8,7 @@ onready var topPosition = $Sprite/Position2DTop.get_global_position()
 onready var bottomPosition = $Sprite/Position2DBottom.get_global_position()
 
 var isStretching = false
+
 var stretchSpeed = 10
 var webLaunchSpeed = 7
 var inferiorStretchLimit = 0.3
@@ -75,6 +76,7 @@ func positionSprite(direction):
 		
 		if direction == "launch":
 			spritePosition += botDifference
-
+	
 	$Sprite.set_global_position(spritePosition)
 	$CollisionShape2D.set_global_position(spritePosition)
+	

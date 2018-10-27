@@ -9,7 +9,7 @@
 [node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
 modulate = Color( 1, 1, 1, 0.325961 )
-position = Vector2( 225.855, 428.95 )
+position = Vector2( 238.443, 428.95 )
 z_index = 1
 _sections_unfolded = [ "Collision", "Linear", "Transform", "Visibility", "Z Index" ]
 
@@ -39,12 +39,17 @@ _sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="Stone3" parent="." index="5" instance=ExtResource( 3 )]
 
-position = Vector2( 705.996, 187.459 )
+position = Vector2( 677.139, 201.372 )
 _sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="Stone4" parent="." index="6" instance=ExtResource( 3 )]
 
-position = Vector2( 121.601, -1406.34 )
+position = Vector2( 924.703, 199.863 )
+_sections_unfolded = [ "Collision", "Transform" ]
+
+[node name="Stone5" parent="." index="7" instance=ExtResource( 3 )]
+
+position = Vector2( 183.416, 766.11 )
 _sections_unfolded = [ "Collision", "Transform" ]
 
 
