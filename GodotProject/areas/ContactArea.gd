@@ -17,9 +17,7 @@ func _on_ContactArea_area_exited(area):
 
 func _on_StoneArea_area_entered(area):
 	if area.name == "WebArea":
-		stonePinJointNode = get_node("../PinJoint2D")
-		webNode = get_node("../../Web")
-		webPinJointNode = get_node("../../Web/PinJoint2D")
+		loadNodes()
 		
 		spiderNode.stonePinJointNode = stonePinJointNode
 		webNode.stonePinJointNode = stonePinJointNode
@@ -33,3 +31,8 @@ func _on_StoneArea_area_entered(area):
 		webPinJointNode.set_node_b("../../Spider")
 		
 		webNode.set_gravity_scale(5)
+
+func loadNodes():
+	webNode = get_node("../../Web")
+	webPinJointNode = get_node("../../Web/PinJoint2D")
+	stonePinJointNode = get_node("../PinJoint2D")

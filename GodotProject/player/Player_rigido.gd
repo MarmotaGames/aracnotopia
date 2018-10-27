@@ -48,6 +48,7 @@ func _physics_process(delta):
 		alignWithMouse()
 	
 	if fall:
+		$SpiderCollisionShape.rotation_degrees = 90
 		var sinal 
 		if linear_velocity.x > 0:
 			sinal = 1
@@ -65,6 +66,7 @@ func _physics_process(delta):
 		resetInput()
 		
 	else:
+		$SpiderCollisionShape.rotation_degrees = 0
 		gravity_scale = 0
 		fallInit = true
 		set_angular_velocity(0)
@@ -215,10 +217,6 @@ func update_rotation():
 				self.rotation_degrees = 45
 				 
 func loadWebNodes():
-#	webNode = get_node("Web")
-#	webPinJointNode = get_node("Web/PinJoint2D")
-#	positionNode = get_node("Web/Sprite/Position2D")
-	
 	webNode = get_node("../Web")
 	webPinJointNode = get_node("../Web/PinJoint2D")
 	positionNode = get_node("../Web/Sprite/Position2D")
