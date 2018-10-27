@@ -11,7 +11,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[node name="Root" type="Sprite"]
+[node name="Root" type="Sprite" index="0"]
 
 position = Vector2( -0.747841, -0.676454 )
 scale = Vector2( 0.800754, 0.834559 )
@@ -59,8 +59,7 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
-collision_layer = 16400
-collision_mask = 0
+collision_layer = 16401
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 4 )
@@ -68,8 +67,8 @@ _sections_unfolded = [ "Collision" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BackgroundSprite/DeathArea" index="0"]
 
-position = Vector2( 0.0355663, 1.34028 )
-scale = Vector2( 64.1589, 36.0266 )
+position = Vector2( -248.53, -48.7789 )
+scale = Vector2( 32.7189, 18.3724 )
 shape = SubResource( 1 )
 
 [node name="Timer" type="Timer" parent="BackgroundSprite/DeathArea" index="1"]
@@ -95,7 +94,7 @@ position = Vector2( 1238.32, 478.17 )
 
 [connection signal="body_exited" from="BackgroundSprite/ContactArea" to="BackgroundSprite/ContactArea" method="_on_Area2D_body_exited"]
 
-[connection signal="body_exited" from="BackgroundSprite/DeathArea" to="BackgroundSprite/DeathArea" method="_on_DeathArea_body_exited"]
+[connection signal="area_exited" from="BackgroundSprite/DeathArea" to="BackgroundSprite/DeathArea" method="_on_DeathArea_area_exited"]
 
 [connection signal="timeout" from="BackgroundSprite/DeathArea/Timer" to="BackgroundSprite/DeathArea" method="_on_Timer_timeout"]
 

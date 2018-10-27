@@ -144,6 +144,8 @@ func update_direction():
 		if not dirKeys[0] and not dirKeys[1]:
 			direction.y = 0
 		$AnimatedSprite.playing = true
+	if Input.is_action_pressed("debug"):
+		self.rotation = 1	
 		
 	if Input.is_action_just_released("ui_up"):
 		dirKeys[0] = 0
@@ -233,5 +235,5 @@ func alignWithMouse():
 #	if deltaY == 0:
 #		deltaY = 0.001
 	var angle = (atan(deltaX/deltaY))
-	#print(angulo)	
+	print(angle)	
 	self.rotation = angle
