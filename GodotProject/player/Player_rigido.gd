@@ -26,12 +26,6 @@ var dirKeys = [0, 0, 0, 0]
 #Guarda as teclas direcionais que estão sendo apertadas (1: apertado 0: não)
 #up, down, left, right, nessa ordem
 
-var mousePos
-
-#func _input(event):
-#	if event is InputEventMouseMotion:
-#		mousePos = event.position
-
 func _ready():
 	if spiderOnWeb:
 		loadWebNodes()
@@ -52,7 +46,7 @@ func _integrate_forces(state):
 	
 func _physics_process(delta):
 	if spiderIsLaunchingWeb:
-		look_at(get_local_mouse_position()) #alinha esquerda da aranha com o mouse
+		look_at(get_local_mouse_position()) #alinha eixo Z (lateral esquerda) da aranha com o mouse
 		self.rotation_degrees += 90 #corrige o alinhamento
 		webInstance.rotation_degrees = self.rotation_degrees
 		
@@ -201,7 +195,6 @@ func update_rotation():
 		else:
 			self.rotation_degrees = 0
 	elif spiderIsLaunchingWeb:
-		alignWithMouse()
 		look_at(get_global_mouse_position())
 		self.rotation_degrees += 90
 		webInstance.rotation_degrees = self.rotation_degrees		
@@ -245,23 +238,3 @@ func resetInput():
 	for i in range(0,4):
 		dirKeys[i] = 0
 		
-func alignWithMouse():
-	var fatorX
-	var fatorY
-	#var mousePos = get_viewport().get_mouse_position()
-	var mousePos = get_global_mouse_position()
-	if self.position.x < mousePos.x:
-		fatorX = -1
-	else:
-		fatorX = 1
-	if self.position.y < mousePos.y:
-		fatorY = 1
-	else:
-		fatorY = -1
-	var deltaX =  fatorX*(mousePos.x - self.position.x)
-	var deltaY =  fatorY*(mousePos.y - self.position.y)
-#	if deltaY == 0:
-#		deltaY = 0.001
-	var angle = (atan(deltaX/deltaY))
-	print(angle)	
-	self.rotation = angle
