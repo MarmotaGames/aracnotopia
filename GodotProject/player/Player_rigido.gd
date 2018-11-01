@@ -26,6 +26,12 @@ var dirKeys = [0, 0, 0, 0]
 #Guarda as teclas direcionais que estão sendo apertadas (1: apertado 0: não)
 #up, down, left, right, nessa ordem
 
+var mousePos
+
+#func _input(event):
+#	if event is InputEventMouseMotion:
+#		mousePos = event.position
+
 func _ready():
 	if spiderOnWeb:
 		loadWebNodes()
@@ -46,7 +52,10 @@ func _integrate_forces(state):
 	
 func _physics_process(delta):
 	if spiderIsLaunchingWeb:
-		alignWithMouse()
+		look_at(get_local_mouse_position()) #alinha esquerda da aranha com o mouse
+		self.rotation_degrees += 90 #corrige o alinhamento
+		webInstance.rotation_degrees = self.rotation_degrees
+		
 	
 	if fall:
 		$SpiderCollisionShape.rotation_degrees = 90
@@ -150,7 +159,7 @@ func update_direction():
 			direction.y = 0
 		$AnimatedSprite.playing = true
 	if Input.is_action_pressed("debug"):
-		self.rotation = 1	
+		self.rotation = PI	
 		
 	if Input.is_action_just_released("ui_up"):
 		dirKeys[0] = 0
@@ -193,6 +202,9 @@ func update_rotation():
 			self.rotation_degrees = 0
 	elif spiderIsLaunchingWeb:
 		alignWithMouse()
+		look_at(get_global_mouse_position())
+		self.rotation_degrees += 90
+		webInstance.rotation_degrees = self.rotation_degrees		
 		#direction.y = 1
 		#direction.x = 0
 		
@@ -234,9 +246,20 @@ func resetInput():
 		dirKeys[i] = 0
 		
 func alignWithMouse():
-	var mousePos = get_viewport().get_mouse_position()
-	var deltaX =  mousePos.x - self.position.x
-	var deltaY =  -1*(mousePos.y - self.position.y)
+	var fatorX
+	var fatorY
+	#var mousePos = get_viewport().get_mouse_position()
+	var mousePos = get_global_mouse_position()
+	if self.position.x < mousePos.x:
+		fatorX = -1
+	else:
+		fatorX = 1
+	if self.position.y < mousePos.y:
+		fatorY = 1
+	else:
+		fatorY = -1
+	var deltaX =  fatorX*(mousePos.x - self.position.x)
+	var deltaY =  fatorY*(mousePos.y - self.position.y)
 #	if deltaY == 0:
 #		deltaY = 0.001
 	var angle = (atan(deltaX/deltaY))
