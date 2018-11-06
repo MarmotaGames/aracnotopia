@@ -29,6 +29,9 @@ func _physics_process(delta):
 			isStretching = false
 			spiderNode.spiderOnWeb = false
 			spiderNode.fall = true
+			if spiderNode.linear_velocity.x == 0:
+				#seta a velocidade de lançamento da aranha, quando não houve input do jogador
+				spiderNode.linear_velocity = Vector2(spiderNode.angular_velocity*-3,0)
 			
 			$PinJoint2D.set_node_b("")
 			stonePinJointNode.set_node_b("")

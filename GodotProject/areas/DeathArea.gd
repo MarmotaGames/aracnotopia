@@ -22,6 +22,7 @@ func _process(delta):
 		$"/root/Root/Spider".fall = false
 		$"/root/Root/Spider".rotation = 0
 		$"/root/Root/Spider".angle = 0
+		$"/root/Root/Spider".properlyAligned = 0
 		
 
 func _on_Timer_timeout():
