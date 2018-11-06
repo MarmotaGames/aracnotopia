@@ -22,6 +22,8 @@ export (int) var speed = 300
 var direction = Vector2(0,-1)
 var angle = 0
 var moving #verifica se o player está andando nesse momento
+var nudgeLeft = false
+var nudgeRight = false
 
 var dirKeys = [0, 0, 0, 0] 
 #Guarda as teclas direcionais que estão sendo apertadas (1: apertado 0: não)
@@ -44,8 +46,17 @@ func _integrate_forces(state):
 		xform.origin = bottomPosition
 		state.set_transform(xform)
 		webPinJointNode.set_node_b("../../Spider")
+		
+		if dirKeys[2] and abs(self.rotation_degrees) <= 45:
+			#print("entrou")
+			webNode.apply_impulse(webNode.position,Vector2(-300,0))
+		if dirKeys[3] and abs(self.rotation_degrees) <= 45:
+			webNode.apply_impulse(webNode.position,Vector2(300,0))
 	
 func _physics_process(delta):
+	if spiderOnWeb and abs(rotation_degrees)<10:
+		nudgeLeft = false
+		nudgeRight = false
 
 	if fall:
 		$SpiderCollisionShape.rotation_degrees = 90
@@ -67,7 +78,7 @@ func _physics_process(delta):
 	if fall or spiderIsLaunchingWeb:
 		resetInput()
 		
-	else:
+	elif not spiderOnWeb:
 		$SpiderCollisionShape.rotation_degrees = 0
 		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 0
 		
