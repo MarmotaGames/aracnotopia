@@ -12,6 +12,7 @@ var webInstance
 var spiderInArea = true
 var spiderOnWeb = false
 var spiderIsLaunchingWeb = false
+var properlyAligned = false
 
 var fallInit = true
 var fall = false
@@ -45,12 +46,7 @@ func _integrate_forces(state):
 		webPinJointNode.set_node_b("../../Spider")
 	
 func _physics_process(delta):
-	if spiderIsLaunchingWeb:
-		look_at(get_local_mouse_position()) #alinha eixo Z (lateral esquerda) da aranha com o mouse
-		self.rotation_degrees += 90 #corrige o alinhamento
-		webInstance.rotation_degrees = self.rotation_degrees
-		
-	
+
 	if fall:
 		$SpiderCollisionShape.rotation_degrees = 90
 		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 90
@@ -83,7 +79,6 @@ func _physics_process(delta):
 	
 	if not spiderIsLaunchingWeb:
 		checkAttachOrDettach()
-		#update_rotation()
 		
 	if not fall and not spiderIsLaunchingWeb:
 		update_direction()
@@ -122,6 +117,7 @@ func _physics_process(delta):
 				webNode.set_gravity_scale(0)
 		elif Input.is_action_just_released("launchWeb") and spiderIsLaunchingWeb:
 			spiderIsLaunchingWeb = false
+			properlyAligned = false
 			webInstance.queue_free()
 	
 func update_direction():
@@ -194,12 +190,16 @@ func update_rotation():
 			self.rotation_degrees = webNode.rotation_degrees
 		else:
 			self.rotation_degrees = 0
+	
 	elif spiderIsLaunchingWeb:
-		look_at(get_global_mouse_position())
-		self.rotation_degrees += 90
-		webInstance.rotation_degrees = self.rotation_degrees		
-		#direction.y = 1
-		#direction.x = 0
+		if not properlyAligned:
+			look_at(get_global_mouse_position())
+			self.rotation_degrees += 90
+			webInstance.rotation_degrees = self.rotation_degrees
+			properlyAligned = true
+		else:
+			#bloqueia (ignora) a rotação enquanto lança teia
+			pass
 		
 	elif not fall:
 		if direction.x == 0:
