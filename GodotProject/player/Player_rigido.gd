@@ -115,10 +115,11 @@ func _physics_process(delta):
 				webNode.set_global_position(webPosition)
 				
 				webNode.set_gravity_scale(0)
-		elif Input.is_action_just_released("launchWeb") and spiderIsLaunchingWeb:
-			spiderIsLaunchingWeb = false
+		elif Input.is_action_just_released("launchWeb"):
 			properlyAligned = false
-			webInstance.queue_free()
+			if spiderIsLaunchingWeb:
+				spiderIsLaunchingWeb = false
+				webInstance.queue_free()
 	
 func update_direction():
 	if Input.is_action_pressed("ui_up"):
@@ -166,6 +167,7 @@ func update_direction():
 func checkAttachOrDettach():
 	if Input.is_action_just_pressed("attachOrDetachFromArea") and spiderInArea and not $StickTimer.time_left:
 		if fall or spiderOnWeb:
+			properlyAligned = false
 			set_linear_velocity(Vector2(0,0))
 			fall = false
 			direction.x = 0
