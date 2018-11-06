@@ -16,7 +16,7 @@ func _on_ContactArea_area_exited(area):
 			spiderNode.fall = true
 
 func _on_StoneArea_area_entered(area):
-	if area.name == "WebArea":
+	if area.name == "WebArea" and not spiderNode.spiderOnWeb:
 		loadNodes()
 		
 		spiderNode.stonePinJointNode = stonePinJointNode
