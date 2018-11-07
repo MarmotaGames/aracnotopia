@@ -6,7 +6,6 @@ onready var stonePinJointNode = null
 onready var spriteScale = $Sprite.get_scale()
 onready var topPosition = $Sprite/Position2DTop.get_global_position()
 onready var bottomPosition = $Sprite/Position2DBottom.get_global_position()
-
 var isStretching = false
 
 var stretchSpeed = 10
@@ -14,6 +13,9 @@ var webLaunchSpeed = 7
 var inferiorStretchLimit = 0.3
 var superiorStretchLimit = 2
 var launchLimit = 3
+var velocidadeDeLancamento = 40
+#var velocidadeDeLancamento = 25000
+var fator = 1
 
 func _physics_process(delta):
 	if spiderNode.spiderOnWeb:
@@ -29,9 +31,22 @@ func _physics_process(delta):
 			isStretching = false
 			spiderNode.spiderOnWeb = false
 			spiderNode.fall = true
-			if spiderNode.linear_velocity.x == 0:
-				#seta a velocidade de lançamento da aranha, quando não houve input do jogador
-				spiderNode.linear_velocity = Vector2(spiderNode.angular_velocity*-3,0)
+			if spiderNode.rotation > 0:
+				fator = -1
+			else:
+				fator = 1
+				
+				#ideia: mudar o que tá à direita pros valores do webNode
+			spiderNode.linear_velocity.x = abs(spiderNode.angular_velocity)*cos(spiderNode.rotation)*fator
+			spiderNode.linear_velocity.y = abs(spiderNode.angular_velocity)*sin(spiderNode.rotation)
+			spiderNode.linear_velocity*=velocidadeDeLancamento
+			
+			"""
+			print(spiderNode.linear_velocity.x)
+			print(spiderNode.linear_velocity.y)
+			print("pausa")
+			"""
+			
 			
 			$PinJoint2D.set_node_b("")
 			stonePinJointNode.set_node_b("")

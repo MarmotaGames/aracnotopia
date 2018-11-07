@@ -69,12 +69,15 @@ func _physics_process(delta):
 			sinal = -1
 		else:
 			sinal = 0
-		set_angular_velocity(5*sinal)
+		set_angular_velocity(5*sinal) #determina rodopio da aranha ao cair
+		
+		"""
 		if fallInit:
 			fallInit = false
 			self.rotation_degrees = 0 
 			set_linear_velocity(Vector2(self.linear_velocity.x,0)) 
-		gravity_scale = 8
+		"""
+		gravity_scale = 16
 	if fall or spiderIsLaunchingWeb:
 		resetInput()
 		
