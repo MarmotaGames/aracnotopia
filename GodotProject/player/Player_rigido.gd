@@ -36,6 +36,7 @@ var webAngular
 
 var x = 1
 var y = 1
+var webLength = 1
 
 func _ready():
 	if spiderOnWeb:
@@ -56,9 +57,9 @@ func _integrate_forces(state):
 		webPinJointNode.set_node_b("../../Spider")
 		
 		if dirKeys[2] and abs(self.rotation_degrees) <= 45:
-			webNode.apply_impulse(webNode.position,Vector2(-300,0))
+			webNode.apply_impulse(webNode.position,Vector2(-400,0))
 		if dirKeys[3] and abs(self.rotation_degrees) <= 45:
-			webNode.apply_impulse(webNode.position,Vector2(300,0))
+			webNode.apply_impulse(webNode.position,Vector2(400,0))
 			
 	if lancamento: #calcular velocidade de lançamento
 		if rotation > 0:
@@ -67,17 +68,13 @@ func _integrate_forces(state):
 			fator = 1
 		if y > 0:
 			y*=-1 #dark magic
-		set_linear_velocity(Vector2(x*-1,y)*velocidadeDeLancamento)
+		set_linear_velocity(Vector2(x*-1,y)*webLength*velocidadeDeLancamento)
 		print(linear_velocity.x)
 		print(linear_velocity.y)
 		print("pausa")
 		lancamento = false
 	
 func _physics_process(delta):
-
-	if spiderOnWeb and abs(rotation_degrees)<10:
-		nudgeLeft = false
-		nudgeRight = false
 
 	if fall:
 		$SpiderCollisionShape.rotation_degrees = 90
@@ -196,6 +193,7 @@ func update_direction():
 	if Input.is_action_just_pressed("dropFromWeb"):
 		lancamento = true
 		webAngular = webNode.angular_velocity
+		webLength = webNode.spriteScale.y
 		x = webAngular*cos(webNode.rotation)
 		y = webAngular*sin(webNode.rotation)
 		fall = true	
@@ -208,6 +206,7 @@ func checkAttachOrDettach():
 			fall = false
 			direction.x = 0
 			direction.y = -1
+			rotation_degrees = 180
 			angle = 0
 			$AnimatedSprite.playing = false
 			$StickTimer.start()
