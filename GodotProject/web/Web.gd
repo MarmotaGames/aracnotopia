@@ -30,24 +30,6 @@ func _physics_process(delta):
 		if spiderNode.spiderOnWeb:
 			isStretching = false
 			spiderNode.spiderOnWeb = false
-			spiderNode.fall = true
-			if spiderNode.rotation > 0:
-				fator = -1
-			else:
-				fator = 1
-				
-				#ideia: mudar o que tá à direita pros valores do webNode
-			spiderNode.linear_velocity.x = abs(spiderNode.angular_velocity)*cos(spiderNode.rotation)*fator
-			spiderNode.linear_velocity.y = abs(spiderNode.angular_velocity)*sin(spiderNode.rotation)
-			spiderNode.linear_velocity*=velocidadeDeLancamento
-			
-			"""
-			print(spiderNode.linear_velocity.x)
-			print(spiderNode.linear_velocity.y)
-			print("pausa")
-			"""
-			
-			
 			$PinJoint2D.set_node_b("")
 			stonePinJointNode.set_node_b("")
 			self.queue_free()

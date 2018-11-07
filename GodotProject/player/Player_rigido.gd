@@ -29,6 +29,14 @@ var dirKeys = [0, 0, 0, 0]
 #Guarda as teclas direcionais que estão sendo apertadas (1: apertado 0: não)
 #up, down, left, right, nessa ordem
 
+var fator = 1
+var velocidadeDeLancamento = 800
+var lancamento = false
+var webAngular
+
+var x = 1
+var y = 1
+
 func _ready():
 	if spiderOnWeb:
 		loadWebNodes()
@@ -48,12 +56,25 @@ func _integrate_forces(state):
 		webPinJointNode.set_node_b("../../Spider")
 		
 		if dirKeys[2] and abs(self.rotation_degrees) <= 45:
-			#print("entrou")
 			webNode.apply_impulse(webNode.position,Vector2(-300,0))
 		if dirKeys[3] and abs(self.rotation_degrees) <= 45:
 			webNode.apply_impulse(webNode.position,Vector2(300,0))
+			
+	if lancamento: #calcular velocidade de lançamento
+		if rotation > 0:
+			fator = -1
+		else:
+			fator = 1
+		if y > 0:
+			y*=-1 #dark magic
+		set_linear_velocity(Vector2(x*-1,y)*velocidadeDeLancamento)
+		print(linear_velocity.x)
+		print(linear_velocity.y)
+		print("pausa")
+		lancamento = false
 	
 func _physics_process(delta):
+
 	if spiderOnWeb and abs(rotation_degrees)<10:
 		nudgeLeft = false
 		nudgeRight = false
@@ -70,14 +91,8 @@ func _physics_process(delta):
 		else:
 			sinal = 0
 		set_angular_velocity(5*sinal) #determina rodopio da aranha ao cair
-		
-		"""
-		if fallInit:
-			fallInit = false
-			self.rotation_degrees = 0 
-			set_linear_velocity(Vector2(self.linear_velocity.x,0)) 
-		"""
 		gravity_scale = 16
+		
 	if fall or spiderIsLaunchingWeb:
 		resetInput()
 		
@@ -178,6 +193,13 @@ func update_direction():
 	if !Input.is_action_pressed("ui_up") and !Input.is_action_pressed("ui_right") and !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_down"):
 		$AnimatedSprite.playing = false
 		
+	if Input.is_action_just_pressed("dropFromWeb"):
+		lancamento = true
+		webAngular = webNode.angular_velocity
+		x = webAngular*cos(webNode.rotation)
+		y = webAngular*sin(webNode.rotation)
+		fall = true	
+
 func checkAttachOrDettach():
 	if Input.is_action_just_pressed("attachOrDetachFromArea") and spiderInArea and not $StickTimer.time_left:
 		if fall or spiderOnWeb:
@@ -192,7 +214,6 @@ func checkAttachOrDettach():
 			if spiderOnWeb:
 				webNode.isStretching = false
 				spiderOnWeb = false
-				
 				webPinJointNode.set_node_b("")
 				stonePinJointNode.set_node_b("")
 				webNode.queue_free()

@@ -43,7 +43,7 @@ custom_solver_bias = 0.0
 radius = 11.5
 height = 20.0
 
-[node name="Spider" type="RigidBody2D" index="0"]
+[node name="Spider" type="RigidBody2D"]
 
 input_pickable = false
 collision_layer = 2
