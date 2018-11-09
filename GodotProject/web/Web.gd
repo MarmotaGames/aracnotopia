@@ -12,9 +12,9 @@ var webLaunchSpeed = 0.06
 var inferiorStretchLimit = 0.3
 var superiorStretchLimit = 2
 var launchLimit = 3
-var fator = 1
 
 func _physics_process(delta):
+	print(rotation_degrees)
 	if spiderNode.spiderOnWeb:
 		if Input.is_action_pressed("ui_down"):
 			stretch("down")
@@ -44,7 +44,6 @@ func stretch(direction):
 	
 	positionSprite(direction)
 	
-	var pointPosition = $Sprite/Position2D.get_global_position()
 	$PinJoint2D.set_global_position(bottomPosition)
 	
 func positionSprite(direction):

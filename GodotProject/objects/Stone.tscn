@@ -13,9 +13,8 @@ extents = Vector2( 31, 31 )
 custom_solver_bias = 0.0
 extents = Vector2( 31, 31 )
 
-[node name="Stone" type="StaticBody2D"]
+[node name="Stone" type="StaticBody2D" index="0"]
 
-position = Vector2( 354.997, 57.6764 )
 input_pickable = false
 collision_layer = 2
 collision_mask = 2
@@ -23,26 +22,26 @@ constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
-_sections_unfolded = [ "Collision" ]
+_sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
-scale = Vector2( 0.12, 0.12 )
+scale = Vector2( 0.121, 0.121 )
 texture = ExtResource( 1 )
 _sections_unfolded = [ "Region", "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
 shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="PinJoint2D" type="PinJoint2D" parent="." index="2"]
 
-position = Vector2( -0.475647, 29.4282 )
 z_index = 1
 node_a = NodePath("..")
 node_b = NodePath("")
 bias = 0.9
-disable_collision = true
+disable_collision = false
 softness = 0.0
 _sections_unfolded = [ "Transform", "Z Index" ]
 
@@ -56,11 +55,12 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 2 )
-_sections_unfolded = [ "Collision" ]
+_sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StoneArea" index="0"]
 
 shape = SubResource( 2 )
+_sections_unfolded = [ "Transform" ]
 
 [connection signal="area_entered" from="StoneArea" to="StoneArea" method="_on_StoneArea_area_entered"]
 

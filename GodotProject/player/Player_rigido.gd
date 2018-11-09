@@ -5,7 +5,6 @@ onready var web_scene = preload("res://web//Web.tscn")
 onready var webNode
 onready var stonePinJointNode
 onready var webPinJointNode
-onready var positionNode
 onready var bottomNode
 
 var webInstance
@@ -20,8 +19,8 @@ var init = false
 
 export (int) var speed = 300
 var direction = Vector2(0,-1)
-var angle = 0
 var moving #verifica se o player está andando nesse momento
+var swingImpulse = 400
 
 var dirKeys = [0, 0, 0, 0]
 #Guarda as teclas direcionais que estão sendo apertadas (1: apertado 0: não)
@@ -44,7 +43,6 @@ func _ready():
 func _integrate_forces(state):
 	if spiderOnWeb:
 		loadWebNodes()
-		var pointPosition = positionNode.get_global_position()
 		var bottomPosition = bottomNode.get_global_position()
 		var xform = state.get_transform()
 			
@@ -54,9 +52,9 @@ func _integrate_forces(state):
 		webPinJointNode.set_node_b("../../Spider")
 		
 		if dirKeys[2] and abs(self.rotation_degrees) <= 45:
-			webNode.apply_impulse(webNode.position,Vector2(-400,0))
+			webNode.apply_impulse(webNode.position,Vector2(-swingImpulse,0))
 		if dirKeys[3] and abs(self.rotation_degrees) <= 45:
-			webNode.apply_impulse(webNode.position,Vector2(400,0))
+			webNode.apply_impulse(webNode.position,Vector2(swingImpulse,0))
 			
 	if lancamento: #calcular velocidade de lançamento
 		if y > 0:
@@ -194,7 +192,6 @@ func checkAttachOrDettach():
 			direction.x = 0
 			direction.y = -1
 			rotation_degrees = 180
-			angle = 0
 			$AnimatedSprite.playing = false
 			$StickTimer.start()
 			if spiderOnWeb:
@@ -253,7 +250,6 @@ func update_rotation():
 func loadWebNodes():
 	webNode = get_node("../Web")
 	webPinJointNode = get_node("../Web/PinJoint2D")
-	positionNode = get_node("../Web/Sprite/Position2D")
 	bottomNode = get_node("../Web/Sprite/Position2DBottom")
 	
 func resetInput():
