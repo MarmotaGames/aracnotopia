@@ -20,7 +20,7 @@
 
 custom_solver_bias = 0.0
 radius = 8.0
-height = 140.0
+height = 100.0
 
 [sub_resource type="SpriteFrames" id=2]
 
@@ -91,10 +91,11 @@ _sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SpiderFallingArea" index="0"]
 
-position = Vector2( 14.3699, -43.3673 )
+position = Vector2( 14.3699, -36.8829 )
 scale = Vector2( 3.03857, 1.20858 )
 z_index = 1
 shape = SubResource( 1 )
+disabled = true
 _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="." index="2"]

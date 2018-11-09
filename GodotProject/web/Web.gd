@@ -14,7 +14,7 @@ var superiorStretchLimit = 2
 var launchLimit = 3
 
 func _physics_process(delta):
-	print(rotation_degrees)
+#	print(rotation_degrees)
 	if spiderNode.spiderOnWeb:
 		if Input.is_action_pressed("ui_down"):
 			stretch("down")
@@ -29,6 +29,7 @@ func _physics_process(delta):
 			$PinJoint2D.set_node_b("")
 			stonePinJointNode.set_node_b("")
 			self.queue_free()
+			
 			
 func stretch(direction):
 	spriteScale = $Sprite.get_scale()
