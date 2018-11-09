@@ -6,15 +6,12 @@ onready var stonePinJointNode = null
 onready var spriteScale = $Sprite.get_scale()
 onready var topPosition = $Sprite/Position2DTop.get_global_position()
 onready var bottomPosition = $Sprite/Position2DBottom.get_global_position()
-var isStretching = false
 
-var stretchSpeed = 10
-var webLaunchSpeed = 7
+var stretchSpeed = 0.015
+var webLaunchSpeed = 0.06
 var inferiorStretchLimit = 0.3
 var superiorStretchLimit = 2
 var launchLimit = 3
-var velocidadeDeLancamento = 40
-#var velocidadeDeLancamento = 25000
 var fator = 1
 
 func _physics_process(delta):
@@ -24,27 +21,23 @@ func _physics_process(delta):
 		elif Input.is_action_pressed("ui_up"):
 			stretch("up")
 		else:
-			isStretching = false
+			pass
 	
 	if Input.is_action_just_pressed("dropFromWeb"):
 		if spiderNode.spiderOnWeb:
-			isStretching = false
 			spiderNode.spiderOnWeb = false
 			$PinJoint2D.set_node_b("")
 			stonePinJointNode.set_node_b("")
 			self.queue_free()
 			
 func stretch(direction):
-	isStretching = true
-
 	spriteScale = $Sprite.get_scale()
-	
 	if direction == "down" and spriteScale.y < superiorStretchLimit:
-		spriteScale.y += 0.001*stretchSpeed
+		spriteScale.y += stretchSpeed
 	elif direction == "up" and spriteScale.y > inferiorStretchLimit:
-		spriteScale.y -= 0.001*stretchSpeed
+		spriteScale.y -= stretchSpeed
 	elif direction == "launch" and spriteScale.y < launchLimit:
-		spriteScale.y += 0.01*webLaunchSpeed
+		spriteScale.y += webLaunchSpeed
 		
 	$Sprite.set_scale(spriteScale)
 	$CollisionShape2D.set_scale(spriteScale)

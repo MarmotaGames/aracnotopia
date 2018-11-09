@@ -22,15 +22,12 @@ export (int) var speed = 300
 var direction = Vector2(0,-1)
 var angle = 0
 var moving #verifica se o player está andando nesse momento
-var nudgeLeft = false
-var nudgeRight = false
 
-var dirKeys = [0, 0, 0, 0] 
+var dirKeys = [0, 0, 0, 0]
 #Guarda as teclas direcionais que estão sendo apertadas (1: apertado 0: não)
 #up, down, left, right, nessa ordem
 
-var fator = 1
-var velocidadeDeLancamento = 800
+var velocidadeDeLancamento = 500
 var lancamento = false
 var webAngular
 
@@ -62,10 +59,6 @@ func _integrate_forces(state):
 			webNode.apply_impulse(webNode.position,Vector2(400,0))
 			
 	if lancamento: #calcular velocidade de lançamento
-		if rotation > 0:
-			fator = -1
-		else:
-			fator = 1
 		if y > 0:
 			y*=-1 #dark magic
 		set_linear_velocity(Vector2(x*-1,y)*webLength*velocidadeDeLancamento)
@@ -75,7 +68,6 @@ func _integrate_forces(state):
 		lancamento = false
 	
 func _physics_process(delta):
-
 	if fall:
 		$SpiderCollisionShape.rotation_degrees = 90
 		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 90
@@ -92,7 +84,6 @@ func _physics_process(delta):
 		
 	if fall or spiderIsLaunchingWeb:
 		resetInput()
-		
 	elif not spiderOnWeb:
 		$SpiderCollisionShape.rotation_degrees = 0
 		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 0
@@ -100,23 +91,21 @@ func _physics_process(delta):
 		gravity_scale = 0
 		fallInit = true
 		set_angular_velocity(0)
-	
+		
 	update_rotation()
 	
 	if not spiderIsLaunchingWeb:
 		checkAttachOrDettach()
-		
-	if not fall and not spiderIsLaunchingWeb:
-		update_direction()
-		
-		if 1 in dirKeys:
-			#Verifica se alguma das teclas direcionais está apertada 
-			#e processa o movimento
-			set_linear_velocity(direction.normalized()*speed)
-			moving = true
-		else:
-			set_linear_velocity(Vector2(0,0))
-			moving = false
+		if not fall:
+			update_direction()
+			if 1 in dirKeys:
+				#Verifica se alguma das teclas direcionais está apertada 
+				#e processa o movimento
+				set_linear_velocity(direction.normalized()*speed)
+				moving = true
+			else:
+				set_linear_velocity(Vector2(0,0))
+				moving = false
 	
 	if not spiderOnWeb:
 		if Input.is_action_pressed("launchWeb"):
@@ -124,7 +113,6 @@ func _physics_process(delta):
 				webNode.stretch("launch")
 				$AnimatedSprite.playing = true
 				webNode.show()
-				
 			else:
 				if moving:
 					moving = false
@@ -135,7 +123,6 @@ func _physics_process(delta):
 				get_parent().add_child(webInstance)
 				loadWebNodes()
 				webNode.hide()
-					
 				var webPosition = self.global_position
 				webPosition.y -= 56
 				webNode.set_global_position(webPosition)
@@ -211,7 +198,6 @@ func checkAttachOrDettach():
 			$AnimatedSprite.playing = false
 			$StickTimer.start()
 			if spiderOnWeb:
-				webNode.isStretching = false
 				spiderOnWeb = false
 				webPinJointNode.set_node_b("")
 				stonePinJointNode.set_node_b("")
