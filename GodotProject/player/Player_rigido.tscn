@@ -41,7 +41,7 @@ _sections_unfolded = [ "Resource" ]
 
 custom_solver_bias = 0.0
 radius = 11.5
-height = 20.0
+height = 70.0
 
 [node name="Spider" type="RigidBody2D"]
 
@@ -121,7 +121,7 @@ _sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite/SpiderArea" index="0"]
 
-position = Vector2( -2.00006, -0.467731 )
+position = Vector2( -0.411162, -8.41212 )
 scale = Vector2( 3.03858, 1.20858 )
 shape = SubResource( 3 )
 _sections_unfolded = [ "Transform", "Z Index" ]

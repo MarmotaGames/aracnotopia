@@ -21,7 +21,7 @@ var init = false
 export (int) var speed = 300
 var direction = Vector2(0,-1)
 var moving #verifica se o player está andando nesse momento
-var swingImpulse = 400
+var swingImpulse = 300
 
 var dirKeys = [0, 0, 0, 0]
 #Guarda as teclas direcionais que estão sendo apertadas (1: apertado 0: não)
@@ -52,9 +52,9 @@ func _integrate_forces(state):
 		state.set_transform(xform)
 		webPinJointNode.set_node_b("../../Spider")
 		
-		if dirKeys[2] and abs(self.rotation_degrees) <= 45:
+		if dirKeys[2] and abs(self.rotation_degrees) <= 35:
 			webNode.apply_impulse(webNode.position,Vector2(-swingImpulse,0))
-		if dirKeys[3] and abs(self.rotation_degrees) <= 45:
+		if dirKeys[3] and abs(self.rotation_degrees) <= 35:
 			webNode.apply_impulse(webNode.position,Vector2(swingImpulse,0))
 			
 	if lancamento: #calcular velocidade de lançamento
@@ -72,6 +72,7 @@ func _physics_process(delta):
 	if fall:
 		$SpiderCollisionShape.rotation_degrees = 90
 		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 90
+		$AnimatedSprite/SpiderArea/CollisionShape2D.rotation_degrees = 90
 		
 		var sinal 
 		if linear_velocity.x > 0:
@@ -88,6 +89,7 @@ func _physics_process(delta):
 	elif not spiderOnWeb:
 		$SpiderCollisionShape.rotation_degrees = 0
 		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 0
+		$AnimatedSprite/SpiderArea/CollisionShape2D.rotation_degrees = 0
 		
 		gravity_scale = 0
 		fallInit = true
@@ -178,7 +180,7 @@ func update_direction():
 	if !Input.is_action_pressed("ui_up") and !Input.is_action_pressed("ui_right") and !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_down"):
 		$AnimatedSprite.playing = false
 		
-	if Input.is_action_just_pressed("dropFromWeb"):
+	if spiderOnWeb and Input.is_action_just_pressed("dropFromWeb"):
 		lancamento = true
 		webAngular = webNode.angular_velocity
 		webLength = webNode.spriteScale.y
