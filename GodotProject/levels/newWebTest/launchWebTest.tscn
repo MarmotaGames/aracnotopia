@@ -57,11 +57,15 @@ position = Vector2( 516.681, 130.844 )
 
 position = Vector2( 227.555, 663.984 )
 
-[node name="RoundStone8" parent="." index="10" instance=ExtResource( 3 )]
+[node name="RoundStone9" parent="." index="10" instance=ExtResource( 3 )]
+
+position = Vector2( 595.113, 590.976 )
+
+[node name="RoundStone8" parent="." index="11" instance=ExtResource( 3 )]
 
 position = Vector2( 1113.39, 165.703 )
 
-[node name="Debugger" parent="." index="11" instance=ExtResource( 4 )]
+[node name="Debugger" parent="." index="12" instance=ExtResource( 4 )]
 
 position = Vector2( 434.471, 389.067 )
 

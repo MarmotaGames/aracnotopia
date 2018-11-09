@@ -1,11 +1,13 @@
 extends Area2D
 
+onready var spiderNode = get_node("../../Spider")
+
 var spawn = Vector2(800, 600)
 var gameover = false
 var timer = false
 
 func _process(delta):
-	if $"/root/Root/Spider".fall:
+	if spiderNode.fall:
 		if not timer:
 			# O tempo desse timer é o tempo máximo de queda
 			$Timer.start()
@@ -17,12 +19,12 @@ func _process(delta):
 	
 	
 	if gameover:
-		$"/root/Root/Spider".position.x = spawn.x
-		$"/root/Root/Spider".position.y = spawn.y
-		$"/root/Root/Spider".fall = false
-		$"/root/Root/Spider".rotation = 0
-		$"/root/Root/Spider".angle = 0
-		$"/root/Root/Spider".properlyAligned = 0
+		spiderNode.position.x = spawn.x
+		spiderNode.position.y = spawn.y
+		spiderNode.fall = false
+		spiderNode.rotation = 0
+		spiderNode.angle = 0
+		spiderNode.properlyAligned = 0
 		
 
 func _on_Timer_timeout():

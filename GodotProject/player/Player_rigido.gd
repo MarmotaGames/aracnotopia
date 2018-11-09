@@ -1,12 +1,13 @@
 extends RigidBody2D
 
 onready var web_scene = preload("res://web//Web.tscn")
-#onready var spiderAreaNode = $AnimatedSprite/SpiderArea
 onready var webNode
+onready var spiderCollisionNode = $SpiderCollisionShape
 onready var stonePinJointNode
 onready var webPinJointNode
 onready var bottomNode
 
+var angle
 var webInstance
 var spiderInArea = true
 var spiderOnWeb = false
@@ -60,12 +61,14 @@ func _integrate_forces(state):
 		if y > 0:
 			y*=-1 #dark magic
 		set_linear_velocity(Vector2(x*-1,y)*webLength*velocidadeDeLancamento)
-		print(linear_velocity.x)
-		print(linear_velocity.y)
-		print("pausa")
+#		print(linear_velocity.x)
+#		print(linear_velocity.y)
+#		print("pausa")
 		lancamento = false
 	
 func _physics_process(delta):
+	disableCollisionIfOnWeb()
+	
 	if fall:
 		$SpiderCollisionShape.rotation_degrees = 90
 		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 90
@@ -256,3 +259,9 @@ func resetInput():
 	for i in range(0,4):
 		dirKeys[i] = 0
 		
+func disableCollisionIfOnWeb():
+	if spiderOnWeb:
+		spiderCollisionNode.set_disabled(true)
+	else:
+		spiderCollisionNode.set_disabled(false)		
+	
