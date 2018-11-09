@@ -12,7 +12,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 7.5, 116.6 )
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" index="0"]
 
 [node name="Ball" parent="." index="0" instance=ExtResource( 1 )]
 
@@ -24,6 +24,7 @@ _sections_unfolded = [ "Collision", "Z Index" ]
 
 [node name="PinJoint2D" parent="Stone" index="2"]
 
+position = Vector2( 15.5244, -9.5718 )
 node_b = NodePath("../../Web")
 
 [node name="Plataforma" parent="." index="2" instance=ExtResource( 3 )]
@@ -33,7 +34,7 @@ scale = Vector2( 0.874704, 0.928921 )
 
 [node name="Web" type="RigidBody2D" parent="." index="3"]
 
-position = Vector2( 354.827, 180.391 )
+position = Vector2( 370.827, 141.391 )
 input_pickable = false
 collision_layer = 16
 collision_mask = 16
@@ -50,7 +51,7 @@ sleeping = false
 can_sleep = true
 linear_velocity = Vector2( 0, 0 )
 linear_damp = 0.1
-angular_velocity = 16.0
+angular_velocity = 1.0
 angular_damp = 0.1
 script = ExtResource( 4 )
 _sections_unfolded = [ "Angular", "Applied Forces", "Collision", "Linear", "Pickable", "Transform", "Z Index" ]
@@ -89,7 +90,7 @@ _sections_unfolded = [ "Transform" ]
 
 position = Vector2( -0.0472565, 84.8039 )
 node_a = NodePath("..")
-node_b = NodePath("../../Spider")
+node_b = NodePath("")
 bias = 0.9
 disable_collision = true
 softness = 0.0
