@@ -1,17 +1,19 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://player/Player_rigido.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/background/background.png" type="Texture" id=2]
 [ext_resource path="res://areas/ContactArea.gd" type="Script" id=3]
 [ext_resource path="res://areas/DeathArea.gd" type="Script" id=4]
 [ext_resource path="res://objects/Stone.tscn" type="PackedScene" id=5]
+[ext_resource path="res://objects/RoundStone.tscn" type="PackedScene" id=6]
+[ext_resource path="res://objects/Plataforma.tscn" type="PackedScene" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[node name="Root" type="Sprite"]
+[node name="Root" type="Sprite" index="0"]
 
 position = Vector2( -0.747841, -0.676454 )
 scale = Vector2( 0.800754, 0.834559 )
@@ -48,7 +50,7 @@ _sections_unfolded = [ "Collision" ]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BackgroundSprite/ContactArea" index="0"]
 
-position = Vector2( -6.79542, 1.60933e-06 )
+position = Vector2( -6.79542, 1.60933e-006 )
 build_mode = 0
 polygon = PoolVector2Array( 7.17801, 5.60348, 841.392, 3.20701, 836.396, 30.7665, 87.1027, 48.74, 82.3938, 140, 93.9492, 148.87, 117.06, 178.806, 160.971, 204.307, 230.304, 229.808, 330.84, 218.718, 371.471, 218.718, 419.001, 233.43, 446.599, 259.174, 469.598, 282.712, 490.296, 345.235, 497.534, 428.732, 513.447, 487.15, 550.808, 519.678, 574.332, 521.67, 596.471, 509.057, 597.834, 489.723, 594.51, 425.457, 598.942, 372.271, 613.076, 329.819, 628.977, 321.642, 647.67, 325.172, 658.77, 354.312, 661.607, 419.651, 678.631, 512.216, 714.099, 608.864, 748.148, 720.486, 498.83, 716.929, 426.932, 639.581, 338.141, 606.142, 245.925, 596.613, 180.555, 608.542, 118.241, 627.922, 56.5924, 652.285, 7.58157, 685.094, 7.58157, 565.304, 56.725, 544.076, 1.32333, 511.943, 3.32545, 423.735, 98.379, 482.269, 154.038, 499.232, 228.9, 497.242, 281.148, 505.885, 323.954, 529.912, 378.055, 528.564, 402.431, 477.594, 381.379, 414.436, 308.348, 361.118, 190.595, 332.532, 74.261, 286.25, 7.97153, 232.719 )
 
@@ -80,11 +82,43 @@ autostart = false
 
 [node name="Stone" parent="." index="2" instance=ExtResource( 5 )]
 
-position = Vector2( 747.866, 330.356 )
+position = Vector2( 674.527, 263.116 )
 
 [node name="Stone2" parent="." index="3" instance=ExtResource( 5 )]
 
-position = Vector2( 963.09, 483.615 )
+position = Vector2( 894.673, 232.082 )
+
+[node name="RoundStone" parent="." index="4" instance=ExtResource( 6 )]
+
+position = Vector2( 405.654, 311.913 )
+
+[node name="RoundStone2" parent="." index="5" instance=ExtResource( 6 )]
+
+position = Vector2( 1321.7, 249.297 )
+
+[node name="RoundStone3" parent="." index="6" instance=ExtResource( 6 )]
+
+position = Vector2( 1029.21, 355.843 )
+
+[node name="RoundStone4" parent="." index="7" instance=ExtResource( 6 )]
+
+position = Vector2( 187.059, 207.412 )
+
+[node name="RoundStone5" parent="." index="8" instance=ExtResource( 6 )]
+
+position = Vector2( 1644.71, 271.492 )
+
+[node name="RoundStone6" parent="." index="9" instance=ExtResource( 6 )]
+
+position = Vector2( 1962.96, 397.502 )
+
+[node name="Plataforma" parent="." index="10" instance=ExtResource( 7 )]
+
+position = Vector2( 1613.82, 645.237 )
+
+[node name="Plataforma2" parent="." index="11" instance=ExtResource( 7 )]
+
+position = Vector2( 1613.82, 900.785 )
 
 [connection signal="area_entered" from="BackgroundSprite/ContactArea" to="BackgroundSprite/ContactArea" method="_on_ContactArea_area_entered"]
 

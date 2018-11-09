@@ -13,6 +13,7 @@ var spiderInArea = true
 var spiderOnWeb = false
 var spiderIsLaunchingWeb = false
 var properlyAligned = false
+var justLaunchedWeb = false
 
 var fallInit = true
 var fall = false
@@ -86,6 +87,7 @@ func _physics_process(delta):
 		
 	if fall or spiderIsLaunchingWeb:
 		resetInput()
+		
 	elif not spiderOnWeb:
 		$SpiderCollisionShape.rotation_degrees = 0
 		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 0
@@ -112,6 +114,8 @@ func _physics_process(delta):
 	
 	if not spiderOnWeb:
 		if Input.is_action_pressed("launchWeb"):
+			justLaunchedWeb = true
+			
 			if spiderIsLaunchingWeb:
 				webNode.stretch("launch")
 				$AnimatedSprite.playing = true
@@ -126,11 +130,13 @@ func _physics_process(delta):
 				get_parent().add_child(webInstance)
 				loadWebNodes()
 				webNode.hide()
+				
 				var webPosition = self.global_position
 				webPosition.y -= 56
 				webNode.set_global_position(webPosition)
 				
 				webNode.set_gravity_scale(0)
+				
 		elif Input.is_action_just_released("launchWeb"):
 			properlyAligned = false
 			if spiderIsLaunchingWeb:
@@ -144,6 +150,7 @@ func update_direction():
 		if not dirKeys[2] and not dirKeys[3]:
 			direction.x = 0
 		$AnimatedSprite.playing = true
+		justLaunchedWeb = false
 		
 	if Input.is_action_pressed("ui_down"):
 		direction.y = 1
@@ -151,6 +158,7 @@ func update_direction():
 		if not dirKeys[2] and not dirKeys[3]:
 			direction.x = 0
 		$AnimatedSprite.playing = true
+		justLaunchedWeb = false
 		
 	if Input.is_action_pressed("ui_left"):
 		direction.x = -1
@@ -158,6 +166,7 @@ func update_direction():
 		if not dirKeys[0] and not dirKeys[1]:
 			direction.y = 0
 		$AnimatedSprite.playing = true
+		justLaunchedWeb = false
 		
 	if Input.is_action_pressed("ui_right"):
 		direction.x = 1
@@ -165,6 +174,8 @@ func update_direction():
 		if not dirKeys[0] and not dirKeys[1]:
 			direction.y = 0
 		$AnimatedSprite.playing = true
+		justLaunchedWeb = false
+		
 	if Input.is_action_pressed("debug"):
 		self.rotation = PI	
 		
@@ -225,7 +236,7 @@ func update_rotation():
 			#bloqueia (ignora) a rotação enquanto lança teia
 			pass
 		
-	elif not fall:
+	elif not fall and not justLaunchedWeb:
 		if direction.x == 0:
 			if direction.y == -1:
 				#angle = 180
