@@ -1,45 +1,45 @@
 1° Semana (12/08 a 18/08)
-	-Criação do projeto na engine Godot
+	-Criação do projeto na engine Godot.
 
-	-Organização das pastas básicas do projeto
+	-Organização das pastas básicas do projeto.
 
-	-Sprite prototípico da aranha
+	-Sprite prototípico da aranha.
 
-	-Sprite prototípico do background
+	-Sprite prototípico do background.
 
-	-Cenas do Player e da Main
+	-Cenas do Player e da Main.
 
-	-Mecânica básica de movimento do player
+	-Mecânica básica de movimento do player.
 
-	-Início da rotação do sprite do player ao mudar de direção
+	-Início da rotação do sprite do player ao mudar de direção.
 
-	-Início da física de corda
+	-Início da física de corda.
 
 2° Semana (19/08 a 25/08)
-	-Rotação do player ao mudar de direção enquanto anda
+	-Rotação do player ao mudar de direção enquanto anda.
 
-	-Continuação da física de corda
+	-Continuação da física de corda.
 
-	-Colisão da aranha com as plataformas (galhos) e da física de gravidade
+	-Colisão da aranha com as plataformas (galhos) e da física de gravidade.
 
-	-Criação do "Game Design Document" do projeto
+	-Criação do "Game Design Document" do projeto.
 
 3° Semana (26/08 a 01/09)
-	-Sprite final da aranha e sua animação
+	-Sprite final da aranha e sua animação.
 
-	-Conclusão da física de corda, adaptada para a temática da aranha, para servir como teia
+	-Conclusão da física de corda, adaptada para a temática da aranha, para servir como teia.
 
-	-Botão e mecânica para grudar na parede durante a queda
+	-Botão e mecânica para grudar na parede durante a queda.
 
-	-Game Over quando a aranha cai além dos limites do cenário ou de uma distância grande
+	-Game Over quando a aranha cai além dos limites do cenário ou de uma distância grande.
 
-	-Animação alternativa da aranha em estado de queda
+	-Animação alternativa da aranha em estado de queda.
 
-	-Câmera scrolla quando o jogador se aproxima da borda da tela
+	-Câmera scrolla quando o jogador se aproxima da borda da tela.
 
-	-Se grudar no tronco enquanto cai
+	-Se grudar no tronco enquanto cai.
 
-	-Grudar a teia no tronco
+	-Grudar a teia no tronco.
 
 4° Semana (02/09 a 08/09) [Break]
 	-Encontramos muitos problemas ao lidar com a teia que utilizava uma física próxima a de uma corda real.
@@ -51,14 +51,14 @@
 	-Isso resolveu o problema, a teia ficava ligada às duas agora. Porém, por remover a aranha do jogo, mesmo que por um breve momento, todas as referências à ela quebravam. Surgiram inúmeros erros.
 
 5° Semana (09/09 a 15/09)
-	-Tela de menu
+	-Tela de menu.
 
-	-"Hub" central
+	-"Hub" central.
 
-	-Um portal que conecta o "Hub" ao primeiro level
+	-Um portal que conecta o "Hub" ao primeiro level.
 
 6° Semana (16/09 a 22/09)
-	-(Não houve desenvolvimento nesta semana, devido à acumulação de provas e trabalhos)
+	-(Não houve desenvolvimento nesta semana, devido à acumulação de provas e trabalhos).
 
 7° Semana (23/09 a 29/09)
 	-Redesign da teia: decidimos que, do jeito que havíamos planejado, a implementação ficaria extremamente complexa e além das nossas atuais capacidades.
@@ -73,10 +73,10 @@
 		-Ao se soltar da teia, a aranha se movimentará com inércia.
 
 8° Semana (30/09 a 06/10)
-	-(Não houve desenvolvimento nesta semana, devido à acumulação de provas e trabalhos)
+	-(Não houve desenvolvimento nesta semana, devido à acumulação de provas e trabalhos).
 
 9° Semana (07/10 a 13/10) [Break]
-	-Alteração da estrutura da aranha para responder à física (gravidade, inércia)
+	-Alteração da estrutura da aranha para responder à física (gravidade, inércia).
 
 	-Protótipo de teia conectada na extremidade superior a um objeto estático e, na outra extremidade, à aranha.
 		-Mecânica de balanço da teia com a aranha acompanhando o movimento pendular.
@@ -86,17 +86,34 @@
 		-Mecânica em que a aranha se destaca da teia, assumindo um movimento inercial.
 
 10° Semana (14/10 a 20/10)
-	-Física funciona da maneira esperada quando a teia estica
+	-Física funciona da maneira esperada quando a teia estica.
 
-	-Organização de arquivos e pastas
+	-Organização de arquivos e pastas.
 
 	-Aranha rotaciona da maneira esperada, tanto pendurada na teia, quanto andando pelo cenário.
 
 11° Semana (21/10 a 27/10)
+	-Mecânica de lançamento de teia.
+
+	-Mecânica da teia se "grudar" na pedra.
+
+	-Adição de sprites para a pedra e a madeira.
+
+	-Mecânica de colisão entre pedra e aranha.
+
+	-Correção de muitos bugs (hitboxes, lançamento de teia, comportamento da aranha na teia, etc).
 
 12° Semana (28/10 a 03/11)
+	-Início do lançamento de teia na direção em que o mouse aponta, e não somente para cima.
 
 13° Semana (04/11 a 10/11)
+	-Lançamento de teia na direção do mouse finalizado
+
+	-Melhoria da mecânica da aranha se balançar na teia e ser lançada com inércia
+
+	-Criação de um cursor do mouse customizado, com a imagem de uma teia
+
+	-Manufatura do Pôster do projeto
 
 14° Semana (11/11 a 17/11) [Break]
 
