@@ -23,7 +23,6 @@ func _process(delta):
 		spiderNode.position.y = spawn.y
 		spiderNode.fall = false
 		spiderNode.rotation = 0
-		spiderNode.angle = 0
 		spiderNode.properlyAligned = 0
 		
 

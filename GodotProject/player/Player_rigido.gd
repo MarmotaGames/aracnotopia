@@ -7,7 +7,6 @@ onready var stonePinJointNode
 onready var webPinJointNode
 onready var bottomNode
 
-var angle
 var webInstance
 var spiderInArea = true
 var spiderOnWeb = false
@@ -17,26 +16,34 @@ var justLaunchedWeb = false
 var justAttached = false
 var lastWebRotationDegrees = 0
 
-var fallInit = true
 var fall = false
 var init = false
 
 export (int) var speed = 300
 var direction = Vector2(0,-1)
-var moving #verifica se o player está andando nesse momento
+var moving
 var swingImpulse = 400
+var maxImpulseAngle = 45
 
 var dirKeys = [0, 0, 0, 0]
 #Guarda as teclas direcionais que estão sendo apertadas (1: apertado 0: não)
 #up, down, left, right, nessa ordem
 
-var velocidadeDeLancamento = 600
-var lancamento = false
-var webAngular
+var launchSpeed = 600
+var spiderIsBeingLaunched = false
+var webAngularVelocity
 
-var x = 1
-var y = 1
 var webLength = 1
+var launchSpeedVector
+
+
+""" 
+******************
+
+  Native Methods
+
+******************
+""" 
 
 func _ready():
 	if spiderOnWeb:
@@ -45,154 +52,114 @@ func _ready():
 	init = true
 	
 func _integrate_forces(state):
-	if spiderOnWeb:
-		loadWebNodes()
-		var bottomPosition = bottomNode.get_global_position()
-		var xform = state.get_transform()
-			
-		webPinJointNode.set_node_b("")
-		xform.origin = bottomPosition
-		state.set_transform(xform)
-		webPinJointNode.set_node_b("../../Spider")
+	repositionSpiderWhenStretchingWeb(state)
 		
-		if dirKeys[2] and abs(self.rotation_degrees) <= 45:
-			webNode.apply_impulse(webNode.position,Vector2(-swingImpulse,0))
-		if dirKeys[3] and abs(self.rotation_degrees) <= 45:
-			webNode.apply_impulse(webNode.position,Vector2(swingImpulse,0))
-			
-	if lancamento: #calcular velocidade de lançamento
-		if y > 0:
-			y*=-1 #dark magic
-		set_linear_velocity(Vector2(x*-1,y)*webLength*velocidadeDeLancamento)
-		lancamento = false
-	
 func _physics_process(delta):
-	keepWebRotationWhenAttaching()
-	disableCollisionIfOnWeb()
-	setCollisionRotation()
+	matchWebRotationWhenAttaching()
+	disableSpiderCollisionIfOnWeb()
 	
-	if fall:		
-		setSpiderAngularVelocity()
+	setCollisionAreaRotation()
+	setAngularVelocityIfFalling()
+	
+	resetInput()
+	setPhysicsPropertiesWhenAttached()
+	
+	updateRotation()
+	processAttachOrDetachInput()
+	
+	updateDirection()
+	processDropFromWebInput()
+	processMovementInput()
+	
+	processLaunchWebInput()
+	applyImpulseWhenBeingLaunched()
+	setLinearVelocityWhenBeingLaunched()
+	
+""" 
+******************
 
-		
-	if fall or spiderIsLaunchingWeb:
-		resetInput()
-		
-	elif not spiderOnWeb:
+  Common Methods
 
-		
-		gravity_scale = 0
-		fallInit = true
-		set_angular_velocity(0)
-		
-	update_rotation()
-	
-	if not spiderIsLaunchingWeb:
-		checkAttachOrDettach()
-		if not fall:
-			update_direction()
-			if 1 in dirKeys:
-				#Verifica se alguma das teclas direcionais está apertada 
-				#e processa o movimento
-				set_linear_velocity(direction.normalized()*speed)
-				moving = true
-			else:
-				set_linear_velocity(Vector2(0,0))
-				moving = false
-	
-	if not spiderOnWeb:
-		if Input.is_action_pressed("launchWeb"):
+******************
+""" 
+
+func updateDirection():
+	if not spiderIsLaunchingWeb and not fall:
+		if Input.is_action_pressed("ui_up"):
+			direction.y = -1
+			dirKeys[0] = 1
+			if not dirKeys[2] and not dirKeys[3]:
+				direction.x = 0
+			$AnimatedSprite.playing = true
+			justLaunchedWeb = false
 			justAttached = false
-			justLaunchedWeb = true
 			
-			if spiderIsLaunchingWeb:
-				webNode.stretch("launch")
-				$AnimatedSprite.playing = true
-				webNode.show()
-			else:
-				if moving:
-					moving = false
-					resetInput()
-				set_linear_velocity(Vector2(0,0))
-				spiderIsLaunchingWeb = true
-				webInstance = web_scene.instance()
-				get_parent().add_child(webInstance)
-				loadWebNodes()
-				webNode.hide()
-				
-				var webPosition = self.global_position
-				webNode.set_global_position(webPosition)
-				
-				webNode.set_gravity_scale(0)
-				
-		elif Input.is_action_just_released("launchWeb"):
-			properlyAligned = false
-			if spiderIsLaunchingWeb:
-				spiderIsLaunchingWeb = false
-				webInstance.queue_free()
-	
-func update_direction():
-	if Input.is_action_pressed("ui_up"):
-		direction.y = -1
-		dirKeys[0] = 1
-		if not dirKeys[2] and not dirKeys[3]:
-			direction.x = 0
-		$AnimatedSprite.playing = true
-		justLaunchedWeb = false
-		justAttached = false
+		if Input.is_action_pressed("ui_down"):
+			direction.y = 1
+			dirKeys[1] = 1
+			if not dirKeys[2] and not dirKeys[3]:
+				direction.x = 0
+			$AnimatedSprite.playing = true
+			justLaunchedWeb = false
+			justAttached = false
+			
+		if Input.is_action_pressed("ui_left"):
+			direction.x = -1
+			dirKeys[2] = 1
+			if not dirKeys[0] and not dirKeys[1]:
+				direction.y = 0
+			$AnimatedSprite.playing = true
+			justLaunchedWeb = false
+			justAttached = false
+			
+		if Input.is_action_pressed("ui_right"):
+			direction.x = 1
+			dirKeys[3] = 1
+			if not dirKeys[0] and not dirKeys[1]:
+				direction.y = 0
+			$AnimatedSprite.playing = true
+			justLaunchedWeb = false
+			justAttached = false
+			
+		if Input.is_action_pressed("debug"):
+			self.rotation = PI
+			
+		if Input.is_action_just_released("ui_up"):
+			dirKeys[0] = 0
+		if Input.is_action_just_released("ui_down"):
+			dirKeys[1] = 0
+		if Input.is_action_just_released("ui_left"):
+			dirKeys[2] = 0
+		if Input.is_action_just_released("ui_right"):
+			dirKeys[3] = 0
 		
-	if Input.is_action_pressed("ui_down"):
-		direction.y = 1
-		dirKeys[1] = 1
-		if not dirKeys[2] and not dirKeys[3]:
-			direction.x = 0
-		$AnimatedSprite.playing = true
-		justLaunchedWeb = false
-		justAttached = false
+		if (!Input.is_action_pressed("ui_up") and 
+		!Input.is_action_pressed("ui_right") and 
+		!Input.is_action_pressed("ui_left") and 
+		!Input.is_action_pressed("ui_down")):
+			$AnimatedSprite.playing = false
 		
-	if Input.is_action_pressed("ui_left"):
-		direction.x = -1
-		dirKeys[2] = 1
-		if not dirKeys[0] and not dirKeys[1]:
-			direction.y = 0
-		$AnimatedSprite.playing = true
-		justLaunchedWeb = false
-		justAttached = false
-		
-	if Input.is_action_pressed("ui_right"):
-		direction.x = 1
-		dirKeys[3] = 1
-		if not dirKeys[0] and not dirKeys[1]:
-			direction.y = 0
-		$AnimatedSprite.playing = true
-		justLaunchedWeb = false
-		justAttached = false
-		
-	if Input.is_action_pressed("debug"):
-		self.rotation = PI	
-		
-	if Input.is_action_just_released("ui_up"):
-		dirKeys[0] = 0
-	if Input.is_action_just_released("ui_down"):
-		dirKeys[1] = 0
-	if Input.is_action_just_released("ui_left"):
-		dirKeys[2] = 0
-	if Input.is_action_just_released("ui_right"):
-		dirKeys[3] = 0
-	
-	if !Input.is_action_pressed("ui_up") and !Input.is_action_pressed("ui_right") and !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_down"):
-		$AnimatedSprite.playing = false
-		
-	if spiderOnWeb and Input.is_action_just_pressed("dropFromWeb"):
-		lancamento = true
-		webAngular = webNode.angular_velocity
+func processDropFromWebInput():
+	if (Input.is_action_just_pressed("dropFromWeb") and
+	spiderOnWeb and 
+	not spiderIsLaunchingWeb and
+	not fall):
+		spiderIsBeingLaunched = true
+		webAngularVelocity = webNode.angular_velocity
 		webLength = webNode.spriteScale.y
-		x = webAngular*cos(webNode.rotation)
-		y = webAngular*sin(webNode.rotation)
-		fall = true	
+		var xSpeedComponent = -webAngularVelocity*cos(webNode.rotation)
+		var ySpeedComponent = -abs(webAngularVelocity*sin(webNode.rotation))
+		launchSpeedVector = Vector2(xSpeedComponent, ySpeedComponent)
+		#The "abs" on the yComponent makes the spider go up even
+		#if the web is going down
+		
+		fall = true
 
-func checkAttachOrDettach():
-	if Input.is_action_just_pressed("attachOrDetachFromArea") and spiderInArea and not $StickTimer.time_left:
+func processAttachOrDetachInput():
+	if (Input.is_action_just_pressed("attachOrDetachFromArea") and 
+	spiderInArea and 
+	not spiderIsLaunchingWeb and
+	not $StickTimer.time_left):
 		if fall or spiderOnWeb:
 			justAttached = true
 			properlyAligned = false
@@ -211,7 +178,7 @@ func checkAttachOrDettach():
 			fall = true
 			$StickTimer.start()
 				
-func update_rotation():
+func updateRotation():
 	if spiderOnWeb:
 		if init:
 			self.rotation_degrees = webNode.rotation_degrees
@@ -262,20 +229,21 @@ func loadWebNodes():
 	bottomNode = get_node("../Web/Sprite/Position2DBottom")
 	
 func resetInput():
-	for i in range(0,4):
-		dirKeys[i] = 0
+	if fall or spiderIsLaunchingWeb:
+		for i in range(0,4):
+			dirKeys[i] = 0
 		
-func disableCollisionIfOnWeb():
+func disableSpiderCollisionIfOnWeb():
 	if spiderOnWeb:
 		spiderCollisionNode.set_disabled(true)
 	else:
 		spiderCollisionNode.set_disabled(false)
 
-func keepWebRotationWhenAttaching():
+func matchWebRotationWhenAttaching():
 	if justAttached:
 		self.rotation_degrees = lastWebRotationDegrees
 		
-func setSpiderAngularVelocity():
+func setAngularVelocityIfFalling():
 	if fall:
 		var sinal
 		if self.linear_velocity.x > 0:
@@ -284,10 +252,10 @@ func setSpiderAngularVelocity():
 			sinal = -1
 		else:
 			sinal = 0
-		self.set_angular_velocity(5*sinal) #determina rodopio da aranha ao cair
+		self.set_angular_velocity(5 * sinal)
 		self.gravity_scale = 16
 	
-func setCollisionRotation():
+func setCollisionAreaRotation():
 	if fall:
 		$SpiderCollisionShape.rotation_degrees = 90
 		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 90
@@ -297,3 +265,74 @@ func setCollisionRotation():
 		$SpiderCollisionShape.rotation_degrees = 0
 		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 0
 		$AnimatedSprite/SpiderArea/CollisionShape2D.rotation_degrees = 0
+		
+func setPhysicsPropertiesWhenAttached():
+	if not fall and not spiderIsLaunchingWeb and not spiderOnWeb:
+		self.gravity_scale = 0
+		set_angular_velocity(0)
+	
+func processMovementInput():
+	if not spiderIsLaunchingWeb and not fall:
+		if 1 in dirKeys:
+			#Verifica se alguma das teclas direcionais está apertada 
+			#e processa o movimento
+			set_linear_velocity(direction.normalized()*speed)
+			moving = true
+		else:
+			set_linear_velocity(Vector2(0,0))
+			moving = false
+		
+func processLaunchWebInput():
+	if not spiderOnWeb:
+		if Input.is_action_pressed("launchWeb"):
+			justAttached = false
+			justLaunchedWeb = true
+			
+			if spiderIsLaunchingWeb:
+				webNode.stretch("launch")
+				$AnimatedSprite.playing = true
+				webNode.show()
+			else:
+				if moving:
+					moving = false
+					resetInput()
+				set_linear_velocity(Vector2(0,0))
+				spiderIsLaunchingWeb = true
+				webInstance = web_scene.instance()
+				get_parent().add_child(webInstance)
+				loadWebNodes()
+				webNode.hide()
+				
+				var webPosition = self.global_position
+				webNode.set_global_position(webPosition)
+				
+				webNode.set_gravity_scale(0)
+				
+		elif Input.is_action_just_released("launchWeb"):
+			properlyAligned = false
+			if spiderIsLaunchingWeb:
+				spiderIsLaunchingWeb = false
+				webInstance.queue_free()
+			
+func repositionSpiderWhenStretchingWeb(state):
+	if spiderOnWeb:
+		loadWebNodes()
+		var bottomPosition = bottomNode.get_global_position()
+		var xform = state.get_transform()
+			
+		webPinJointNode.set_node_b("")
+		xform.origin = bottomPosition
+		state.set_transform(xform)
+		webPinJointNode.set_node_b("../../Spider")
+	
+func setLinearVelocityWhenBeingLaunched():
+	if spiderIsBeingLaunched:
+		set_linear_velocity(launchSpeedVector * webLength * launchSpeed)
+		spiderIsBeingLaunched = false
+
+func applyImpulseWhenBeingLaunched():
+	if spiderOnWeb:
+		if dirKeys[2] and abs(self.rotation_degrees) <= maxImpulseAngle:
+			webNode.apply_impulse(webNode.position,Vector2(-swingImpulse,0))
+		if dirKeys[3] and abs(self.rotation_degrees) <= maxImpulseAngle:
+			webNode.apply_impulse(webNode.position,Vector2(swingImpulse,0))
