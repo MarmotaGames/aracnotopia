@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://player/Player_rigido.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/background/background.png" type="Texture" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://areas/DeathArea.gd" type="Script" id=4]
 [ext_resource path="res://objects/Stone.tscn" type="PackedScene" id=5]
 [ext_resource path="res://objects/RoundStone.tscn" type="PackedScene" id=6]
-[ext_resource path="res://objects/Plataforma.tscn" type="PackedScene" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -23,12 +22,13 @@ _sections_unfolded = [ "Offset", "Z Index" ]
 
 [node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
-position = Vector2( 731.377, 601.121 )
+position = Vector2( 1900, 951.121 )
 z_index = 2
 _sections_unfolded = [ "Collision", "Linear", "Transform", "Z Index" ]
 
 [node name="BackgroundSprite" type="Sprite" parent="." index="1"]
 
+editor/display_folded = true
 show_behind_parent = true
 position = Vector2( 1281.33, 720.982 )
 scale = Vector2( 2, 2 )
@@ -48,14 +48,21 @@ audio_bus_name = "Master"
 script = ExtResource( 3 )
 _sections_unfolded = [ "Collision" ]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BackgroundSprite/ContactArea" index="0"]
+[node name="RightTree" type="CollisionPolygon2D" parent="BackgroundSprite/ContactArea" index="0"]
 
-position = Vector2( -6.79542, 1.60933e-006 )
+position = Vector2( 643.864, 360.528 )
 build_mode = 0
-polygon = PoolVector2Array( 7.17801, 5.60348, 841.392, 3.20701, 836.396, 30.7665, 87.1027, 48.74, 82.3938, 140, 93.9492, 148.87, 117.06, 178.806, 160.971, 204.307, 230.304, 229.808, 330.84, 218.718, 371.471, 218.718, 419.001, 233.43, 446.599, 259.174, 469.598, 282.712, 490.296, 345.235, 497.534, 428.732, 513.447, 487.15, 550.808, 519.678, 574.332, 521.67, 596.471, 509.057, 597.834, 489.723, 594.51, 425.457, 598.942, 372.271, 613.076, 329.819, 628.977, 321.642, 647.67, 325.172, 658.77, 354.312, 661.607, 419.651, 678.631, 512.216, 714.099, 608.864, 748.148, 720.486, 498.83, 716.929, 426.932, 639.581, 338.141, 606.142, 245.925, 596.613, 180.555, 608.542, 118.241, 627.922, 56.5924, 652.285, 7.58157, 685.094, 7.58157, 565.304, 56.725, 544.076, 1.32333, 511.943, 3.32545, 423.735, 98.379, 482.269, 154.038, 499.232, 228.9, 497.242, 281.148, 505.885, 323.954, 529.912, 378.055, 528.564, 402.431, 477.594, 381.379, 414.436, 308.348, 361.118, 190.595, 332.532, 74.261, 286.25, 7.97153, 232.719 )
+polygon = PoolVector2Array( 171.012, 360.176, 161.063, 337.806, 153.192, 319.995, 143.351, 279.943, 151.222, 211.977, 173.177, 177, 202.694, 141.831, 232.592, 112.408, 261.723, 83.7213, 300.054, 57.9768, 359.083, 28.5544, 399.713, 10.1654, 438.527, -8.95908, 450.793, -20.7281, 443.127, -62.7474, 437.761, -87.7564, 432.394, -110.559, 417.062, -130.419, 386.398, -147.337, 361.1, -159.106, 295.938, -176.023, 269.106, -195.148, 236.908, -215.008, 213.143, -240.753, 159.481, -261.348, 113.484, -282.68, 83.1884, -304.277, 45.8129, -335.129, 29.049, -355.169, 29.3238, -362.025, 106.548, -361.497, 103.8, -359.124, 113.144, -350.422, 144.748, -324.054, 181.574, -304.013, 193.064, -298.352, 193.6, -306.325, 185.157, -332.687, 184.413, -351.723, 185.068, -361.464, 227.195, -361.559, 224.542, -359.329, 233.392, -347.858, 247.124, -336.634, 257.296, -323.458, 258.822, -321.987, 273.537, -310.35, 280.863, -307.106, 287.062, -316.839, 291.57, -337.385, 303.968, -361.717, 372.155, -360.636, 365.393, -358.473, 352.995, -336.845, 322.564, -294.67, 316.929, -285.478, 318.62, -256.28, 347.923, -230.326, 372.036, -215.543, 415.458, -195.503, 454.757, -182.846, 475.643, -168.343, 482.514, -162.806, 497.626, -139.013, 508.348, -120.882, 528.077, -74.6938, 543.489, -89.7393, 564.531, -113.529, 573.108, -123.174, 584.857, -139.986, 596.821, -167.966, 607.289, -199.532, 615.888, -231.817, 620.748, -245.806, 629.918, -273.053, 632.004, -292.065, 644.518, -292.065, 641.953, 115.608, 620.643, 136.413, 603.446, 150.403, 576.528, 165.11, 556.34, 175.513, 539.89, 189.144, 513.72, 204.569, 493.268, 221.389, 465.939, 250.201, 451.43, 274.158, 443.447, 299.435, 442.772, 329.543, 446.146, 355.442, 447.496, 360.298, 447.834, 362.564, 171.87, 360.564 )
+
+[node name="Polygon2D" type="CollisionPolygon2D" parent="BackgroundSprite/ContactArea" index="1"]
+
+build_mode = 0
+polygon = PoolVector2Array( 4.53057, 253.433, 27.4169, 252.457, 34.5371, 248.553, 40.6401, 258.801, 50.8118, 284.664, 59.4578, 313.943, 71.6638, 342.246, 82.8527, 364.693, 92.5158, 377.869, 82.3441, 409.1, 72.1724, 447.651, 71.4964, 449.947, 73.9324, 451.701, 74.846, 463.095, 66.3197, 482.963, 59.0115, 504.584, 56.88, 520.361, 50.7898, 535.555, 42.2635, 544.32, 31.0714, 547.983, 19.1374, 555.47, 3.99049, 563.398, 3.99049, 686.711, 20.9734, 673.94, 47.1363, 655.442, 71.4632, 642.23, 119.658, 626.816, 145.821, 615.806, 166.935, 599.511, 190.344, 581.895, 202.737, 563.398, 212.835, 541.818, 218.802, 514.953, 215.618, 470.17, 210.568, 425.2, 209.677, 403.055, 209.314, 378.684, 211.989, 357.115, 207.018, 328.895, 187.963, 277.224, 162.279, 229.926, 131.211, 181.037, 95.1717, 138.111, 67.5707, 114.338, 24.8128, 109.335, 3.95523, 113.337 )
 
 [node name="DeathArea" type="Area2D" parent="BackgroundSprite" index="1"]
 
+editor/display_folded = true
+visible = false
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -94,7 +101,8 @@ position = Vector2( 405.654, 311.913 )
 
 [node name="RoundStone2" parent="." index="5" instance=ExtResource( 6 )]
 
-position = Vector2( 1321.7, 249.297 )
+position = Vector2( 1120.7, 920.297 )
+_sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="RoundStone3" parent="." index="6" instance=ExtResource( 6 )]
 
@@ -106,19 +114,12 @@ position = Vector2( 187.059, 207.412 )
 
 [node name="RoundStone5" parent="." index="8" instance=ExtResource( 6 )]
 
-position = Vector2( 1644.71, 271.492 )
+position = Vector2( 1644.71, 340.492 )
+_sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="RoundStone6" parent="." index="9" instance=ExtResource( 6 )]
 
 position = Vector2( 1962.96, 397.502 )
-
-[node name="Plataforma" parent="." index="10" instance=ExtResource( 7 )]
-
-position = Vector2( 1613.82, 645.237 )
-
-[node name="Plataforma2" parent="." index="11" instance=ExtResource( 7 )]
-
-position = Vector2( 1613.82, 900.785 )
 
 [connection signal="area_entered" from="BackgroundSprite/ContactArea" to="BackgroundSprite/ContactArea" method="_on_ContactArea_area_entered"]
 

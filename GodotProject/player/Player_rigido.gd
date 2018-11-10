@@ -24,13 +24,13 @@ var init = false
 export (int) var speed = 300
 var direction = Vector2(0,-1)
 var moving #verifica se o player está andando nesse momento
-var swingImpulse = 300
+var swingImpulse = 400
 
 var dirKeys = [0, 0, 0, 0]
 #Guarda as teclas direcionais que estão sendo apertadas (1: apertado 0: não)
 #up, down, left, right, nessa ordem
 
-var velocidadeDeLancamento = 500
+var velocidadeDeLancamento = 600
 var lancamento = false
 var webAngular
 
@@ -55,9 +55,9 @@ func _integrate_forces(state):
 		state.set_transform(xform)
 		webPinJointNode.set_node_b("../../Spider")
 		
-		if dirKeys[2] and abs(self.rotation_degrees) <= 35:
+		if dirKeys[2] and abs(self.rotation_degrees) <= 45:
 			webNode.apply_impulse(webNode.position,Vector2(-swingImpulse,0))
-		if dirKeys[3] and abs(self.rotation_degrees) <= 35:
+		if dirKeys[3] and abs(self.rotation_degrees) <= 45:
 			webNode.apply_impulse(webNode.position,Vector2(swingImpulse,0))
 			
 	if lancamento: #calcular velocidade de lançamento
