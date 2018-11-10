@@ -14,22 +14,9 @@ var superiorStretchLimit = 2
 var launchLimit = 3
 
 func _physics_process(delta):
-	if spiderNode.spiderOnWeb:
-		if Input.is_action_pressed("ui_down"):
-			stretch("down")
-		elif Input.is_action_pressed("ui_up"):
-			stretch("up")
-		else:
-			pass
+	processStrechInput()
+	processDropFromWebInput()
 	
-	if Input.is_action_just_pressed("dropFromWeb"):
-		if spiderNode.spiderOnWeb:
-			spiderNode.spiderOnWeb = false
-			$PinJoint2D.set_node_b("")
-			stonePinJointNode.set_node_b("")
-			self.queue_free()
-			
-			
 func stretch(direction):
 	spriteScale = $Sprite.get_scale()
 	if direction == "down" and spriteScale.y < superiorStretchLimit:
@@ -72,3 +59,19 @@ func positionSprite(direction):
 	$Sprite.set_global_position(spritePosition)
 	$CollisionShape2D.set_global_position(spritePosition)
 	
+func processStrechInput():
+	if spiderNode.spiderOnWeb:
+		if Input.is_action_pressed("ui_down"):
+			stretch("down")
+		elif Input.is_action_pressed("ui_up"):
+			stretch("up")
+		else:
+			pass
+			
+func processDropFromWebInput():
+	if Input.is_action_just_pressed("dropFromWeb"):
+		if spiderNode.spiderOnWeb:
+			spiderNode.spiderOnWeb = false
+			$PinJoint2D.set_node_b("")
+			stonePinJointNode.set_node_b("")
+			self.queue_free()

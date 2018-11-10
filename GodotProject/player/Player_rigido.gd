@@ -1,40 +1,37 @@
 extends RigidBody2D
 
-onready var web_scene = preload("res://web//Web.tscn")
 onready var webNode
-onready var spiderCollisionNode = $SpiderCollisionShape
-onready var stonePinJointNode
-onready var webPinJointNode
 onready var bottomNode
+onready var webPinJointNode
+onready var stonePinJointNode
+onready var web_scene = preload("res://web//Web.tscn")
+onready var spiderCollisionNode = $SpiderCollisionShape
+
+var spiderOnWeb = false
+var spiderInArea = true
+var spiderIsMoving = false
+var spiderIsFalling = false
+var spiderIsLaunchingWeb = false
+var spiderIsBeingLaunched = false
+
+var justAttached = false
+var justLaunchedWeb = false
+var properlyAligned = false
 
 var webInstance
-var spiderInArea = true
-var spiderOnWeb = false
-var spiderIsLaunchingWeb = false
-var properlyAligned = false
-var justLaunchedWeb = false
-var justAttached = false
+var launchSpeedVector
+
+var webLength = 1
+var launchSpeed = 600
+var swingImpulse = 400
+var movementSpeed = 300
+var maxImpulseAngle = 45
 var lastWebRotationDegrees = 0
 
-var fall = false
-var init = false
-
-export (int) var speed = 300
-var direction = Vector2(0,-1)
-var moving
-var swingImpulse = 400
-var maxImpulseAngle = 45
-
+var direction = Vector2(0, -1)
 var dirKeys = [0, 0, 0, 0]
 #Guarda as teclas direcionais que estão sendo apertadas (1: apertado 0: não)
 #up, down, left, right, nessa ordem
-
-var launchSpeed = 600
-var spiderIsBeingLaunched = false
-var webAngularVelocity
-
-var webLength = 1
-var launchSpeedVector
 
 
 """ 
@@ -49,8 +46,6 @@ func _ready():
 	if spiderOnWeb:
 		loadWebNodes()
 		
-	init = true
-	
 func _integrate_forces(state):
 	repositionSpiderWhenStretchingWeb(state)
 		
@@ -84,7 +79,7 @@ func _physics_process(delta):
 """ 
 
 func updateDirection():
-	if not spiderIsLaunchingWeb and not fall:
+	if not spiderIsLaunchingWeb and not spiderIsFalling:
 		if Input.is_action_pressed("ui_up"):
 			direction.y = -1
 			dirKeys[0] = 1
@@ -143,9 +138,10 @@ func processDropFromWebInput():
 	if (Input.is_action_just_pressed("dropFromWeb") and
 	spiderOnWeb and 
 	not spiderIsLaunchingWeb and
-	not fall):
+	not spiderIsFalling):
+		spiderIsFalling = true
 		spiderIsBeingLaunched = true
-		webAngularVelocity = webNode.angular_velocity
+		var webAngularVelocity = webNode.angular_velocity
 		webLength = webNode.spriteScale.y
 		var xSpeedComponent = -webAngularVelocity*cos(webNode.rotation)
 		var ySpeedComponent = -abs(webAngularVelocity*sin(webNode.rotation))
@@ -153,18 +149,17 @@ func processDropFromWebInput():
 		#The "abs" on the yComponent makes the spider go up even
 		#if the web is going down
 		
-		fall = true
 
 func processAttachOrDetachInput():
 	if (Input.is_action_just_pressed("attachOrDetachFromArea") and 
 	spiderInArea and 
 	not spiderIsLaunchingWeb and
 	not $StickTimer.time_left):
-		if fall or spiderOnWeb:
+		if spiderIsFalling or spiderOnWeb:
 			justAttached = true
 			properlyAligned = false
 			set_linear_velocity(Vector2(0,0))
-			fall = false
+			spiderIsFalling = false
 			direction.x = 0
 			direction.y = -1
 			$AnimatedSprite.playing = false
@@ -175,16 +170,13 @@ func processAttachOrDetachInput():
 				stonePinJointNode.set_node_b("")
 				webNode.queue_free()
 		else:
-			fall = true
+			spiderIsFalling = true
 			$StickTimer.start()
 				
 func updateRotation():
 	if spiderOnWeb:
-		if init:
-			self.rotation_degrees = webNode.rotation_degrees
-			lastWebRotationDegrees = webNode.rotation_degrees
-		else:
-			self.rotation_degrees = 0
+		self.rotation_degrees = webNode.rotation_degrees
+		lastWebRotationDegrees = webNode.rotation_degrees
 	
 	elif spiderIsLaunchingWeb:
 		if not properlyAligned:
@@ -196,7 +188,7 @@ func updateRotation():
 			#bloqueia (ignora) a rotação enquanto lança teia
 			pass
 		
-	elif not fall and not justLaunchedWeb:
+	elif not spiderIsFalling and not justLaunchedWeb:
 		if direction.x == 0:
 			if direction.y == -1:
 				#angle = 180
@@ -229,7 +221,7 @@ func loadWebNodes():
 	bottomNode = get_node("../Web/Sprite/Position2DBottom")
 	
 func resetInput():
-	if fall or spiderIsLaunchingWeb:
+	if spiderIsFalling or spiderIsLaunchingWeb:
 		for i in range(0,4):
 			dirKeys[i] = 0
 		
@@ -244,7 +236,7 @@ func matchWebRotationWhenAttaching():
 		self.rotation_degrees = lastWebRotationDegrees
 		
 func setAngularVelocityIfFalling():
-	if fall:
+	if spiderIsFalling:
 		var sinal
 		if self.linear_velocity.x > 0:
 			sinal = 1
@@ -256,7 +248,7 @@ func setAngularVelocityIfFalling():
 		self.gravity_scale = 16
 	
 func setCollisionAreaRotation():
-	if fall:
+	if spiderIsFalling:
 		$SpiderCollisionShape.rotation_degrees = 90
 		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 90
 		$AnimatedSprite/SpiderArea/CollisionShape2D.rotation_degrees = 90
@@ -267,20 +259,20 @@ func setCollisionAreaRotation():
 		$AnimatedSprite/SpiderArea/CollisionShape2D.rotation_degrees = 0
 		
 func setPhysicsPropertiesWhenAttached():
-	if not fall and not spiderIsLaunchingWeb and not spiderOnWeb:
+	if not spiderIsFalling and not spiderIsLaunchingWeb and not spiderOnWeb:
 		self.gravity_scale = 0
 		set_angular_velocity(0)
 	
 func processMovementInput():
-	if not spiderIsLaunchingWeb and not fall:
+	if not spiderIsLaunchingWeb and not spiderIsFalling:
 		if 1 in dirKeys:
 			#Verifica se alguma das teclas direcionais está apertada 
 			#e processa o movimento
-			set_linear_velocity(direction.normalized()*speed)
-			moving = true
+			set_linear_velocity(direction.normalized()*movementSpeed)
+			spiderIsMoving = true
 		else:
 			set_linear_velocity(Vector2(0,0))
-			moving = false
+			spiderIsMoving = false
 		
 func processLaunchWebInput():
 	if not spiderOnWeb:
@@ -293,8 +285,8 @@ func processLaunchWebInput():
 				$AnimatedSprite.playing = true
 				webNode.show()
 			else:
-				if moving:
-					moving = false
+				if spiderIsMoving:
+					spiderIsMoving = false
 					resetInput()
 				set_linear_velocity(Vector2(0,0))
 				spiderIsLaunchingWeb = true

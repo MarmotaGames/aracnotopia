@@ -3,7 +3,7 @@ extends AnimatedSprite
 var fallRotInit = true
 
 func _process(delta):
-	if get_parent().fall == true:
+	if get_parent().spiderIsFalling:
 		self.animation = "falling"
 		self.playing = true
 		if fallRotInit:

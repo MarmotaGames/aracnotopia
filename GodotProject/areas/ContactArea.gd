@@ -13,7 +13,7 @@ func _on_ContactArea_area_exited(area):
 	if area.name == "SpiderArea":
 		spiderNode.spiderInArea = false
 		if not spiderNode.spiderOnWeb:
-			spiderNode.fall = true
+			spiderNode.spiderIsFalling = true
 
 func _on_StoneArea_area_entered(area):
 	if area.name == "WebArea" and not spiderNode.spiderOnWeb:
