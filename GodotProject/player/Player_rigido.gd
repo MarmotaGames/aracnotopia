@@ -69,29 +69,17 @@ func _integrate_forces(state):
 func _physics_process(delta):
 	keepWebRotationWhenAttaching()
 	disableCollisionIfOnWeb()
+	setCollisionRotation()
 	
-	if fall:
-		$SpiderCollisionShape.rotation_degrees = 90
-		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 90
-		$AnimatedSprite/SpiderArea/CollisionShape2D.rotation_degrees = 90
-		
-		var sinal 
-		if linear_velocity.x > 0:
-			sinal = 1
-		elif linear_velocity.x < 0:
-			sinal = -1
-		else:
-			sinal = 0
-		set_angular_velocity(5*sinal) #determina rodopio da aranha ao cair
-		gravity_scale = 16
+	if fall:		
+		setSpiderAngularVelocity()
+
 		
 	if fall or spiderIsLaunchingWeb:
 		resetInput()
 		
 	elif not spiderOnWeb:
-		$SpiderCollisionShape.rotation_degrees = 0
-		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 0
-		$AnimatedSprite/SpiderArea/CollisionShape2D.rotation_degrees = 0
+
 		
 		gravity_scale = 0
 		fallInit = true
@@ -133,7 +121,6 @@ func _physics_process(delta):
 				webNode.hide()
 				
 				var webPosition = self.global_position
-				webPosition.y -= 56
 				webNode.set_global_position(webPosition)
 				
 				webNode.set_gravity_scale(0)
@@ -287,3 +274,26 @@ func disableCollisionIfOnWeb():
 func keepWebRotationWhenAttaching():
 	if justAttached:
 		self.rotation_degrees = lastWebRotationDegrees
+		
+func setSpiderAngularVelocity():
+	if fall:
+		var sinal
+		if self.linear_velocity.x > 0:
+			sinal = 1
+		elif self.linear_velocity.x < 0:
+			sinal = -1
+		else:
+			sinal = 0
+		self.set_angular_velocity(5*sinal) #determina rodopio da aranha ao cair
+		self.gravity_scale = 16
+	
+func setCollisionRotation():
+	if fall:
+		$SpiderCollisionShape.rotation_degrees = 90
+		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 90
+		$AnimatedSprite/SpiderArea/CollisionShape2D.rotation_degrees = 90
+		
+	elif not spiderOnWeb:
+		$SpiderCollisionShape.rotation_degrees = 0
+		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 0
+		$AnimatedSprite/SpiderArea/CollisionShape2D.rotation_degrees = 0
