@@ -113,7 +113,9 @@
 
 	-Criação de um cursor do mouse customizado, com a imagem de uma teia
 
-	-Manufatura do Pôster do projeto
+	-Desenvolvimento do Pôster do projeto
+
+	-Refatoração de quase todo o código: melhora dos nomes das variáveis; organização do código em funções e em blocos de acordo com sua funcionalidade; melhora da legibilidade em geral 
 
 14° Semana (11/11 a 17/11) [Break]
 
