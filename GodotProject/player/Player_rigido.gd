@@ -7,6 +7,13 @@ onready var stonePinJointNode
 onready var web_scene = preload("res://web//Web.tscn")
 onready var spiderCollisionNode = $SpiderCollisionShape
 
+var webLength = 1
+var launchSpeed = 600
+var swingImpulse = 400
+var movementSpeed = 300
+var maxImpulseAngle = 45
+var lastWebRotationDegrees = 0
+
 var spiderOnWeb = false
 var spiderInArea = true
 var spiderIsMoving = false
@@ -18,20 +25,13 @@ var justAttached = false
 var justLaunchedWeb = false
 var properlyAligned = false
 
-var webInstance
-var launchSpeedVector
-
-var webLength = 1
-var launchSpeed = 600
-var swingImpulse = 400
-var movementSpeed = 300
-var maxImpulseAngle = 45
-var lastWebRotationDegrees = 0
-
 var direction = Vector2(0, -1)
 var dirKeys = [0, 0, 0, 0]
 #Guarda as teclas direcionais que estao sendo apertadas (1: apertado 0: nao)
 #up, down, left, right, nessa ordem
+
+var webInstance
+var launchSpeedVector
 
 
 """ 
@@ -52,8 +52,8 @@ func _integrate_forces(state):
 func _physics_process(delta):
 	processInputs()
 	
-	setPhysicsPropertiesWhenAttached()
 	disableSpiderCollisionIfOnWeb()
+	setPhysicsPropertiesWhenAttached()
 	
 	setCollisionAreaRotationIfFalling()
 	setAngularVelocityIfFalling()
@@ -67,19 +67,15 @@ func _physics_process(delta):
 	
 
 """ 
-******************
+*****************
 
-  Common Methods
+  Input Methods
 
-******************
+*****************
 """ 
 
-		
 func processDropFromWebInput():
-	if (Input.is_action_just_pressed("dropFromWeb") and
-	spiderOnWeb and 
-	not spiderIsLaunchingWeb and
-	not spiderIsFalling):
+	if Input.is_action_just_pressed("dropFromWeb") and canDropFromWeb():
 		spiderIsFalling = true
 		spiderIsBeingLaunched = true
 		var webAngularVelocity = webNode.angular_velocity
@@ -91,10 +87,7 @@ func processDropFromWebInput():
 		#if the web is going down
 		
 func processAttachOrDetachInput():
-	if (Input.is_action_just_pressed("attachOrDetachFromArea") and 
-	spiderInArea and 
-	not spiderIsLaunchingWeb and
-	not $StickTimer.time_left):
+	if Input.is_action_just_pressed("attachOrDetachFromArea") and canAttachOrDettach():
 		if spiderIsFalling or spiderOnWeb:
 			properlyAligned = false
 			set_linear_velocity(Vector2(0,0))
@@ -114,14 +107,14 @@ func processAttachOrDetachInput():
 			$StickTimer.start()
 
 func processMovementInput():
-	if not spiderIsLaunchingWeb and not spiderIsFalling:
+	if canWalk():
 		if 1 in dirKeys:
 			#Verifica se alguma das teclas direcionais está apertada 
 			#e processa o movimento
-			set_linear_velocity(direction.normalized()*movementSpeed)
+			set_linear_velocity(direction.normalized() * movementSpeed)
 			spiderIsMoving = true
 		else:
-			set_linear_velocity(Vector2(0,0))
+			set_linear_velocity(Vector2(0, 0))
 			spiderIsMoving = false
 		
 func processLaunchWebInput():
@@ -162,6 +155,15 @@ func processInputs():
 	processDropFromWebInput()
 	processMovementInput()
 
+
+""" 
+****************************
+
+  Property Control Methods
+
+****************************
+""" 
+
 func disableSpiderCollisionIfOnWeb():
 	if spiderOnWeb:
 		spiderCollisionNode.set_disabled(true)
@@ -171,6 +173,41 @@ func disableSpiderCollisionIfOnWeb():
 func matchWebRotationWhenAttaching():
 	if justAttached:
 		self.rotation_degrees = lastWebRotationDegrees
+
+func setPhysicsPropertiesWhenAttached():
+	if isAttached():
+		self.gravity_scale = 0
+		set_angular_velocity(0)
+
+func resetPressedDirKeys():
+	if spiderIsFalling or spiderIsLaunchingWeb:
+		for i in range(0,4):
+			dirKeys[i] = 0
+
+func loadWebNodes():
+	webNode = get_node("../Web")
+	webPinJointNode = get_node("../Web/PinJoint2D")
+	bottomNode = get_node("../Web/Sprite/Position2DBottom")
+
+func setCollisionAreaRotationIfFalling():
+	if spiderIsFalling:
+		$SpiderCollisionShape.rotation_degrees = 90
+		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 90
+		$AnimatedSprite/SpiderArea/CollisionShape2D.rotation_degrees = 90
+		
+	elif not spiderOnWeb:
+		$SpiderCollisionShape.rotation_degrees = 0
+		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 0
+		$AnimatedSprite/SpiderArea/CollisionShape2D.rotation_degrees = 0
+
+
+""" 
+*********************
+
+  Transform Methods
+
+*********************
+""" 
 
 func setAngularVelocityIfFalling():
 	if spiderIsFalling:
@@ -184,22 +221,6 @@ func setAngularVelocityIfFalling():
 		self.set_angular_velocity(5 * sinal)
 		self.gravity_scale = 16
 	
-func setCollisionAreaRotationIfFalling():
-	if spiderIsFalling:
-		$SpiderCollisionShape.rotation_degrees = 90
-		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 90
-		$AnimatedSprite/SpiderArea/CollisionShape2D.rotation_degrees = 90
-		
-	elif not spiderOnWeb:
-		$SpiderCollisionShape.rotation_degrees = 0
-		$SpiderFallingArea/CollisionShape2D.rotation_degrees = 0
-		$AnimatedSprite/SpiderArea/CollisionShape2D.rotation_degrees = 0
-		
-func setPhysicsPropertiesWhenAttached():
-	if not spiderIsFalling and not spiderIsLaunchingWeb and not spiderOnWeb:
-		self.gravity_scale = 0
-		set_angular_velocity(0)
-	
 func setLinearVelocityWhenBeingLaunched():
 	if spiderIsBeingLaunched:
 		set_linear_velocity(launchSpeedVector * webLength * launchSpeed)
@@ -211,16 +232,6 @@ func applyImpulseWhenBeingLaunched():
 			webNode.apply_impulse(webNode.position,Vector2(-swingImpulse,0))
 		if dirKeys[3] and abs(self.rotation_degrees) <= maxImpulseAngle:
 			webNode.apply_impulse(webNode.position,Vector2(swingImpulse,0))
-
-func loadWebNodes():
-	webNode = get_node("../Web")
-	webPinJointNode = get_node("../Web/PinJoint2D")
-	bottomNode = get_node("../Web/Sprite/Position2DBottom")
-	
-func resetPressedDirKeys():
-	if spiderIsFalling or spiderIsLaunchingWeb:
-		for i in range(0,4):
-			dirKeys[i] = 0
 
 func repositionSpiderWhenStretchingWeb(state):
 	if spiderOnWeb:
@@ -332,3 +343,31 @@ func updateDirection():
 		!Input.is_action_pressed("ui_left") and 
 		!Input.is_action_pressed("ui_down")):
 			$AnimatedSprite.playing = false
+
+
+""" 
+*****************
+
+  Check Methods
+
+*****************
+""" 
+
+func canDropFromWeb():
+	return (spiderOnWeb and 
+			not spiderIsLaunchingWeb and
+			not spiderIsFalling)
+
+func canAttachOrDettach():
+	return (spiderInArea and 
+			not spiderIsLaunchingWeb and
+			not $StickTimer.time_left)
+
+func canWalk():
+	return (not spiderIsLaunchingWeb and 
+			not spiderIsFalling)
+
+func isAttached():
+	return (not spiderIsFalling and 
+			not spiderIsLaunchingWeb and 
+			not spiderOnWeb)
