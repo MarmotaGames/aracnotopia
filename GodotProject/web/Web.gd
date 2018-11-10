@@ -14,7 +14,6 @@ var superiorStretchLimit = 2
 var launchLimit = 3
 
 func _physics_process(delta):
-#	print(rotation_degrees)
 	if spiderNode.spiderOnWeb:
 		if Input.is_action_pressed("ui_down"):
 			stretch("down")

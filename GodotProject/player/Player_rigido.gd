@@ -14,6 +14,8 @@ var spiderOnWeb = false
 var spiderIsLaunchingWeb = false
 var properlyAligned = false
 var justLaunchedWeb = false
+var justAttached = false
+var lastWebRotationDegrees = 0
 
 var fallInit = true
 var fall = false
@@ -62,12 +64,10 @@ func _integrate_forces(state):
 		if y > 0:
 			y*=-1 #dark magic
 		set_linear_velocity(Vector2(x*-1,y)*webLength*velocidadeDeLancamento)
-#		print(linear_velocity.x)
-#		print(linear_velocity.y)
-#		print("pausa")
 		lancamento = false
 	
 func _physics_process(delta):
+	keepWebRotationWhenAttaching()
 	disableCollisionIfOnWeb()
 	
 	if fall:
@@ -114,6 +114,7 @@ func _physics_process(delta):
 	
 	if not spiderOnWeb:
 		if Input.is_action_pressed("launchWeb"):
+			justAttached = false
 			justLaunchedWeb = true
 			
 			if spiderIsLaunchingWeb:
@@ -151,6 +152,7 @@ func update_direction():
 			direction.x = 0
 		$AnimatedSprite.playing = true
 		justLaunchedWeb = false
+		justAttached = false
 		
 	if Input.is_action_pressed("ui_down"):
 		direction.y = 1
@@ -159,6 +161,7 @@ func update_direction():
 			direction.x = 0
 		$AnimatedSprite.playing = true
 		justLaunchedWeb = false
+		justAttached = false
 		
 	if Input.is_action_pressed("ui_left"):
 		direction.x = -1
@@ -167,6 +170,7 @@ func update_direction():
 			direction.y = 0
 		$AnimatedSprite.playing = true
 		justLaunchedWeb = false
+		justAttached = false
 		
 	if Input.is_action_pressed("ui_right"):
 		direction.x = 1
@@ -175,6 +179,7 @@ func update_direction():
 			direction.y = 0
 		$AnimatedSprite.playing = true
 		justLaunchedWeb = false
+		justAttached = false
 		
 	if Input.is_action_pressed("debug"):
 		self.rotation = PI	
@@ -202,12 +207,12 @@ func update_direction():
 func checkAttachOrDettach():
 	if Input.is_action_just_pressed("attachOrDetachFromArea") and spiderInArea and not $StickTimer.time_left:
 		if fall or spiderOnWeb:
+			justAttached = true
 			properlyAligned = false
 			set_linear_velocity(Vector2(0,0))
 			fall = false
 			direction.x = 0
 			direction.y = -1
-			rotation_degrees = 180
 			$AnimatedSprite.playing = false
 			$StickTimer.start()
 			if spiderOnWeb:
@@ -223,6 +228,7 @@ func update_rotation():
 	if spiderOnWeb:
 		if init:
 			self.rotation_degrees = webNode.rotation_degrees
+			lastWebRotationDegrees = webNode.rotation_degrees
 		else:
 			self.rotation_degrees = 0
 	
@@ -276,5 +282,8 @@ func disableCollisionIfOnWeb():
 	if spiderOnWeb:
 		spiderCollisionNode.set_disabled(true)
 	else:
-		spiderCollisionNode.set_disabled(false)		
-	
+		spiderCollisionNode.set_disabled(false)
+
+func keepWebRotationWhenAttaching():
+	if justAttached:
+		self.rotation_degrees = lastWebRotationDegrees
