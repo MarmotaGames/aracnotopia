@@ -27,8 +27,14 @@ func _on_StoneArea_area_entered(area):
 		
 		spiderNode.spiderOnWeb = true
 		spiderNode.spiderIsLaunchingWeb = false
+		if spiderNode.spiderIsFalling:
+			spiderNode.spiderIsFalling = false
 		stonePinJointNode.set_node_b("../../Web")
 		webPinJointNode.set_node_b("../../Spider")
+		
+		webNode.stretch("up")
+		webNode.stretch("down")
+		
 		
 		webNode.set_gravity_scale(5)
 

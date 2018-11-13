@@ -32,6 +32,7 @@ var dirKeys = [0, 0, 0, 0]
 
 var webInstance
 var launchSpeedVector
+var target
 
 
 """ 
@@ -77,6 +78,7 @@ func _physics_process(delta):
 func processDropFromWebInput():
 	if Input.is_action_just_pressed("dropFromWeb") and canDropFromWeb():
 		spiderIsFalling = true
+		properlyAligned = false
 		spiderIsBeingLaunched = true
 		var webAngularVelocity = webNode.angular_velocity
 		webLength = webNode.spriteScale.y
@@ -128,10 +130,10 @@ func processLaunchWebInput():
 				$AnimatedSprite.playing = true
 				webNode.show()
 			else:
-				if spiderIsMoving:
+				if spiderIsMoving and not spiderIsFalling:
 					spiderIsMoving = false
 					resetPressedDirKeys()
-				set_linear_velocity(Vector2(0,0))
+					set_linear_velocity(Vector2(0,0))
 				spiderIsLaunchingWeb = true
 				webInstance = web_scene.instance()
 				get_parent().add_child(webInstance)
@@ -251,13 +253,13 @@ func updateRotation():
 	
 	elif spiderIsLaunchingWeb:
 		if not properlyAligned:
-			look_at(get_global_mouse_position())
-			self.rotation_degrees += 90
-			webInstance.rotation_degrees = self.rotation_degrees
-			properlyAligned = true
-		else:
-			#bloqueia (ignora) a rotação enquanto lança teia
-			pass
+			target = get_global_mouse_position()
+			properlyAligned = true			
+		look_at(target)
+		#if not spiderIsFalling:
+		self.rotation_degrees += 90
+		webInstance.rotation_degrees = self.rotation_degrees
+
 		
 	elif not spiderIsFalling and not justLaunchedWeb:
 		if direction.x == 0:

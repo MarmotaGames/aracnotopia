@@ -7,8 +7,10 @@ onready var spriteScale = $Sprite.get_scale()
 onready var topPosition = $Sprite/Position2DTop.get_global_position()
 onready var bottomPosition = $Sprite/Position2DBottom.get_global_position()
 
+#var stretchSpeed = 0.015
+#var webLaunchSpeed = 0.06
 var stretchSpeed = 0.015
-var webLaunchSpeed = 0.06
+var webLaunchSpeed = 0.3
 var inferiorStretchLimit = 0.3
 var superiorStretchLimit = 2
 var launchLimit = 3

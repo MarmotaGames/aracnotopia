@@ -101,7 +101,7 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 
 scale = Vector2( 0.3, 0.3 )
 frames = SubResource( 2 )
-animation = "default"
+animation = "falling"
 script = ExtResource( 15 )
 _sections_unfolded = [ "Transform" ]
 
