@@ -30,6 +30,7 @@ func stretch(direction):
 		
 	$Sprite.set_scale(spriteScale)
 	$CollisionShape2D.set_scale(spriteScale)
+	$Polygon2D.set_scale(spriteScale)
 	
 	positionSprite(direction)
 	
@@ -46,7 +47,7 @@ func positionSprite(direction):
 	topPosition = $Sprite/Position2DTop.get_global_position()
 	bottomPosition = $Sprite/Position2DBottom.get_global_position()
 	
-	if spiderNode.spiderOnWeb:
+	if spiderNode.spiderOnWeb and stonePinJointNode:
 		var stonePinJointPosition = stonePinJointNode.get_global_position()
 		var topDifference = stonePinJointPosition - topPosition
 		
@@ -60,6 +61,7 @@ func positionSprite(direction):
 	
 	$Sprite.set_global_position(spritePosition)
 	$CollisionShape2D.set_global_position(spritePosition)
+	$Polygon2D.set_global_position(spritePosition)
 	
 func processStrechInput():
 	if spiderNode.spiderOnWeb:

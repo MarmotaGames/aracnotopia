@@ -43,7 +43,7 @@ custom_solver_bias = 0.0
 radius = 11.5
 height = 70.0
 
-[node name="Spider" type="RigidBody2D" index="0"]
+[node name="Spider" type="RigidBody2D"]
 
 input_pickable = false
 collision_layer = 2
@@ -101,7 +101,7 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 
 scale = Vector2( 0.3, 0.3 )
 frames = SubResource( 2 )
-animation = "falling"
+animation = "default"
 script = ExtResource( 15 )
 _sections_unfolded = [ "Transform" ]
 

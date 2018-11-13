@@ -34,6 +34,10 @@ var webInstance
 var launchSpeedVector
 var target
 
+var pos
+var stone
+var lengthToTarget
+
 
 """ 
 ******************
@@ -120,6 +124,7 @@ func processMovementInput():
 			spiderIsMoving = false
 		
 func processLaunchWebInput():
+	updateRotation()
 	if not spiderOnWeb:
 		if Input.is_action_pressed("launchWeb"):
 			justAttached = false
@@ -145,11 +150,33 @@ func processLaunchWebInput():
 				
 				webNode.set_gravity_scale(0)
 				
+				target = get_global_mouse_position()
+				var space_state = get_world_2d().direct_space_state
+				var result = space_state.intersect_ray(position,target, [self], collision_mask)
+				if result:
+					pos = result.position
+					stone = result.collider
+					makeWeb(pos,stone)
+				
+				
+				
+				
+				
+				
+				
 		elif Input.is_action_just_released("launchWeb"):
 			properlyAligned = false
 			if spiderIsLaunchingWeb:
 				spiderIsLaunchingWeb = false
 				webInstance.queue_free()
+				
+func makeWeb(pos,stone):
+	stonePinJointNode = stone.get_child(2)
+	webNode.stonePinJointNode = stonePinJointNode
+	webNode.positionSprite("down")
+	stonePinJointNode.set_global_position(pos)
+	
+
 				
 func processInputs():
 	processLaunchWebInput()
@@ -179,7 +206,7 @@ func matchWebRotationWhenAttaching():
 func setPhysicsPropertiesWhenAttached():
 	if isAttached():
 		self.gravity_scale = 0
-		set_angular_velocity(0)
+		#set_angular_velocity(0)
 
 func resetPressedDirKeys():
 	if spiderIsFalling or spiderIsLaunchingWeb:

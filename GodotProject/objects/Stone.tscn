@@ -13,7 +13,7 @@ extents = Vector2( 31, 31 )
 custom_solver_bias = 0.0
 extents = Vector2( 31, 31 )
 
-[node name="Stone" type="StaticBody2D" index="0"]
+[node name="Stone" type="StaticBody2D"]
 
 input_pickable = false
 collision_layer = 2
@@ -61,6 +61,21 @@ _sections_unfolded = [ "Collision", "Transform" ]
 
 shape = SubResource( 2 )
 _sections_unfolded = [ "Transform" ]
+
+[node name="Polygon2D" type="Polygon2D" parent="StoneArea" index="1"]
+
+polygon = PoolVector2Array( -30.873, -30.8488, 30.8187, -30.8488, 31.0046, 31.2038, -30.897, 31.2038 )
+uv = PoolVector2Array(  )
+color = Color( 1, 1, 1, 0 )
+vertex_colors = PoolColorArray(  )
+offset = Vector2( 0, 0 )
+antialiased = false
+texture = null
+texture_offset = Vector2( 0, 0 )
+texture_scale = Vector2( 1, 1 )
+texture_rotation_degrees = 0.0
+invert_enable = false
+invert_border = 100.0
 
 [connection signal="area_entered" from="StoneArea" to="StoneArea" method="_on_StoneArea_area_entered"]
 

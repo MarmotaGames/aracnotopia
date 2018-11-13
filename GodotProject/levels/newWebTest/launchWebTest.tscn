@@ -5,7 +5,7 @@
 [ext_resource path="res://objects/RoundStone.tscn" type="PackedScene" id=3]
 [ext_resource path="res://debug/dirKeysDebugger.tscn" type="PackedScene" id=4]
 
-[node name="Node2D" type="Node2D" index="0"]
+[node name="Node2D" type="Node2D"]
 
 [node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
@@ -16,7 +16,6 @@ _sections_unfolded = [ "Collision", "Linear", "Transform", "Visibility", "Z Inde
 
 [node name="Plataforma" parent="." index="1" instance=ExtResource( 2 )]
 
-editor/display_folded = true
 position = Vector2( 230.362, 579.981 )
 scale = Vector2( 0.612234, 1.06096 )
 z_index = -1

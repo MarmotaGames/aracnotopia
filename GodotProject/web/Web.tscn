@@ -13,7 +13,7 @@ extents = Vector2( 7.5, 116.5 )
 custom_solver_bias = 0.0
 extents = Vector2( 7.5, 116.5 )
 
-[node name="Web" type="RigidBody2D" index="0"]
+[node name="Web" type="RigidBody2D"]
 
 input_pickable = false
 collision_layer = 16
@@ -38,6 +38,7 @@ _sections_unfolded = [ "Angular", "Collision", "Linear", "Pickable", "Transform"
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
+editor/display_folded = true
 position = Vector2( 4.76837e-07, 0 )
 scale = Vector2( 0.3, 0.05 )
 texture = ExtResource( 2 )
@@ -88,5 +89,20 @@ bias = 0.9
 disable_collision = true
 softness = 0.0
 _sections_unfolded = [ "Transform" ]
+
+[node name="Polygon2D" type="Polygon2D" parent="." index="3"]
+
+polygon = PoolVector2Array( -2.23828, -5.82513, -2.24318, 5.81927, 2.26383, 5.80886, 2.26458, -5.82305 )
+uv = PoolVector2Array(  )
+color = Color( 1, 1, 1, 0 )
+vertex_colors = PoolColorArray(  )
+offset = Vector2( 0, 0 )
+antialiased = false
+texture = null
+texture_offset = Vector2( 0, 0 )
+texture_scale = Vector2( 1, 1 )
+texture_rotation_degrees = 0.0
+invert_enable = false
+invert_border = 100.0
 
 
