@@ -24,17 +24,22 @@ func loadNodes():
 	stonePinJointNode = get_node("../PinJoint2D")
 	
 func _on_StoneArea_area_entered(area):
-	if area.name == "WebArea" and not spiderNode.spiderOnWeb:
-		loadNodes()
-		spiderNode.spiderOnWeb = true
-		spiderNode.spiderIsLaunchingWeb = false
-		if spiderNode.spiderIsFalling:
-			spiderNode.spiderIsFalling = false
-		stonePinJointNode.set_node_b("../../Web")
-		webPinJointNode.set_node_b("../../Spider")
-		
-		webNode.stretch("up")
-		webNode.stretch("down")
-		
-		
-		webNode.set_gravity_scale(5)
+	var objeto = null
+	if spiderNode.result:
+		objeto = spiderNode.result.collider
+	if area.name == "WebArea" and not spiderNode.spiderOnWeb and objeto and objeto == get_parent():#spiderNode.result:
+		#break aqui para debug
+		if spiderNode.result != null:
+			loadNodes()
+			spiderNode.spiderOnWeb = true
+			spiderNode.spiderIsLaunchingWeb = false
+			if spiderNode.spiderIsFalling:
+				spiderNode.spiderIsFalling = false
+			stonePinJointNode.set_node_b("../../Web")
+			webPinJointNode.set_node_b("../../Spider")
+			
+			webNode.stretch("up")
+			webNode.stretch("down")
+			
+			
+			webNode.set_gravity_scale(5)

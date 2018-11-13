@@ -27,6 +27,18 @@ func stretch(direction):
 		spriteScale.y -= stretchSpeed
 	elif direction == "launch" and spriteScale.y < launchLimit:
 		spriteScale.y += webLaunchSpeed
+	elif spriteScale.y > launchLimit:
+		if spiderNode.spiderIsLaunchingWeb:
+			spiderNode.spiderIsLaunchingWeb = false
+			spiderNode.spiderOnWeb = false
+			spiderNode.failedLaunch = true
+			if not spiderNode.spiderInArea:
+				spiderNode.spiderIsFalling = true
+			self.queue_free()
+			return
+		else:
+			pass
+			return
 		
 	$Sprite.set_scale(spriteScale)
 	$CollisionShape2D.set_scale(spriteScale)
@@ -47,7 +59,7 @@ func positionSprite(direction):
 	topPosition = $Sprite/Position2DTop.get_global_position()
 	bottomPosition = $Sprite/Position2DBottom.get_global_position()
 	
-	if spiderNode.spiderOnWeb and stonePinJointNode:
+	if spiderNode.spiderOnWeb:
 		var stonePinJointPosition = stonePinJointNode.get_global_position()
 		var topDifference = stonePinJointPosition - topPosition
 		

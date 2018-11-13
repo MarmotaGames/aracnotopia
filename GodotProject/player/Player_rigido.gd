@@ -20,6 +20,7 @@ var spiderIsMoving = false
 var spiderIsFalling = false
 var spiderIsLaunchingWeb = false
 var spiderIsBeingLaunched = false
+var failedLaunch = false
 
 var justAttached = false
 var justLaunchedWeb = false
@@ -37,6 +38,8 @@ var target
 var pos
 var stone
 var lengthToTarget
+var result
+var webInit = false
 
 
 """ 
@@ -80,6 +83,7 @@ func _physics_process(delta):
 """ 
 
 func processDropFromWebInput():
+	webInit = false
 	if Input.is_action_just_pressed("dropFromWeb") and canDropFromWeb():
 		spiderIsFalling = true
 		properlyAligned = false
@@ -139,24 +143,26 @@ func processLaunchWebInput():
 					spiderIsMoving = false
 					resetPressedDirKeys()
 					set_linear_velocity(Vector2(0,0))
-				spiderIsLaunchingWeb = true
-				webInstance = web_scene.instance()
-				get_parent().add_child(webInstance)
-				loadWebNodes()
-				webNode.hide()
+				if not failedLaunch:
+					spiderIsLaunchingWeb = true
+					webInstance = web_scene.instance()
+					get_parent().add_child(webInstance)
+					loadWebNodes()
+					webNode.hide()
 				
-				var webPosition = self.global_position
-				webNode.set_global_position(webPosition)
-				
-				webNode.set_gravity_scale(0)
-				
-				target = get_global_mouse_position()
-				var space_state = get_world_2d().direct_space_state
-				var result = space_state.intersect_ray(position,target, [self], collision_mask)
-				if result:
-					pos = result.position
-					stone = result.collider
-					makeWeb(pos,stone)
+					var webPosition = self.global_position
+					webNode.set_global_position(webPosition)
+					
+					webNode.set_gravity_scale(0)
+					
+					target = get_global_mouse_position()
+					var space_state = get_world_2d().direct_space_state
+					result = space_state.intersect_ray(position,target, [self], collision_mask)
+					if result and not webInit:
+						pos = result.position
+						stone = result.collider
+						makeWeb(pos,stone)
+						webInit = true
 				
 				
 				
@@ -166,9 +172,12 @@ func processLaunchWebInput():
 				
 		elif Input.is_action_just_released("launchWeb"):
 			properlyAligned = false
+			webInit = false
 			if spiderIsLaunchingWeb:
 				spiderIsLaunchingWeb = false
 				webInstance.queue_free()
+			if failedLaunch:
+				failedLaunch = false
 				
 func makeWeb(pos,stone):
 	stonePinJointNode = stone.get_child(2)
