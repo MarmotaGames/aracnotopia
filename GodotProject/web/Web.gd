@@ -92,8 +92,12 @@ func positionSprite(direction):
 	$Polygon2D.set_global_position(spritePosition)
 	
 	if not direction == "launch":
-		$PinJoint2D.set_global_position(spiderNode.position)
-	
+		$PinJoint2D.set_global_position($Sprite/Position2DBottom.get_global_position())
+		
+#		webPinJointNode.set_node_b("")
+#		xform.origin = bottomPosition
+#		state.set_transform(xform)
+#		webPinJointNode.set_node_b("../../Spider")
 	
 func processStrechInput():
 	if spiderNode.spiderOnWeb:
