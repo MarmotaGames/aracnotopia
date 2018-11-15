@@ -1,6 +1,7 @@
 extends RigidBody2D
 
 onready var spiderNode = get_node("../Spider")
+onready var spinneretNode = get_node("../Spider/Spinneret")
 onready var stonePinJointNode = null
 
 onready var spriteScale = $Sprite.get_scale()
@@ -27,8 +28,9 @@ func stretch(direction):
 		spriteScale.y -= stretchSpeed
 	elif direction == "launch" and spriteScale.y < launchLimit:
 		spriteScale.y += webLaunchSpeed
-	elif spriteScale.y > launchLimit:
+	elif spriteScale.y > launchLimit: #atirou e não attachou em nada
 		if spiderNode.spiderIsLaunchingWeb:
+			# desinstanciar a teia
 			spiderNode.spiderIsLaunchingWeb = false
 			spiderNode.spiderOnWeb = false
 			spiderNode.failedLaunch = true
@@ -46,13 +48,14 @@ func stretch(direction):
 	
 	positionSprite(direction)
 	
-	$PinJoint2D.set_global_position(bottomPosition)
+	#$PinJoint2D.set_global_position(bottomPosition)	
 	
 func positionSprite(direction):
-	if spiderNode.spiderIsLaunchingWeb:
-		if spriteScale.y > launchLimit:
-			return
+#	if spiderNode.spiderIsLaunchingWeb:
+#		if spriteScale.y > launchLimit:
+#			return
 
+	"""
 	var spiderPosition = spiderNode.get_global_position()
 	var spritePosition = $Sprite.get_global_position()
 	
@@ -74,6 +77,23 @@ func positionSprite(direction):
 	$Sprite.set_global_position(spritePosition)
 	$CollisionShape2D.set_global_position(spritePosition)
 	$Polygon2D.set_global_position(spritePosition)
+	"""
+	var offset
+	if direction == "launch":
+		offset = spiderNode.position - $Sprite/Position2DBottom.get_global_position()
+		
+	if direction == "down" or direction == "up":
+		offset = stonePinJointNode.get_global_position() - $Sprite/Position2DTop.get_global_position()
+	
+	var spritePosition = $Sprite.get_global_position()
+	spritePosition += offset
+	$Sprite.set_global_position(spritePosition)
+	$CollisionShape2D.set_global_position(spritePosition)
+	$Polygon2D.set_global_position(spritePosition)
+	
+	if not direction == "launch":
+		$PinJoint2D.set_global_position(spiderNode.position)
+	
 	
 func processStrechInput():
 	if spiderNode.spiderOnWeb:

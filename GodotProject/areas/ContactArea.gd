@@ -35,6 +35,18 @@ func _on_StoneArea_area_entered(area):
 			spiderNode.spiderIsLaunchingWeb = false
 			if spiderNode.spiderIsFalling:
 				spiderNode.spiderIsFalling = false
+				
+			webNode.stonePinJointNode = stonePinJointNode
+			#webNode.positionSprite("down")
+			var stonePinJointPosition
+			var webPosition2DTop = get_node("../../Web/Sprite/Position2DTop").get_global_position()
+			if webTopInStone(webPosition2DTop):
+				stonePinJointPosition = webPosition2DTop
+			else:
+				stonePinJointPosition = spiderNode.result.position
+			
+			
+			stonePinJointNode.set_global_position(stonePinJointPosition)
 			stonePinJointNode.set_node_b("../../Web")
 			webPinJointNode.set_node_b("../../Spider")
 			
@@ -43,3 +55,11 @@ func _on_StoneArea_area_entered(area):
 			
 			
 			webNode.set_gravity_scale(5)
+			
+func webTopInStone(webPosition2DTop):
+	var stonePosition = get_parent().get_global_position()
+	var halfsize = get_parent().scale.x * 512 / 2
+	if webPosition2DTop.x < stonePosition.x + halfsize and webPosition2DTop.x > stonePosition.x - halfsize and webPosition2DTop.y < stonePosition.y + halfsize and webPosition2DTop.y > stonePosition.y - halfsize:
+		return true
+	else:
+		return false
