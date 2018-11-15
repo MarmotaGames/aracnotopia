@@ -387,6 +387,8 @@ func updateDirection():
 		!Input.is_action_pressed("ui_left") and 
 		!Input.is_action_pressed("ui_down")):
 			$AnimatedSprite.playing = false
+		if spiderOnWeb and abs(self.rotation_degrees) > maxImpulseAngle:
+			$AnimatedSprite.playing = false
 
 
 """ 
