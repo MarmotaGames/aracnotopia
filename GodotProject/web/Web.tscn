@@ -84,24 +84,7 @@ scale = Vector2( 0.3, 0.05 )
 shape = SubResource( 2 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="PinJoint2D" type="PinJoint2D" parent="." index="2"]
-
-editor/display_folded = true
-position = Vector2( 0, 5 )
-scale = Vector2( 0.2, 0.2 )
-node_a = NodePath("..")
-node_b = NodePath("")
-bias = 0.9
-disable_collision = true
-softness = 0.0
-_sections_unfolded = [ "Transform" ]
-
-[node name="Sprite" type="Sprite" parent="PinJoint2D" index="0"]
-
-texture = ExtResource( 4 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="Polygon2D" type="Polygon2D" parent="." index="3"]
+[node name="Polygon2D" type="Polygon2D" parent="." index="2"]
 
 polygon = PoolVector2Array( -2.23828, -5.82513, -2.24318, 5.81927, 2.26383, 5.80886, 2.26458, -5.82305 )
 uv = PoolVector2Array(  )
@@ -115,5 +98,22 @@ texture_scale = Vector2( 1, 1 )
 texture_rotation_degrees = 0.0
 invert_enable = false
 invert_border = 100.0
+
+[node name="PinJoint2D" type="PinJoint2D" parent="." index="3"]
+
+editor/display_folded = true
+position = Vector2( 0, 5 )
+scale = Vector2( 0.2, 0.2 )
+node_a = NodePath("..")
+node_b = NodePath("")
+bias = 0.9
+disable_collision = false
+softness = 0.0
+_sections_unfolded = [ "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="PinJoint2D" index="0"]
+
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform" ]
 
 

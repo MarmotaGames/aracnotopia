@@ -12,6 +12,7 @@ var launchSpeed = 600
 var swingImpulse = 400
 var movementSpeed = 300
 var maxImpulseAngle = 45
+var maxStretchAngle = 80
 var lastWebRotationDegrees = 0
 
 var spiderOnWeb = false
@@ -96,6 +97,9 @@ func processDropFromWebInput():
 		#The "abs" on the yComponent makes the spider go up even
 		#if the web is going down
 		
+		
+		webInstance.queue_free()
+		
 func processAttachOrDetachInput():
 	if Input.is_action_just_pressed("attachOrDetachFromArea") and canAttachOrDettach():
 		if spiderIsFalling or spiderOnWeb:
@@ -107,6 +111,7 @@ func processAttachOrDetachInput():
 			$AnimatedSprite.playing = false
 			$StickTimer.start()
 			if spiderOnWeb:
+				loadWebNodes()
 				justAttached = true
 				spiderOnWeb = false
 				webPinJointNode.set_node_b("")
@@ -387,7 +392,7 @@ func updateDirection():
 		!Input.is_action_pressed("ui_left") and 
 		!Input.is_action_pressed("ui_down")):
 			$AnimatedSprite.playing = false
-		if spiderOnWeb and abs(self.rotation_degrees) > maxImpulseAngle:
+		if spiderOnWeb and (abs(self.rotation_degrees) > maxImpulseAngle and not((dirKeys[0] or dirKeys[1]) and abs(self.rotation_degrees) < maxStretchAngle)):
 			$AnimatedSprite.playing = false
 
 

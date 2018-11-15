@@ -15,6 +15,7 @@ var webLaunchSpeed = 0.3
 var inferiorStretchLimit = 0.3
 var superiorStretchLimit = 2
 var launchLimit = 3
+var maxStretchAngle = 80
 
 func _physics_process(delta):
 	processStrechInput()
@@ -101,9 +102,9 @@ func positionSprite(direction):
 	
 func processStrechInput():
 	if spiderNode.spiderOnWeb:
-		if Input.is_action_pressed("ui_down"):
+		if Input.is_action_pressed("ui_down") and abs(self.rotation_degrees) <= maxStretchAngle:
 			stretch("down")
-		elif Input.is_action_pressed("ui_up"):
+		elif Input.is_action_pressed("ui_up") and abs(self.rotation_degrees) <= maxStretchAngle:
 			stretch("up")
 		else:
 			pass

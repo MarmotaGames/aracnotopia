@@ -37,6 +37,7 @@ func _on_StoneArea_area_entered(area):
 				spiderNode.spiderIsFalling = false
 				
 			webNode.stonePinJointNode = stonePinJointNode
+			spiderNode.stonePinJointNode = stonePinJointNode
 			#webNode.positionSprite("down")
 			var stonePinJointPosition
 			var webPosition2DTop = get_node("../../Web/Sprite/Position2DTop").get_global_position()
