@@ -158,13 +158,14 @@ func processLaunchWebInput():
 					
 					webNode.set_gravity_scale(0)
 					
-					target = get_global_mouse_position()
-					var space_state = get_world_2d().direct_space_state
-					result = space_state.intersect_ray(position,target, [self], collision_mask)
+					if not webInit:
+						target = get_global_mouse_position()
+						var space_state = get_world_2d().direct_space_state
+						result = space_state.intersect_ray(position,target, [self], collision_mask)
 					if result and not webInit:
 						pos = result.position
-						stone = result.collider
-						makeWeb(pos,stone)
+						#stone = result.collider
+						#makeWeb(pos,stone)
 						webInit = true
 				
 				
@@ -212,8 +213,9 @@ func disableSpiderCollisionIfOnWeb():
 		spiderCollisionNode.set_disabled(false)
 
 func matchWebRotationWhenAttaching():
-	if justAttached:
-		self.rotation_degrees = lastWebRotationDegrees
+	pass
+#	if justAttached:
+#		self.rotation_degrees = lastWebRotationDegrees
 
 func setPhysicsPropertiesWhenAttached():
 	if isAttached():
@@ -270,9 +272,13 @@ func setLinearVelocityWhenBeingLaunched():
 func applyImpulseWhenBeingLaunched():
 	if spiderOnWeb:
 		if dirKeys[2] and abs(self.rotation_degrees) <= maxImpulseAngle:
-			webNode.apply_impulse(webNode.position,Vector2(-swingImpulse,0))
+			webNode.apply_impulse(position,Vector2(-swingImpulse,0))
+			#apply_impulse(position,Vector2(-swingImpulse,0))
 		if dirKeys[3] and abs(self.rotation_degrees) <= maxImpulseAngle:
-			webNode.apply_impulse(webNode.position,Vector2(swingImpulse,0))
+			webNode.apply_impulse(position,Vector2(swingImpulse,0))
+			#apply_impulse(position,Vector2(swingImpulse,0))
+		webNode.stretch("up")
+		webNode.stretch("down")
 
 func repositionSpiderWhenStretchingWeb(state):
 	if spiderOnWeb:

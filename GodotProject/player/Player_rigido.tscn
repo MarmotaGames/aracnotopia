@@ -80,6 +80,7 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="SpiderFallingArea" type="Area2D" parent="." index="1"]
 
+editor/display_folded = true
 position = Vector2( 0, 26.3761 )
 scale = Vector2( 0.500001, 0.500001 )
 input_pickable = true
@@ -102,6 +103,7 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="." index="2"]
 
+editor/display_folded = true
 scale = Vector2( 0.3, 0.3 )
 frames = SubResource( 2 )
 animation = "default"
@@ -160,5 +162,10 @@ process_mode = 1
 wait_time = 0.1
 one_shot = true
 autostart = false
+
+[node name="Spinneret" type="Position2D" parent="." index="5"]
+
+position = Vector2( 0, -54 )
+_sections_unfolded = [ "Transform" ]
 
 

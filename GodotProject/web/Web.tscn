@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://web/Web.gd" type="Script" id=1]
 [ext_resource path="res://assets/web/newWeb.png" type="Texture" id=2]
+[ext_resource path="res://assets/web/Ball.png" type="Texture" id=3]
+[ext_resource path="res://icon.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -38,7 +40,6 @@ _sections_unfolded = [ "Angular", "Collision", "Linear", "Pickable", "Transform"
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
-editor/display_folded = true
 position = Vector2( 4.76837e-07, 0 )
 scale = Vector2( 0.3, 0.05 )
 texture = ExtResource( 2 )
@@ -50,12 +51,7 @@ position = Vector2( 0, -116.5 )
 scale = Vector2( 1, 1.25 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Position2DBottom" type="Position2D" parent="Sprite" index="1"]
-
-position = Vector2( 0, 116.5 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="WebArea" type="Area2D" parent="Sprite" index="2"]
+[node name="WebArea" type="Area2D" parent="Sprite" index="1"]
 
 scale = Vector2( 3, 2 )
 input_pickable = true
@@ -73,6 +69,15 @@ scale = Vector2( 0.3, 0.5 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
+[node name="Position2DBottom" type="Position2D" parent="Sprite" index="2"]
+
+position = Vector2( 0, 116.5 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="Sprite/Position2DBottom" index="0"]
+
+texture = ExtResource( 3 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
 scale = Vector2( 0.3, 0.05 )
@@ -81,6 +86,7 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="PinJoint2D" type="PinJoint2D" parent="." index="2"]
 
+editor/display_folded = true
 position = Vector2( 0, 5 )
 scale = Vector2( 0.2, 0.2 )
 node_a = NodePath("..")
@@ -88,6 +94,11 @@ node_b = NodePath("")
 bias = 0.9
 disable_collision = true
 softness = 0.0
+_sections_unfolded = [ "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="PinJoint2D" index="0"]
+
+texture = ExtResource( 4 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Polygon2D" type="Polygon2D" parent="." index="3"]

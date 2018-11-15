@@ -189,4 +189,16 @@ scale = Vector2( 9, 10 )
 _sections_unfolded = [ "Collision", "Transform" ]
 spawn = Vector2( 150, 895 )
 
+[node name="Stone7" parent="." index="9" instance=ExtResource( 3 )]
+
+position = Vector2( 528.942, 484.953 )
+
+[node name="Stone8" parent="." index="10" instance=ExtResource( 3 )]
+
+position = Vector2( 740.597, 433.33 )
+
+[node name="Stone9" parent="." index="11" instance=ExtResource( 3 )]
+
+position = Vector2( 983.225, 397.194 )
+
 
