@@ -6,6 +6,8 @@ var center
 var count = 360
 var angle_step = 2.0*PI / count
 var web_step = 5
+var maxLength = 800
+var minLength = 60
 
 func _ready():
 	center = get_node("../Stone").position
@@ -13,10 +15,10 @@ func _ready():
 
 
 func _process(delta):
-	if Input.is_action_pressed("ui_down"):
+	if Input.is_action_pressed("ui_down") and radius < maxLength:
 		radius += web_step
 		reposition()
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("ui_up") and radius > minLength:
 		radius -= web_step
 		reposition()
 	if Input.is_action_pressed("attachOrDetachFromArea"):
