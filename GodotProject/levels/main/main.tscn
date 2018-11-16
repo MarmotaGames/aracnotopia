@@ -15,10 +15,9 @@ extents = Vector2( 10, 10 )
 [node name="Root" type="Sprite"]
 
 position = Vector2( -0.747841, -0.676454 )
-scale = Vector2( 0.800754, 0.834559 )
 z_index = -1
 centered = false
-_sections_unfolded = [ "Offset", "Z Index" ]
+_sections_unfolded = [ "Offset", "Transform", "Z Index" ]
 
 [node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
@@ -28,7 +27,6 @@ _sections_unfolded = [ "Collision", "Linear", "Transform", "Z Index" ]
 
 [node name="BackgroundSprite" type="Sprite" parent="." index="1"]
 
-editor/display_folded = true
 show_behind_parent = true
 position = Vector2( 1281.33, 720.982 )
 scale = Vector2( 2, 2 )
@@ -61,7 +59,6 @@ polygon = PoolVector2Array( 4.53057, 253.433, 27.4169, 252.457, 34.5371, 248.553
 
 [node name="DeathArea" type="Area2D" parent="BackgroundSprite" index="1"]
 
-editor/display_folded = true
 visible = false
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )

@@ -1,0 +1,71 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://levels/newWebTest/Line2D.gd" type="Script" id=1]
+[ext_resource path="res://test/InocuousStone.tscn" type="PackedScene" id=2]
+[ext_resource path="res://test/CollisionCircleSpawer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://test/KinematicBallPlayer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://debug/dirKeysDebugger.tscn" type="PackedScene" id=5]
+[ext_resource path="res://debug/AngleDebugger.gd" type="Script" id=6]
+
+[node name="Node2D" type="Node2D" index="0"]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="Line2D" type="Line2D" parent="." index="0"]
+
+points = PoolVector2Array( 0, 0, 0, 0 )
+width = 4.0
+default_color = Color( 0.4, 0.5, 1, 1 )
+texture_mode = 5
+sharp_limit = 2.0
+round_precision = 8
+script = ExtResource( 1 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." index="1"]
+
+editor/display_folded = true
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" index="0"]
+
+[node name="Stone" parent="." index="2" instance=ExtResource( 2 )]
+
+collision_layer = 0
+collision_mask = 0
+
+[node name="Node2D" parent="." index="3" instance=ExtResource( 3 )]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="KinematicBody2D" parent="." index="4" instance=ExtResource( 4 )]
+
+position = Vector2( 8.60962, -73.0077 )
+
+[node name="Debugger" parent="." index="5" instance=ExtResource( 5 )]
+
+visible = false
+script = ExtResource( 6 )
+
+[node name="Stone2" parent="." index="6" instance=ExtResource( 2 )]
+
+position = Vector2( 108.283, 515.18 )
+
+[node name="Stone3" parent="." index="7" instance=ExtResource( 2 )]
+
+position = Vector2( -144.054, 886.051 )
+
+[node name="Stone4" parent="." index="8" instance=ExtResource( 2 )]
+
+position = Vector2( 211.158, 1224.14 )
+
+[node name="Stone5" parent="." index="9" instance=ExtResource( 2 )]
+
+position = Vector2( -194.778, 1663.43 )
+
+

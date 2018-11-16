@@ -45,7 +45,6 @@ func stretch(direction):
 		
 	$Sprite.set_scale(spriteScale)
 	$CollisionShape2D.set_scale(spriteScale)
-	$Polygon2D.set_scale(spriteScale)
 	
 	positionSprite(direction)
 	
@@ -90,7 +89,6 @@ func positionSprite(direction):
 	spritePosition += offset
 	$Sprite.set_global_position(spritePosition)
 	$CollisionShape2D.set_global_position(spritePosition)
-	$Polygon2D.set_global_position(spritePosition)
 	
 	if not direction == "launch":
 		$PinJoint2D.set_global_position($Sprite/Position2DBottom.get_global_position())

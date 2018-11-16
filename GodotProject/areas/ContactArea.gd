@@ -4,6 +4,7 @@ onready var spiderNode = get_node("../../Spider")
 onready var stonePinJointNode
 onready var webNode
 onready var webPinJointNode
+onready var webBottom
 
 var polygon_shape
 var list
@@ -20,6 +21,7 @@ func _on_ContactArea_area_exited(area):
 
 func loadNodes():
 	webNode = get_node("../../Web")
+	webBottom = get_node("../../Web/Sprite/Position2DBottom")
 	webPinJointNode = get_node("../../Web/PinJoint2D")
 	stonePinJointNode = get_node("../PinJoint2D")
 	
@@ -47,12 +49,13 @@ func _on_StoneArea_area_entered(area):
 				stonePinJointPosition = spiderNode.result.position
 			
 			
-			stonePinJointNode.set_global_position(stonePinJointPosition)
+			stonePinJointNode.set_global_position(spiderNode.result.position)
+			webNode.positionSprite("up")
 			stonePinJointNode.set_node_b("../../Web")
 			webPinJointNode.set_node_b("../../Spider")
 			
-			webNode.stretch("up")
-			webNode.stretch("down")
+			#webNode.stretch("up")
+			#webNode.stretch("down")
 			
 			
 			webNode.set_gravity_scale(5)

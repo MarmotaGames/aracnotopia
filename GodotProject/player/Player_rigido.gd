@@ -50,6 +50,9 @@ var webInit = false
 
 ******************
 """ 
+func _draw():
+	if spiderOnWeb:
+		draw_line(result.position, target, Color(255, 0, 0))
 
 func _ready():
 	if spiderOnWeb:
@@ -59,6 +62,7 @@ func _integrate_forces(state):
 	repositionSpiderWhenStretchingWeb(state)
 		
 func _physics_process(delta):
+	update()
 	processInputs()
 	
 	disableSpiderCollisionIfOnWeb()
@@ -97,8 +101,8 @@ func processDropFromWebInput():
 		#The "abs" on the yComponent makes the spider go up even
 		#if the web is going down
 		
-		
-		webInstance.queue_free()
+		#webNode.queue_free()		
+		#webInstance.queue_free()
 		
 func processAttachOrDetachInput():
 	if Input.is_action_just_pressed("attachOrDetachFromArea") and canAttachOrDettach():
@@ -169,6 +173,7 @@ func processLaunchWebInput():
 						#stone = result.collider
 						#makeWeb(pos,stone)
 						webInit = true
+						target = pos
 				
 				
 				
@@ -215,14 +220,14 @@ func disableSpiderCollisionIfOnWeb():
 		spiderCollisionNode.set_disabled(false)
 
 func matchWebRotationWhenAttaching():
-	pass
-#	if justAttached:
-#		self.rotation_degrees = lastWebRotationDegrees
+
+	if justAttached:
+		self.rotation_degrees = lastWebRotationDegrees
 
 func setPhysicsPropertiesWhenAttached():
 	if isAttached():
 		self.gravity_scale = 0
-		#set_angular_velocity(0)
+		set_angular_velocity(0)
 
 func resetPressedDirKeys():
 	if spiderIsFalling or spiderIsLaunchingWeb:
