@@ -58,6 +58,8 @@ _sections_unfolded = [ "Transform" ]
 [node name="Spider" parent="." index="2" instance=ExtResource( 2 )]
 
 position = Vector2( 147.291, 895.244 )
+z_index = 1
+_sections_unfolded = [ "Collision", "Linear", "Transform", "Z Index" ]
 
 [node name="Stone" parent="." index="3" instance=ExtResource( 3 )]
 
