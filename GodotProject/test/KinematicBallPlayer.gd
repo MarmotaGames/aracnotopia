@@ -3,22 +3,75 @@ extends KinematicBody2D
 var x_speed = Vector2(0,0)
 var gravity = Vector2(0,500)
 var ballSpeed = 900
-	
+var remainingSpeed = Vector2(0,0)
+var normal = 0
+var remainingSpeedStep = 50
+var move
+var previousAngle = 0.0
+var phase
+var angle
+
 func _physics_process(delta):
+	phase = calculateMotion()
+	previousAngle = angle
 	if get_node("../Line2D").webAngle > 0.7 and get_node("../Line2D").webAngle  <2.3:
 		if Input.is_action_pressed("ui_right"):
 			x_speed=Vector2(ballSpeed,0)
 		if Input.is_action_pressed("ui_left"):
 			x_speed=Vector2(-ballSpeed,0)
 	if Input.is_action_just_released("ui_right") or Input.is_action_just_released("ui_left"):
-		x_speed=Vector2(0,0)
+		remainingSpeed = x_speed
 		
-#	if Input.is_action_pressed("ui_down"):
-#		get_node("../Node2D").radius += get_node("../Node2D").web_step
-#		get_node("../Node2D").reposition()
-#	if Input.is_action_pressed("ui_up"):
-#		get_node("../Node2D").radius -= get_node("../Node2D").web_step
-#		get_node("../Node2D").reposition()
+	if remainingSpeed != Vector2(0,0):
+		if remainingSpeed.x > remainingSpeedStep:
+			remainingSpeed.x -= remainingSpeedStep
+		elif remainingSpeed.x < -remainingSpeedStep:
+			remainingSpeed.x += remainingSpeedStep
+		else:
+			remainingSpeed.x = 0
+			
+		if remainingSpeed.y < 0:
+			remainingSpeed.y += remainingSpeedStep
+		else:
+			remainingSpeed.y = 0
+		x_speed = remainingSpeed
+	if Input.is_action_just_pressed("attachOrDetachFromArea"):
+		var launchAngle = move.collider.rotation
+		if phase == "leftGoingLeft" or phase == "rightGoingLeft": 
+			launchAngle += PI/2
+		if phase == "leftGoingRight" or phase == "rightGoingRight": 
+			launchAngle -= PI/2
+
+		x_speed = Vector2(cos(launchAngle), sin(launchAngle))*2500
+		#x_speed.y *= -1
+		remainingSpeed = x_speed
+	
+
 	
 	move_and_slide(x_speed+gravity)
+	move = get_slide_collision(0)
+	if move:
+		normal = move.remainder
+		
+func calculateMotion():
+	angle = get_node("../Line2D").webAngle
+	
+	if angle == previousAngle:
+		return("still")
+	if angle > previousAngle: #GOING LEFT
+		if angle > PI / 2:
+			return("leftGoingLeft")
+		elif angle < PI / 2:
+			return("rightGoingLeft")
+		else:
+			return("deadBottomGoingLeft")
+	else: #GOING RIGHT
+		if angle > PI / 2:
+			return("leftGoingRight")
+		elif angle < PI / 2:
+			return("rightGoingRight")
+		else:
+			return("deadBottomGoingRight")
+		
+	
 		
