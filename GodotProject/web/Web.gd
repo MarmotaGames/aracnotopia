@@ -13,7 +13,7 @@ var stretchSpeed = 0.015
 var webLaunchSpeed = 0.3
 var inferiorStretchLimit = 0.3
 var superiorStretchLimit = 2
-var launchLimit = 3
+var launchLimit = 4
 
 func _physics_process(delta):
 	processStrechInput()

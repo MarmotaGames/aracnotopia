@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://areas/DeathArea.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[node name="DeathArea" type="Area2D"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 16401
+audio_bus_override = false
+audio_bus_name = "Master"
+script = ExtResource( 1 )
+_sections_unfolded = [ "Collision" ]
+spawn = Vector2( 1900, 950 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
+
+position = Vector2( -4.20279, -2.20673 )
+scale = Vector2( 64.1344, 35.7631 )
+shape = SubResource( 1 )
+
+[node name="Timer" type="Timer" parent="." index="1"]
+
+process_mode = 1
+wait_time = 3.0
+one_shot = true
+autostart = false
+
+[connection signal="area_exited" from="." to="." method="_on_DeathArea_area_exited"]
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+
