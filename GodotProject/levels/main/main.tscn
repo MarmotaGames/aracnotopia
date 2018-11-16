@@ -1,19 +1,23 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://player/Player_rigido.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/background/background.png" type="Texture" id=2]
 [ext_resource path="res://areas/ContactArea.gd" type="Script" id=3]
-[ext_resource path="res://areas/DeathArea.tscn" type="PackedScene" id=4]
+[ext_resource path="res://areas/DeathArea.gd" type="Script" id=4]
 [ext_resource path="res://objects/Stone.tscn" type="PackedScene" id=5]
 [ext_resource path="res://objects/RoundStone.tscn" type="PackedScene" id=6]
 
-[node name="Root" type="Sprite"]
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[node name="Root" type="Sprite" index="0"]
 
 position = Vector2( -0.747841, -0.676454 )
-scale = Vector2( 0.800754, 0.834559 )
 z_index = -1
 centered = false
-_sections_unfolded = [ "Offset", "Z Index" ]
+_sections_unfolded = [ "Offset", "Transform", "Z Index" ]
 
 [node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
@@ -23,7 +27,6 @@ _sections_unfolded = [ "Collision", "Linear", "Transform", "Z Index" ]
 
 [node name="BackgroundSprite" type="Sprite" parent="." index="1"]
 
-editor/display_folded = true
 show_behind_parent = true
 position = Vector2( 1281.33, 720.982 )
 scale = Vector2( 2, 2 )
@@ -54,42 +57,64 @@ polygon = PoolVector2Array( 171.012, 360.176, 161.063, 337.806, 153.192, 319.995
 build_mode = 0
 polygon = PoolVector2Array( 4.53057, 253.433, 27.4169, 252.457, 34.5371, 248.553, 40.6401, 258.801, 50.8118, 284.664, 59.4578, 313.943, 71.6638, 342.246, 82.8527, 364.693, 92.5158, 377.869, 82.3441, 409.1, 72.1724, 447.651, 71.4964, 449.947, 73.9324, 451.701, 74.846, 463.095, 66.3197, 482.963, 59.0115, 504.584, 56.88, 520.361, 50.7898, 535.555, 42.2635, 544.32, 31.0714, 547.983, 19.1374, 555.47, 3.99049, 563.398, 3.99049, 686.711, 20.9734, 673.94, 47.1363, 655.442, 71.4632, 642.23, 119.658, 626.816, 145.821, 615.806, 166.935, 599.511, 190.344, 581.895, 202.737, 563.398, 212.835, 541.818, 218.802, 514.953, 215.618, 470.17, 210.568, 425.2, 209.677, 403.055, 209.314, 378.684, 211.989, 357.115, 207.018, 328.895, 187.963, 277.224, 162.279, 229.926, 131.211, 181.037, 95.1717, 138.111, 67.5707, 114.338, 24.8128, 109.335, 3.95523, 113.337 )
 
-[node name="DeathArea" parent="." index="2" instance=ExtResource( 4 )]
+[node name="DeathArea" type="Area2D" parent="BackgroundSprite" index="1"]
 
-position = Vector2( 1281.33, 720.982 )
-scale = Vector2( 2, 2 )
+visible = false
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 16401
+audio_bus_override = false
+audio_bus_name = "Master"
+script = ExtResource( 4 )
+_sections_unfolded = [ "Collision" ]
 
-[node name="Stone" parent="." index="3" instance=ExtResource( 5 )]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BackgroundSprite/DeathArea" index="0"]
+
+position = Vector2( -4.20279, -2.20673 )
+scale = Vector2( 64.1344, 35.7631 )
+shape = SubResource( 1 )
+
+[node name="Timer" type="Timer" parent="BackgroundSprite/DeathArea" index="1"]
+
+process_mode = 1
+wait_time = 3.0
+one_shot = true
+autostart = false
+
+[node name="Stone" parent="." index="2" instance=ExtResource( 5 )]
 
 position = Vector2( 674.527, 263.116 )
 
-[node name="Stone2" parent="." index="4" instance=ExtResource( 5 )]
+[node name="Stone2" parent="." index="3" instance=ExtResource( 5 )]
 
 position = Vector2( 894.673, 232.082 )
 
-[node name="RoundStone" parent="." index="5" instance=ExtResource( 6 )]
+[node name="RoundStone" parent="." index="4" instance=ExtResource( 6 )]
 
 position = Vector2( 405.654, 311.913 )
 
-[node name="RoundStone2" parent="." index="6" instance=ExtResource( 6 )]
+[node name="RoundStone2" parent="." index="5" instance=ExtResource( 6 )]
 
 position = Vector2( 1120.7, 920.297 )
 _sections_unfolded = [ "Collision", "Transform" ]
 
-[node name="RoundStone3" parent="." index="7" instance=ExtResource( 6 )]
+[node name="RoundStone3" parent="." index="6" instance=ExtResource( 6 )]
 
 position = Vector2( 1029.21, 355.843 )
 
-[node name="RoundStone4" parent="." index="8" instance=ExtResource( 6 )]
+[node name="RoundStone4" parent="." index="7" instance=ExtResource( 6 )]
 
 position = Vector2( 187.059, 207.412 )
 
-[node name="RoundStone5" parent="." index="9" instance=ExtResource( 6 )]
+[node name="RoundStone5" parent="." index="8" instance=ExtResource( 6 )]
 
 position = Vector2( 1644.71, 340.492 )
 _sections_unfolded = [ "Collision", "Transform" ]
 
-[node name="RoundStone6" parent="." index="10" instance=ExtResource( 6 )]
+[node name="RoundStone6" parent="." index="9" instance=ExtResource( 6 )]
 
 position = Vector2( 1962.96, 397.502 )
 
@@ -101,4 +126,6 @@ position = Vector2( 1962.96, 397.502 )
 
 [connection signal="body_exited" from="BackgroundSprite/ContactArea" to="BackgroundSprite/ContactArea" method="_on_Area2D_body_exited"]
 
+[connection signal="area_exited" from="BackgroundSprite/DeathArea" to="BackgroundSprite/DeathArea" method="_on_DeathArea_area_exited"]
 
+[connection signal="timeout" from="BackgroundSprite/DeathArea/Timer" to="BackgroundSprite/DeathArea" method="_on_Timer_timeout"]

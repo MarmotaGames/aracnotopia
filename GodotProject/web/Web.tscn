@@ -43,7 +43,7 @@ _sections_unfolded = [ "Angular", "Collision", "Linear", "Pickable", "Transform"
 position = Vector2( 4.76837e-07, 0 )
 scale = Vector2( 0.3, 0.05 )
 texture = ExtResource( 2 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="Position2DTop" type="Position2D" parent="Sprite" index="0"]
 
@@ -84,22 +84,7 @@ scale = Vector2( 0.3, 0.05 )
 shape = SubResource( 2 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="Polygon2D" type="Polygon2D" parent="." index="2"]
-
-polygon = PoolVector2Array( -2.23828, -5.82513, -2.24318, 5.81927, 2.26383, 5.80886, 2.26458, -5.82305 )
-uv = PoolVector2Array(  )
-color = Color( 1, 1, 1, 0 )
-vertex_colors = PoolColorArray(  )
-offset = Vector2( 0, 0 )
-antialiased = false
-texture = null
-texture_offset = Vector2( 0, 0 )
-texture_scale = Vector2( 1, 1 )
-texture_rotation_degrees = 0.0
-invert_enable = false
-invert_border = 100.0
-
-[node name="PinJoint2D" type="PinJoint2D" parent="." index="3"]
+[node name="PinJoint2D" type="PinJoint2D" parent="." index="2"]
 
 editor/display_folded = true
 position = Vector2( 0, 5 )
