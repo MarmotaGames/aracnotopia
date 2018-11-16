@@ -8,6 +8,7 @@ var angle_step = 2.0*PI / count
 var web_step = 5
 var maxLength = 800
 var minLength = 60
+var shouldCreate = false
 
 func _ready():
 	center = get_node("../Stone").position
@@ -25,12 +26,12 @@ func _process(delta):
 		killCircle()
 		get_node("../Line2D").hide()
 		
-	if Input.is_action_just_pressed("launchWeb"):
-		center = get_global_mouse_position()
+	if shouldCreate:
 		get_node("../Line2D").points[1] = center
 		radius = center.distance_to(get_node("../KinematicBody2D").get_global_position())+14
 		create()
 		get_node("../Line2D").show()
+		shouldCreate = false
 
 func create():
 	var angle = 0

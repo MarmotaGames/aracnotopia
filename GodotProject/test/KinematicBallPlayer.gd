@@ -43,9 +43,19 @@ func _physics_process(delta):
 			launchAngle -= PI/2
 
 		x_speed = Vector2(cos(launchAngle), sin(launchAngle))*2500
+		
+		if phase == "still":
+			x_speed = (Vector2(0,0))
 		#x_speed.y *= -1
 		remainingSpeed = x_speed
-	
+		
+	if Input.is_action_just_pressed("launchWeb"):
+		var target = get_global_mouse_position()
+		var space_state = get_world_2d().direct_space_state
+		var result = space_state.intersect_ray(position,target, [self], collision_mask)
+		if result:
+			get_node("../Node2D").shouldCreate = true
+			get_node("../Node2D").center = result.position	
 
 	
 	move_and_slide(x_speed+gravity)
@@ -56,7 +66,7 @@ func _physics_process(delta):
 func calculateMotion():
 	angle = get_node("../Line2D").webAngle
 	
-	if angle == previousAngle:
+	if abs(angle - previousAngle) < 0.01:
 		return("still")
 	if angle > previousAngle: #GOING LEFT
 		if angle > PI / 2:
