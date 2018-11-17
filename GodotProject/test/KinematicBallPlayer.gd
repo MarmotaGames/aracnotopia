@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 var x_speed = Vector2(0,0)
 var gravity = Vector2(0,500)
-var ballSpeed = 900
+var ballSpeed = 5
 var remainingSpeed = Vector2(0,0)
 var normal = 0
 var remainingSpeedStep = 50
@@ -11,14 +11,16 @@ var previousAngle = 0.0
 var phase
 var angle
 
+var spiderOnWeb = true
+
 func _physics_process(delta):
 	phase = calculateMotion()
 	previousAngle = angle
 	if get_node("../Line2D").webAngle > 0.7 and get_node("../Line2D").webAngle  <2.3:
-		if Input.is_action_pressed("ui_right"):
-			x_speed=Vector2(ballSpeed,0)
-		if Input.is_action_pressed("ui_left"):
-			x_speed=Vector2(-ballSpeed,0)
+		if Input.is_action_pressed("ui_right") and spiderOnWeb:
+			x_speed=Vector2(ballSpeed*get_node("../Node2D").radius,0)
+		if Input.is_action_pressed("ui_left") and spiderOnWeb:
+			x_speed=Vector2(-ballSpeed*get_node("../Node2D").radius,0)
 	if Input.is_action_just_released("ui_right") or Input.is_action_just_released("ui_left"):
 		remainingSpeed = x_speed
 		
@@ -35,7 +37,7 @@ func _physics_process(delta):
 		else:
 			remainingSpeed.y = 0
 		x_speed = remainingSpeed
-	if Input.is_action_just_pressed("attachOrDetachFromArea"):
+	if Input.is_action_just_pressed("attachOrDetachFromArea") and spiderOnWeb:
 		var launchAngle = move.collider.rotation
 		if phase == "leftGoingLeft" or phase == "rightGoingLeft": 
 			launchAngle += PI/2
@@ -48,6 +50,7 @@ func _physics_process(delta):
 			x_speed = (Vector2(0,0))
 		#x_speed.y *= -1
 		remainingSpeed = x_speed
+		spiderOnWeb = false
 		
 	if Input.is_action_just_pressed("launchWeb"):
 		var target = get_global_mouse_position()
@@ -55,7 +58,8 @@ func _physics_process(delta):
 		var result = space_state.intersect_ray(position,target, [self], collision_mask)
 		if result:
 			get_node("../Node2D").shouldCreate = true
-			get_node("../Node2D").center = result.position	
+			get_node("../Node2D").center = result.position
+			spiderOnWeb = true	
 
 	
 	move_and_slide(x_speed+gravity)
