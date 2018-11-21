@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 10, 10 )
+extents = Vector2( 2.36207, 42.6093 )
 
 [node name="Root" type="Node2D"]
 
@@ -15,16 +15,16 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
 
-position = Vector2( 673.127, 530.443 )
-_sections_unfolded = [ "Collision" ]
+position = Vector2( 1167.74, 595.859 )
 
 [node name="TheWebSprite" type="Sprite" parent="." index="1"]
 
+modulate = Color( 1, 1, 1, 0.861882 )
 show_behind_parent = true
-position = Vector2( 1050, 605 )
-scale = Vector2( 1.5, 1.35 )
+position = Vector2( 1164.63, 630.228 )
+scale = Vector2( 2.5, 2.5 )
 texture = ExtResource( 2 )
-_sections_unfolded = [ "Transform", "Z Index" ]
+_sections_unfolded = [ "Transform", "Visibility", "Z Index" ]
 
 [node name="UP" type="Area2D" parent="." index="2"]
 
@@ -40,7 +40,7 @@ _sections_unfolded = [ "Collision", "Material", "Transform" ]
 
 [node name="LevelUP" type="CollisionShape2D" parent="UP" index="0"]
 
-position = Vector2( 1050, 0 )
+position = Vector2( 1170.78, 56.5096 )
 scale = Vector2( 50, 3 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
