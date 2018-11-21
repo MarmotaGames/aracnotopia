@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://objects/Plataforma.tscn" type="PackedScene" id=1]
 [ext_resource path="res://player/Player_rigido.tscn" type="PackedScene" id=2]
 [ext_resource path="res://objects/Stone.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objects/RoundStone.tscn" type="PackedScene" id=4]
+[ext_resource path="res://areas/DeathArea.tscn" type="PackedScene" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -15,6 +17,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Plataforma" parent="." index="0" instance=ExtResource( 1 )]
 
+editor/display_folded = true
 position = Vector2( 143.561, 900 )
 
 [node name="ContactArea2" type="Area2D" parent="Plataforma" index="1"]
@@ -36,6 +39,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Plataforma3" parent="." index="1" instance=ExtResource( 1 )]
 
+editor/display_folded = true
 position = Vector2( 1900, 124 )
 
 [node name="ContactArea2" type="Area2D" parent="Plataforma3" index="1"]
@@ -84,5 +88,65 @@ position = Vector2( 1781.47, 480.529 )
 [node name="Stone6" parent="." index="8" instance=ExtResource( 3 )]
 
 position = Vector2( 1539.75, 115.962 )
+
+[node name="RoundStone" parent="." index="9" instance=ExtResource( 4 )]
+
+position = Vector2( 2266.78, 606.336 )
+
+[node name="RoundStone2" parent="." index="10" instance=ExtResource( 4 )]
+
+position = Vector2( 2648.8, 606.336 )
+
+[node name="RoundStone3" parent="." index="11" instance=ExtResource( 4 )]
+
+position = Vector2( 2999.83, 606.336 )
+
+[node name="RoundStone4" parent="." index="12" instance=ExtResource( 4 )]
+
+position = Vector2( 3500.58, 606.336 )
+
+[node name="RoundStone5" parent="." index="13" instance=ExtResource( 4 )]
+
+position = Vector2( 3960.03, 606.336 )
+
+[node name="RoundStone6" parent="." index="14" instance=ExtResource( 4 )]
+
+position = Vector2( 4383.34, 606.336 )
+
+[node name="RoundStone7" parent="." index="15" instance=ExtResource( 4 )]
+
+position = Vector2( 4847.95, 606.336 )
+
+[node name="RoundStone8" parent="." index="16" instance=ExtResource( 4 )]
+
+position = Vector2( 5338.37, 606.336 )
+
+[node name="RoundStone9" parent="." index="17" instance=ExtResource( 4 )]
+
+position = Vector2( 5895.9, 606.336 )
+
+[node name="RoundStone10" parent="." index="18" instance=ExtResource( 4 )]
+
+position = Vector2( 6592.81, 606.336 )
+
+[node name="RoundStone11" parent="." index="19" instance=ExtResource( 4 )]
+
+position = Vector2( 7418.78, 606.336 )
+
+[node name="RoundStone12" parent="." index="20" instance=ExtResource( 4 )]
+
+position = Vector2( 8244.76, 606.336 )
+
+[node name="Plataforma2" parent="." index="21" instance=ExtResource( 1 )]
+
+position = Vector2( 9272.83, 777.465 )
+scale = Vector2( 2, 2 )
+
+[node name="DeathArea" parent="." index="22" instance=ExtResource( 5 )]
+
+position = Vector2( 5138.46, 712.511 )
+scale = Vector2( 8, 2 )
+_sections_unfolded = [ "Collision", "Transform" ]
+spawn = Vector2( 150, 895 )
 
 

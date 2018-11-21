@@ -65,6 +65,9 @@ angular_velocity = 0.0
 angular_damp = -1.0
 script = ExtResource( 1 )
 _sections_unfolded = [ "Collision", "Linear", "Transform" ]
+launchSpeed = 400
+swingImpulse = 500
+fallingGravity = 10
 
 [node name="SpiderCollisionShape" type="CollisionShape2D" parent="." index="0"]
 
@@ -133,7 +136,7 @@ current = true
 zoom = Vector2( 1, 1 )
 limit_left = 0
 limit_top = 0
-limit_right = 2050
+limit_right = 20500
 limit_bottom = 1200
 limit_smoothed = false
 drag_margin_h_enabled = true
