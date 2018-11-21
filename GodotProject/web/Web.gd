@@ -9,7 +9,7 @@ onready var bottomPosition = $Sprite/Position2DBottom.get_global_position()
 
 #var stretchSpeed = 0.015
 #var webLaunchSpeed = 0.06
-var stretchSpeed = 0.015
+var stretchSpeed = 0.025
 var webLaunchSpeed = 0.3
 var inferiorStretchLimit = 0.3
 var superiorStretchLimit = 2
