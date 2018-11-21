@@ -35,7 +35,7 @@
 
 	-Animação alternativa da aranha em estado de queda.
 
-	-Câmera scrolla quando o jogador se aproxima da borda da tela.
+	-Câmera acompanha o movimento da aranha.
 
 	-Se grudar no tronco enquanto cai.
 
@@ -44,7 +44,7 @@
 4° Semana (02/09 a 08/09) [Break]
 	-Encontramos muitos problemas ao lidar com a teia que utilizava uma física próxima a de uma corda real.
 
-	-O principal problema é que não conseguíamos grudar a teia, dinamincamente, às duas âncoras: o galho e a fieira da aranha. Ela só ficava ligada em uma delas.
+	-O principal problema é que não conseguíamos grudar a teia, dinamicamente, às duas âncoras: o galho e a fieira da aranha. Ela só ficava ligada em uma delas.
 
 	-Tentamos desenvolver uma alternativa que, ao criar a teia, removia a aranha do jogo e criava uma cena com todos os elementos juntos: aranha e a teia ligada previamente às duas âncoras.
 
@@ -118,9 +118,11 @@
 	-Refatoração de quase todo o código: melhora dos nomes das variáveis; organização do código em funções e em blocos de acordo com sua funcionalidade; melhora da legibilidade em geral 
 
 14° Semana (11/11 a 17/11) [Break]
+	-Lançamento de teia no ar (enquanto a aranha está no modo "caindo"), utilizando detecção por meio de raycasts.
+
+	-Desenvolvimento paralelo de uma alternativa ao funcionamento da teia, de maneira mais fluida e elegante.
+
+	-Desenvolvimento do primeiro nível, que se passa em um rio.
 
 15° Semana (18/11 a 24/11)
-
-16° Semana (25/11 a 01/12)
-
-17° Semana (02/12 a 08/12)
+	-Implementação do menu inicial e uma conexão entre o hub e o primeiro level.
