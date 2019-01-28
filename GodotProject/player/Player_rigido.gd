@@ -7,9 +7,12 @@ onready var stonePinJointNode
 onready var web_scene = preload("res://web//Web.tscn")
 onready var spiderCollisionNode = $SpiderCollisionShape
 
+export (int) var launchSpeed = 400
+export (int) var swingImpulse = 500
+export (float) var fallingGravity = 10
+
+
 var webLength = 1
-var launchSpeed = 600
-var swingImpulse = 400
 var movementSpeed = 300
 var maxImpulseAngle = 45
 var lastWebRotationDegrees = 0
@@ -257,7 +260,7 @@ func setAngularVelocityIfFalling():
 		else:
 			sinal = 0
 		self.set_angular_velocity(5 * sinal)
-		self.gravity_scale = 16
+		self.gravity_scale = fallingGravity
 	
 func setLinearVelocityWhenBeingLaunched():
 	if spiderIsBeingLaunched:
