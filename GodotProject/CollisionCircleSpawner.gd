@@ -34,7 +34,7 @@ func _process(delta):
 		
 	if shouldCreate:
 		get_node("../Line2D").points[1] = center
-		radius = center.distance_to(get_node("../KinematicBody2D").get_global_position())+14
+		radius = center.distance_to(get_node("../Player").get_global_position())+14
 		create()
 		get_node("../Line2D").show() #the Line2D exhists at all times, but is only shown when needed
 		shouldCreate = false

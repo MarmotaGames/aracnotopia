@@ -1,9 +1,7 @@
 extends Area2D
 
 onready var spiderNode = get_node("../../Player")
-onready var stonePinJointNode
 onready var webNode
-onready var webPinJointNode
 onready var webBottom
 
 var polygon_shape
@@ -22,8 +20,6 @@ func _on_ContactArea_area_exited(area):
 func loadNodes():
 	webNode = get_node("../../Web")
 	webBottom = get_node("../../Web/Sprite/Position2DBottom")
-	webPinJointNode = get_node("../../Web/PinJoint2D")
-	stonePinJointNode = get_node("../PinJoint2D")
 	
 func _on_StoneArea_area_entered(area):
 	var objeto = null
@@ -38,31 +34,16 @@ func _on_StoneArea_area_entered(area):
 			if spiderNode.spiderIsFalling:
 				spiderNode.spiderIsFalling = false
 				
-			webNode.stonePinJointNode = stonePinJointNode
-			spiderNode.stonePinJointNode = stonePinJointNode
 			#webNode.positionSprite("down")
-			var stonePinJointPosition
 			var webPosition2DTop = get_node("../../Web/Sprite/Position2DTop").get_global_position()
-			if webTopInStone(webPosition2DTop):
-				stonePinJointPosition = webPosition2DTop
-			else:
-				stonePinJointPosition = spiderNode.result.position
 			
-			
-			stonePinJointNode.set_global_position(spiderNode.result.position)
 			webNode.positionSprite("up")
-			stonePinJointNode.set_node_b("../../Web")
-			webPinJointNode.set_node_b("../../Spider")
-			
-			#webNode.stretch("up")
-			#webNode.stretch("down")
-			
 			
 			webNode.set_gravity_scale(5)
 			
 func webTopInStone(webPosition2DTop):
 	var stonePosition = get_parent().get_global_position()
-	var halfsize = get_parent().scale.x * 512 / 2
+	var halfsize = get_parent().scale.x * 256
 	if webPosition2DTop.x < stonePosition.x + halfsize and webPosition2DTop.x > stonePosition.x - halfsize and webPosition2DTop.y < stonePosition.y + halfsize and webPosition2DTop.y > stonePosition.y - halfsize:
 		return true
 	else:
