@@ -7,5 +7,3 @@ func _process(delta):
 	self.points[0] = get_node("../KinematicBody2D").get_global_position()	
 	webAngle = self.points[0].angle_to_point(self.points[1])
 	#print(webAngle)
-
-
