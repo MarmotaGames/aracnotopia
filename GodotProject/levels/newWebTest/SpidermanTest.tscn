@@ -156,28 +156,13 @@ _sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="Plataforma3" parent="." index="20" instance=ExtResource( 2 )]
 
+editor/display_folded = true
 position = Vector2( 4178.25, -1022.05 )
 scale = Vector2( 1, 1 )
 
-[node name="ContactArea2" type="Area2D" parent="Plataforma3" index="1"]
-
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Plataforma3/ContactArea2" index="0"]
-
-position = Vector2( -2.80341, 0.792988 )
-scale = Vector2( 25.1861, 25.7107 )
-shape = SubResource( 1 )
-_sections_unfolded = [ "Transform" ]
-
 [node name="Plataforma2" parent="." index="21" instance=ExtResource( 2 )]
 
+editor/display_folded = true
 position = Vector2( 7913.5, 510.625 )
 scale = Vector2( 2, 2 )
 
