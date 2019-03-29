@@ -38,6 +38,7 @@ func _physics_process(delta):
 			remainingSpeed.y = 0
 		x_speed = remainingSpeed
 	if Input.is_action_just_pressed("attachOrDetachFromArea") and spiderOnWeb:
+		#LAUNCHING FROM WEB
 		var launchAngle = move.collider.rotation
 		if phase == "leftGoingLeft" or phase == "rightGoingLeft": 
 			launchAngle += PI/2
@@ -54,6 +55,8 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_pressed("launchWeb"):
 		var target = get_global_mouse_position()
+		
+		#Raytrace to check for a valid attach point in the direction of the mouse
 		var space_state = get_world_2d().direct_space_state
 		var result = space_state.intersect_ray(position,target, [self], collision_mask)
 		if result:
@@ -68,6 +71,7 @@ func _physics_process(delta):
 		normal = move.remainder
 		
 func calculateMotion():
+	#See at which phase of the "pendulum" the spider is
 	angle = get_node("../Line2D").webAngle
 	
 	if abs(angle - previousAngle) < 0.01:

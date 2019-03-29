@@ -7,7 +7,7 @@
 [ext_resource path="res://debug/dirKeysDebugger.tscn" type="PackedScene" id=5]
 [ext_resource path="res://debug/AngleDebugger.gd" type="Script" id=6]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" index="0"]
 
 _sections_unfolded = [ "Transform" ]
 

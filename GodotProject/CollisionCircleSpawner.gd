@@ -11,17 +11,23 @@ var minLength = 60
 var shouldCreate = false
 
 func _ready():
+	#Only for the test scene
+	#Spider spawns connected to first stone
 	center = get_node("../Stone").position
 	create()
 
 
 func _process(delta):
+	#NOTA: Fazer um if pra checar se está na teia
+	
+	#Change lenght of web
 	if Input.is_action_pressed("ui_down") and radius < maxLength:
 		radius += web_step
 		reposition()
 	if Input.is_action_pressed("ui_up") and radius > minLength:
 		radius -= web_step
 		reposition()
+	#Dettach from web
 	if Input.is_action_pressed("attachOrDetachFromArea"):
 		killCircle()
 		get_node("../Line2D").hide()
@@ -30,7 +36,7 @@ func _process(delta):
 		get_node("../Line2D").points[1] = center
 		radius = center.distance_to(get_node("../KinematicBody2D").get_global_position())+14
 		create()
-		get_node("../Line2D").show()
+		get_node("../Line2D").show() #the Line2D exhists at all times, but is only shown when needed
 		shouldCreate = false
 
 func create():
