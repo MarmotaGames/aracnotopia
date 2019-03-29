@@ -12,7 +12,8 @@ var phase
 var angle
 
 var spiderOnWeb = true
-var spiderInArea = false
+var spiderInArea = true
+var spiderIsFalling = false
 
 #old variables
 var speed = 300

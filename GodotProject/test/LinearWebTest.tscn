@@ -8,7 +8,7 @@
 [ext_resource path="res://debug/dirKeysDebugger.tscn" type="PackedScene" id=6]
 [ext_resource path="res://debug/AngleDebugger.gd" type="Script" id=7]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" index="0"]
 
 _sections_unfolded = [ "Transform" ]
 
@@ -45,7 +45,7 @@ bounce = 0.0
 
 _sections_unfolded = [ "Transform" ]
 
-[node name="KinematicBody2D" parent="." index="5" instance=ExtResource( 5 )]
+[node name="Player" parent="." index="5" instance=ExtResource( 5 )]
 
 position = Vector2( 8.60962, -73.0077 )
 
@@ -71,3 +71,4 @@ position = Vector2( 211.158, 1224.14 )
 position = Vector2( -194.778, 1663.43 )
 
 
+[editable path="Plataforma"]

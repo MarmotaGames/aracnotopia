@@ -1,6 +1,6 @@
 extends Area2D
 
-onready var spiderNode = get_node("../../Spider")
+onready var spiderNode = get_node("../../Player")
 onready var stonePinJointNode
 onready var webNode
 onready var webPinJointNode

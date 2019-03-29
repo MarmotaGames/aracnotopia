@@ -8,8 +8,8 @@ func _ready():
 
 func _process(delta):
 	if ready:
-		self.position.x = get_node("../KinematicBody2D").position.x
-		self.position.y = get_node("../KinematicBody2D").position.y - 50
+		self.position.x = get_node("../Player").position.x
+		self.position.y = get_node("../Player").position.y - 50
 		
 		var up = str(get_node("../Line2D").webAngle)
 		#	var up = str(get_node("../Spider").angular_velocity)
