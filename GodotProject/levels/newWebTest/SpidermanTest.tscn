@@ -156,7 +156,6 @@ _sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="Plataforma3" parent="." index="20" instance=ExtResource( 2 )]
 
-editor/display_folded = true
 position = Vector2( 4178.25, -1022.05 )
 scale = Vector2( 1, 1 )
 
@@ -184,33 +183,10 @@ scale = Vector2( 2, 2 )
 
 [node name="DeathArea" parent="." index="22" instance=ExtResource( 5 )]
 
+visible = false
 position = Vector2( 4864.22, -2018.55 )
 scale = Vector2( 9, 10 )
 _sections_unfolded = [ "Collision", "Transform" ]
 spawn = Vector2( 150, 895 )
-
-[node name="Stone7" parent="." index="9" instance=ExtResource( 3 )]
-
-position = Vector2( 528.942, 484.953 )
-
-[node name="Stone8" parent="." index="10" instance=ExtResource( 3 )]
-
-position = Vector2( 740.597, 433.33 )
-
-[node name="Stone9" parent="." index="11" instance=ExtResource( 3 )]
-
-position = Vector2( 983.225, 397.194 )
-
-[node name="Stone7" parent="." index="9" instance=ExtResource( 3 )]
-
-position = Vector2( 528.942, 484.953 )
-
-[node name="Stone8" parent="." index="10" instance=ExtResource( 3 )]
-
-position = Vector2( 740.597, 433.33 )
-
-[node name="Stone9" parent="." index="11" instance=ExtResource( 3 )]
-
-position = Vector2( 983.225, 397.194 )
 
 
