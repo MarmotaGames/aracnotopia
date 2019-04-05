@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-var x_speed = Vector2(0,0)
+var flyingSpeed = Vector2(0,0)
 var velocity = Vector2(0,500)
 var gravity = 500
 var ballSpeed = 5
@@ -14,12 +14,11 @@ var angle
 
 var spiderOnWeb = true
 var spiderInArea = true
-var spiderIsFalling = false
 
 #old variables
 var speed = 300
 var direction = Vector2(0,-1)
-var fall = false
+var spiderIsFalling = false
 var front = 0
 var back = 180
 var step = 1
@@ -44,7 +43,7 @@ func _physics_process(delta):
 			get_node("../Node2D").center = result.position
 			spiderOnWeb = true	
 
-	move_and_slide(x_speed+velocity)
+	move_and_slide(flyingSpeed+velocity)
 	move = get_slide_collision(0)
 	if move:
 		normal = move.remainder
@@ -76,11 +75,11 @@ func _physics_process(delta):
 			self.rotation_degrees = angle
 			isRotating = false
 			
-		if 1 in dirKeys and not fall:
+		if 1 in dirKeys and not spiderIsFalling:
 			#Verifica se alguma das teclas direcionais está apertada e processa o movimento
 			move_and_slide(direction.normalized()*speed)
 
-		if fall:
+		if spiderIsFalling:
 			direction.x = 0
 			direction.y = 1
 			velocity.y = gravity
@@ -109,28 +108,28 @@ func calculateMotion():
 			return("deadBottomGoingRight")
 
 func update_direction():
-	if Input.is_action_pressed("ui_up") and not fall:
+	if Input.is_action_pressed("ui_up") and not spiderIsFalling:
 		direction.y = -1
 		dirKeys[0] = 1
 		if not dirKeys[2] and not dirKeys[3]:
 			direction.x = 0
 		#$AnimatedSprite.playing = true
 		
-	if Input.is_action_pressed("ui_down") and not fall:
+	if Input.is_action_pressed("ui_down") and not spiderIsFalling:
 		direction.y = 1
 		dirKeys[1] = 1
 		if not dirKeys[2] and not dirKeys[3]:
 			direction.x = 0
 		#$AnimatedSprite.playing = true
 	
-	if Input.is_action_pressed("ui_left") and not fall:
+	if Input.is_action_pressed("ui_left") and not spiderIsFalling:
 		direction.x = -1
 		dirKeys[2] = 1
 		if not dirKeys[0] and not dirKeys[1]:
 			direction.y = 0
 		#$AnimatedSprite.playing = true
 	
-	if Input.is_action_pressed("ui_right") and not fall:
+	if Input.is_action_pressed("ui_right") and not spiderIsFalling:
 		direction.x = 1
 		dirKeys[3] = 1
 		if not dirKeys[0] and not dirKeys[1]:
@@ -149,7 +148,7 @@ func update_direction():
 	if Input.is_action_just_released("ui_right"):
 		dirKeys[3] = 0
 		
-	if !Input.is_action_pressed("ui_up") and !Input.is_action_pressed("ui_right") and !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_down") and !isRotating and !fall:
+	if !Input.is_action_pressed("ui_up") and !Input.is_action_pressed("ui_right") and !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_down") and !isRotating and !spiderIsFalling:
 		pass
 		#$AnimatedSprite.playing = false
 	
@@ -159,16 +158,16 @@ func update_direction():
 func processAttachOrDetachInput():
 	if Input.is_action_just_pressed("attachOrDetachFromArea"):
 		if spiderInArea:
-			if fall or spiderOnWeb:
+			if spiderIsFalling or spiderOnWeb:
 				# da attach
-				fall = false
+				spiderIsFalling = false
 				direction.x = 0
 				direction.y = 1
 				angle = 0
 				#spiderOnWeb = false
 				#$AnimatedSprite.playing = false
 			else:
-				fall = true
+				spiderIsFalling = true
 
 func getRotation():
 	if direction.x == 0:
@@ -197,7 +196,6 @@ func getRotation():
 			angle = 90
 		if direction.y == 1:
 			angle = 45
-
 
 func evalRotation():
 	front = int(self.rotation_degrees)
@@ -243,12 +241,12 @@ func processDropFromWebInput():
 		if phase == "leftGoingRight" or phase == "rightGoingRight": 
 			launchAngle -= PI/2
 
-		x_speed = Vector2(cos(launchAngle), sin(launchAngle))*2500
+		flyingSpeed = Vector2(cos(launchAngle), sin(launchAngle))*2500
 		
 		if phase == "still":
-			x_speed = (Vector2(0,0))
-		#x_speed.y *= -1
-		remainingSpeed = x_speed
+			flyingSpeed = (Vector2(0,0))
+		#flyingSpeed.y *= -1
+		remainingSpeed = flyingSpeed
 		spiderOnWeb = false
 
 func calculateDropVelocity():
@@ -257,11 +255,11 @@ func calculateDropVelocity():
 	previousAngle = angle
 	if get_node("../Line2D").webAngle > 0.7 and get_node("../Line2D").webAngle  <2.3:
 		if Input.is_action_pressed("ui_right") and spiderOnWeb:
-			x_speed=Vector2(ballSpeed*get_node("../Node2D").radius,0)
+			flyingSpeed=Vector2(ballSpeed*get_node("../Node2D").radius,0)
 		if Input.is_action_pressed("ui_left") and spiderOnWeb:
-			x_speed=Vector2(-ballSpeed*get_node("../Node2D").radius,0)
+			flyingSpeed=Vector2(-ballSpeed*get_node("../Node2D").radius,0)
 	if Input.is_action_just_released("ui_right") or Input.is_action_just_released("ui_left"):
-		remainingSpeed = x_speed
+		remainingSpeed = flyingSpeed
 		
 	if remainingSpeed != Vector2(0,0):
 		if remainingSpeed.x > remainingSpeedStep:
@@ -275,4 +273,4 @@ func calculateDropVelocity():
 			remainingSpeed.y += remainingSpeedStep
 		else:
 			remainingSpeed.y = 0
-		x_speed = remainingSpeed
+		flyingSpeed = remainingSpeed
