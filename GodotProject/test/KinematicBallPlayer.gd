@@ -28,10 +28,7 @@ var isRotating = false
 var dirKeys = [0, 0, 0, 0]
 var grudando = false
 
-func _physics_process(delta):
-	processAttachOrDetachInput()
-	processDropFromWebInput()
-
+func processLaunchWebInput():
 	if Input.is_action_just_pressed("launchWeb"):
 		var target = get_global_mouse_position()
 		
@@ -43,7 +40,12 @@ func _physics_process(delta):
 			get_node("../Node2D").center = result.position
 			spiderOnWeb = true	
 
-	move_and_slide(flyingSpeed+velocity)
+func _physics_process(delta):
+	processAttachOrDetachInput()
+	processDropFromWebInput()
+	processLaunchWebInput()
+	
+	move_and_slide(flyingSpeed + velocity)
 	move = get_slide_collision(0)
 	if move:
 		normal = move.remainder
