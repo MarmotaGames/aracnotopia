@@ -10,6 +10,7 @@ var web_step = 5
 var maxLength = 800
 var minLength = 60
 var shouldCreate = false
+var radiusOffset = 14
 
 func _ready():
 	#Only for the test scene
@@ -34,15 +35,15 @@ func _process(delta):
 			spider_node.spiderOnWeb = false
 		
 	if shouldCreate:
-		if spider_node.spiderOnWeb:
-			shouldCreate = false
-		else:
+		if not spider_node.spiderOnWeb:
 			get_node("../Line2D").points[1] = center
-			radius = center.distance_to(get_node("../Player").get_global_position())+14
+			radius = center.distance_to(get_node("../Player").get_global_position()) + radiusOffset
 			create()
 			get_node("../Line2D").show() #the Line2D exhists at all times, but is only shown when needed
-			shouldCreate = false
 			spider_node.spiderOnWeb = true
+
+		shouldCreate = false
+
 
 func create():
 	var angle = 0

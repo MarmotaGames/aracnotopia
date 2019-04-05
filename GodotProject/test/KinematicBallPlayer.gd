@@ -43,10 +43,11 @@ func _physics_process(delta):
 	processAttachOrDetachInput()
 	processDropFromWebInput()
 	processLaunchWebInput()
-	
+
 	move_and_slide(flyingSpeed + velocity)
 	move = get_slide_collision(0)
 	if move:
+		print(move.collider.rotation)
 		normal = move.remainder
 
 	#start of the old code(spider movement)
@@ -214,6 +215,8 @@ func processDropFromWebInput():
 		#LAUNCHING FROM WEB
 		calculateDropVelocity()
 
+		#verify in which phase of the pendulum the spider is at
+		phase = calculateMotion()
 		var launchAngle = move.collider.rotation
 		if phase == "leftGoingLeft" or phase == "rightGoingLeft": 
 			launchAngle += PI/2
@@ -229,14 +232,13 @@ func processDropFromWebInput():
 		spiderOnWeb = false
 
 func calculateDropVelocity():
-	#verify in which phase of the pendulum the spider is at
-	phase = calculateMotion()
 	previousAngle = angle
-	if get_node("../Line2D").webAngle > 0.7 and get_node("../Line2D").webAngle  <2.3:
+	if get_node("../Line2D").webAngle > 0.7 and get_node("../Line2D").webAngle < 2.3:
 		if Input.is_action_pressed("ui_right") and spiderOnWeb:
 			flyingSpeed=Vector2(ballSpeed*get_node("../Node2D").radius,0)
 		if Input.is_action_pressed("ui_left") and spiderOnWeb:
 			flyingSpeed=Vector2(-ballSpeed*get_node("../Node2D").radius,0)
+
 	if Input.is_action_just_released("ui_right") or Input.is_action_just_released("ui_left"):
 		remainingSpeed = flyingSpeed
 		
@@ -252,6 +254,7 @@ func calculateDropVelocity():
 			remainingSpeed.y += remainingSpeedStep
 		else:
 			remainingSpeed.y = 0
+
 		flyingSpeed = remainingSpeed
 
 func calculateMotion():
@@ -276,6 +279,6 @@ func calculateMotion():
 
 		elif angle < PI / 2:
 			return("rightGoingRight")
-			
+
 		else:
 			return("deadBottomGoingRight")
