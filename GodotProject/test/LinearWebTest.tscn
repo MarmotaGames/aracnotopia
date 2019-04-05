@@ -14,6 +14,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Plataforma" parent="." index="0" instance=ExtResource( 1 )]
 
+editor/display_folded = true
 position = Vector2( 11.1702, 271.268 )
 
 [node name="Line2D" type="Line2D" parent="." index="1"]
@@ -47,7 +48,8 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Player" parent="." index="5" instance=ExtResource( 5 )]
 
-position = Vector2( 8.60962, -73.0077 )
+position = Vector2( 8.60962, 82.319 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="Debugger" parent="." index="6" instance=ExtResource( 6 )]
 

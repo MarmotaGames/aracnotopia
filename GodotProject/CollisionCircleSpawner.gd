@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 onready var collider_scene = preload("res://test//Envoltorio.tscn")
+onready var spider_node = get_node("../Player")
 var radius = 300.0
 var center
 var count = 360
@@ -28,9 +29,11 @@ func _process(delta):
 		radius -= web_step
 		reposition()
 	#Dettach from web
-	if Input.is_action_pressed("attachOrDetachFromArea"):
-		killCircle()
-		get_node("../Line2D").hide()
+	if Input.is_action_just_pressed("attachOrDetachFromArea"):
+		if spider_node.spiderOnWeb:
+			killCircle()
+			get_node("../Line2D").hide()
+			spider_node.spiderOnWeb = false
 		
 	if shouldCreate:
 		get_node("../Line2D").points[1] = center

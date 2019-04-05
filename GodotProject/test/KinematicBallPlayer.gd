@@ -1,7 +1,8 @@
 extends KinematicBody2D
 
 var x_speed = Vector2(0,0)
-var gravity = Vector2(0,500)
+var velocity = Vector2(0,500)
+var gravity = 500
 var ballSpeed = 5
 var remainingSpeed = Vector2(0,0)
 var normal = 0
@@ -19,7 +20,6 @@ var spiderIsFalling = false
 var speed = 300
 var direction = Vector2(0,-1)
 var fall = false
-var velocity = Vector2(0, 250)
 var front = 0
 var back = 180
 var step = 1
@@ -29,50 +29,10 @@ var isRotating = false
 var dirKeys = [0, 0, 0, 0]
 var grudando = false
 
-
 func _physics_process(delta):
-	#verify in which phase of the pendulum the spider is at
-	if spiderOnWeb:
-		phase = calculateMotion()
-		previousAngle = angle
-		if get_node("../Line2D").webAngle > 0.7 and get_node("../Line2D").webAngle  <2.3:
-			if Input.is_action_pressed("ui_right") and spiderOnWeb:
-				x_speed=Vector2(ballSpeed*get_node("../Node2D").radius,0)
-			if Input.is_action_pressed("ui_left") and spiderOnWeb:
-				x_speed=Vector2(-ballSpeed*get_node("../Node2D").radius,0)
-		if Input.is_action_just_released("ui_right") or Input.is_action_just_released("ui_left"):
-			remainingSpeed = x_speed
-			
-		if remainingSpeed != Vector2(0,0):
-			if remainingSpeed.x > remainingSpeedStep:
-				remainingSpeed.x -= remainingSpeedStep
-			elif remainingSpeed.x < -remainingSpeedStep:
-				remainingSpeed.x += remainingSpeedStep
-			else:
-				remainingSpeed.x = 0
-				
-			if remainingSpeed.y < 0:
-				remainingSpeed.y += remainingSpeedStep
-			else:
-				remainingSpeed.y = 0
-			x_speed = remainingSpeed
+	processAttachOrDetachInput()
+	processDropFromWebInput()
 
-	if Input.is_action_just_pressed("attachOrDetachFromArea") and spiderOnWeb:
-		#LAUNCHING FROM WEB
-		var launchAngle = move.collider.rotation
-		if phase == "leftGoingLeft" or phase == "rightGoingLeft": 
-			launchAngle += PI/2
-		if phase == "leftGoingRight" or phase == "rightGoingRight": 
-			launchAngle -= PI/2
-
-		x_speed = Vector2(cos(launchAngle), sin(launchAngle))*2500
-		
-		if phase == "still":
-			x_speed = (Vector2(0,0))
-		#x_speed.y *= -1
-		remainingSpeed = x_speed
-		spiderOnWeb = false
-		
 	if Input.is_action_just_pressed("launchWeb"):
 		var target = get_global_mouse_position()
 		
@@ -84,8 +44,7 @@ func _physics_process(delta):
 			get_node("../Node2D").center = result.position
 			spiderOnWeb = true	
 
-	
-	move_and_slide(x_speed+gravity)
+	move_and_slide(x_speed+velocity)
 	move = get_slide_collision(0)
 	if move:
 		normal = move.remainder
@@ -121,6 +80,13 @@ func _physics_process(delta):
 			#Verifica se alguma das teclas direcionais está apertada e processa o movimento
 			move_and_slide(direction.normalized()*speed)
 
+		if fall:
+			direction.x = 0
+			direction.y = 1
+			velocity.y = gravity
+		else:
+			velocity.y = 0
+			
 func calculateMotion():
 	#See at which phase of the "pendulum" the spider is
 	angle = get_node("../Line2D").webAngle
@@ -186,23 +152,23 @@ func update_direction():
 	if !Input.is_action_pressed("ui_up") and !Input.is_action_pressed("ui_right") and !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_down") and !isRotating and !fall:
 		pass
 		#$AnimatedSprite.playing = false
-		
-#	if Input.is_action_just_pressed("ui_accept") and not $StickTimer.time_left:
-	if Input.is_action_just_pressed("ui_accept"):
-		if fall:
-			if spiderInArea:
+	
+	if Input.is_action_pressed("secretar"):
+		grudando = true
+
+func processAttachOrDetachInput():
+	if Input.is_action_just_pressed("attachOrDetachFromArea"):
+		if spiderInArea:
+			if fall or spiderOnWeb:
+				# da attach
 				fall = false
 				direction.x = 0
 				direction.y = 1
 				angle = 0
+				#spiderOnWeb = false
 				#$AnimatedSprite.playing = false
-#				$StickTimer.start()
-		else:
-			fall = true
-#			$StickTimer.start()
-	
-	if Input.is_action_pressed("secretar"):
-		grudando = true
+			else:
+				fall = true
 
 func getRotation():
 	if direction.x == 0:
@@ -265,3 +231,48 @@ func evalRotation():
 				step = -1
 			else:
 				step = 1
+
+func processDropFromWebInput():
+	if Input.is_action_just_pressed("dropFromWeb") and spiderOnWeb:
+		#LAUNCHING FROM WEB
+		calculateDropVelocity()
+
+		var launchAngle = move.collider.rotation
+		if phase == "leftGoingLeft" or phase == "rightGoingLeft": 
+			launchAngle += PI/2
+		if phase == "leftGoingRight" or phase == "rightGoingRight": 
+			launchAngle -= PI/2
+
+		x_speed = Vector2(cos(launchAngle), sin(launchAngle))*2500
+		
+		if phase == "still":
+			x_speed = (Vector2(0,0))
+		#x_speed.y *= -1
+		remainingSpeed = x_speed
+		spiderOnWeb = false
+
+func calculateDropVelocity():
+	#verify in which phase of the pendulum the spider is at
+	phase = calculateMotion()
+	previousAngle = angle
+	if get_node("../Line2D").webAngle > 0.7 and get_node("../Line2D").webAngle  <2.3:
+		if Input.is_action_pressed("ui_right") and spiderOnWeb:
+			x_speed=Vector2(ballSpeed*get_node("../Node2D").radius,0)
+		if Input.is_action_pressed("ui_left") and spiderOnWeb:
+			x_speed=Vector2(-ballSpeed*get_node("../Node2D").radius,0)
+	if Input.is_action_just_released("ui_right") or Input.is_action_just_released("ui_left"):
+		remainingSpeed = x_speed
+		
+	if remainingSpeed != Vector2(0,0):
+		if remainingSpeed.x > remainingSpeedStep:
+			remainingSpeed.x -= remainingSpeedStep
+		elif remainingSpeed.x < -remainingSpeedStep:
+			remainingSpeed.x += remainingSpeedStep
+		else:
+			remainingSpeed.x = 0
+			
+		if remainingSpeed.y < 0:
+			remainingSpeed.y += remainingSpeedStep
+		else:
+			remainingSpeed.y = 0
+		x_speed = remainingSpeed
