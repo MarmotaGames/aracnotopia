@@ -38,7 +38,6 @@ func processLaunchWebInput():
 		if result:
 			get_node("../Node2D").shouldCreate = true
 			get_node("../Node2D").center = result.position
-			spiderOnWeb = true	
 
 func _physics_process(delta):
 	processAttachOrDetachInput()
@@ -87,27 +86,6 @@ func _physics_process(delta):
 			velocity.y = gravity
 		else:
 			velocity.y = 0
-			
-func calculateMotion():
-	#See at which phase of the "pendulum" the spider is
-	angle = get_node("../Line2D").webAngle
-	
-	if abs(angle - previousAngle) < 0.01:
-		return("still")
-	if angle > previousAngle: #GOING LEFT
-		if angle > PI / 2:
-			return("leftGoingLeft")
-		elif angle < PI / 2:
-			return("rightGoingLeft")
-		else:
-			return("deadBottomGoingLeft")
-	else: #GOING RIGHT
-		if angle > PI / 2:
-			return("leftGoingRight")
-		elif angle < PI / 2:
-			return("rightGoingRight")
-		else:
-			return("deadBottomGoingRight")
 
 func update_direction():
 	if Input.is_action_pressed("ui_up") and not spiderIsFalling:
@@ -161,12 +139,11 @@ func processAttachOrDetachInput():
 	if Input.is_action_just_pressed("attachOrDetachFromArea"):
 		if spiderInArea:
 			if spiderIsFalling or spiderOnWeb:
-				# da attach
+				# attach
 				spiderIsFalling = false
 				direction.x = 0
 				direction.y = 1
 				angle = 0
-				#spiderOnWeb = false
 				#$AnimatedSprite.playing = false
 			else:
 				spiderIsFalling = true
@@ -276,3 +253,29 @@ func calculateDropVelocity():
 		else:
 			remainingSpeed.y = 0
 		flyingSpeed = remainingSpeed
+
+func calculateMotion():
+	#See at which phase of the "pendulum" the spider is
+	angle = get_node("../Line2D").webAngle
+	
+	if abs(angle - previousAngle) < 0.01:
+		return("still")
+
+	if angle > previousAngle: #GOING LEFT
+		if angle > PI / 2:
+			return("leftGoingLeft")
+
+		elif angle < PI / 2:
+			return("rightGoingLeft")
+
+		else:
+			return("deadBottomGoingLeft")
+	else: #GOING RIGHT
+		if angle > PI / 2:
+			return("leftGoingRight")
+
+		elif angle < PI / 2:
+			return("rightGoingRight")
+			
+		else:
+			return("deadBottomGoingRight")

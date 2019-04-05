@@ -19,28 +19,30 @@ func _ready():
 
 
 func _process(delta):
-	#NOTA: Fazer um if pra checar se está na teia
-	
-	#Change lenght of web
-	if Input.is_action_pressed("ui_down") and radius < maxLength:
-		radius += web_step
-		reposition()
-	if Input.is_action_pressed("ui_up") and radius > minLength:
-		radius -= web_step
-		reposition()
-	#Dettach from web
-	if Input.is_action_just_pressed("attachOrDetachFromArea"):
-		if spider_node.spiderOnWeb:
+	if spider_node.spiderOnWeb:
+		#Change lenght of web
+		if Input.is_action_pressed("ui_down") and radius < maxLength:
+			radius += web_step
+			reposition()
+		if Input.is_action_pressed("ui_up") and radius > minLength:
+			radius -= web_step
+			reposition()
+		#Dettach from web
+		if Input.is_action_just_pressed("attachOrDetachFromArea"):
 			killCircle()
 			get_node("../Line2D").hide()
 			spider_node.spiderOnWeb = false
 		
 	if shouldCreate:
-		get_node("../Line2D").points[1] = center
-		radius = center.distance_to(get_node("../Player").get_global_position())+14
-		create()
-		get_node("../Line2D").show() #the Line2D exhists at all times, but is only shown when needed
-		shouldCreate = false
+		if spider_node.spiderOnWeb:
+			shouldCreate = false
+		else:
+			get_node("../Line2D").points[1] = center
+			radius = center.distance_to(get_node("../Player").get_global_position())+14
+			create()
+			get_node("../Line2D").show() #the Line2D exhists at all times, but is only shown when needed
+			shouldCreate = false
+			spider_node.spiderOnWeb = true
 
 func create():
 	var angle = 0
