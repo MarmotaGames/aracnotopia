@@ -4,8 +4,10 @@
 [ext_resource path="res://objects/Stone.tscn" type="PackedScene" id=2]
 [ext_resource path="res://objects/Plataforma.tscn" type="PackedScene" id=3]
 [ext_resource path="res://lixo/Web.gd" type="Script" id=4]
-[ext_resource path="res://assets/web/newWeb.png" type="Texture" id=5]
+[ext_resource path="res://lixo/assets/newWeb.png" type="Texture" id=5]
 [ext_resource path="res://lixo/Player_rigido.tscn" type="PackedScene" id=6]
+
+
 
 
 

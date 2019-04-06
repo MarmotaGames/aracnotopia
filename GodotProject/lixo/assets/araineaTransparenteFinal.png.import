@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ancora.png-b65a43608eaf37ca337434d45dfc4a3e.stex"
+path="res://.import/araineaTransparenteFinal.png-a585366ef80450c7dfd4c38ed6cb9d49.stex"
 
 [deps]
 
-source_file="res://assets/web/ancora.png"
-dest_files=[ "res://.import/ancora.png-b65a43608eaf37ca337434d45dfc4a3e.stex" ]
+source_file="res://lixo/assets/araineaTransparenteFinal.png"
+dest_files=[ "res://.import/araineaTransparenteFinal.png-a585366ef80450c7dfd4c38ed6cb9d49.stex" ]
 
 [params]
 

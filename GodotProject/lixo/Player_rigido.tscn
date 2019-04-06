@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=2]
 
-[ext_resource path="res://lixo?/Player_rigido.gd" type="Script" id=1]
+[ext_resource path="res://lixo/Player_rigido.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/walk_cycle/01.png" type="Texture" id=2]
 [ext_resource path="res://assets/player/walk_cycle/02.png" type="Texture" id=3]
 [ext_resource path="res://assets/player/walk_cycle/03.png" type="Texture" id=4]
@@ -15,6 +15,7 @@
 [ext_resource path="res://assets/player/fall_cycle/falling03.png" type="Texture" id=13]
 [ext_resource path="res://assets/player/fall_cycle/falling04.png" type="Texture" id=14]
 [ext_resource path="res://player/AnimatedSprite.gd" type="Script" id=15]
+
 
 
 [sub_resource type="CapsuleShape2D" id=1]

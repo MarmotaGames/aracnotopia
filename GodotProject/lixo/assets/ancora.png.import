@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/web3.png-ef7532e9c71526aa8409ea8b955ab4a0.stex"
+path="res://.import/ancora.png-3ca9d7c00ca19b73ac1693d77d06fbe3.stex"
 
 [deps]
 
-source_file="res://assets/web/web3.png"
-dest_files=[ "res://.import/web3.png-ef7532e9c71526aa8409ea8b955ab4a0.stex" ]
+source_file="res://lixo/assets/ancora.png"
+dest_files=[ "res://.import/ancora.png-3ca9d7c00ca19b73ac1693d77d06fbe3.stex" ]
 
 [params]
 

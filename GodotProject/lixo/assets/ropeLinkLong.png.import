@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/araineaTransparenteFinal.png-b9551c78ff4cef353a4b48f79e8bce79.stex"
+path="res://.import/ropeLinkLong.png-db215f03eb47c686fe5710180b214419.stex"
 
 [deps]
 
-source_file="res://assets/player/araineaTransparenteFinal.png"
-dest_files=[ "res://.import/araineaTransparenteFinal.png-b9551c78ff4cef353a4b48f79e8bce79.stex" ]
+source_file="res://lixo/assets/ropeLinkLong.png"
+dest_files=[ "res://.import/ropeLinkLong.png-db215f03eb47c686fe5710180b214419.stex" ]
 
 [params]
 

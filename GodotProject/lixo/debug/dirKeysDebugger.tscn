@@ -2,8 +2,6 @@
 
 [ext_resource path="res://lixo/debug/dirKeysDebugger.gd" type="Script" id=1]
 
-
-
 [node name="Position2D" type="Position2D"]
 
 position = Vector2( 15.4757, 0 )

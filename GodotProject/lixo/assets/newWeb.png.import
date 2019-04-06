@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ropeLinkLong.png-0bfe6cce0631ab2eb28a6d07edb7daa9.stex"
+path="res://.import/newWeb.png-777c7d960856b0411affa0f7e11c5710.stex"
 
 [deps]
 
-source_file="res://assets/web/ropeLinkLong.png"
-dest_files=[ "res://.import/ropeLinkLong.png-0bfe6cce0631ab2eb28a6d07edb7daa9.stex" ]
+source_file="res://lixo/assets/newWeb.png"
+dest_files=[ "res://.import/newWeb.png-777c7d960856b0411affa0f7e11c5710.stex" ]
 
 [params]
 

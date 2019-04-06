@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/webThreadTransparency.png-66f45560d95d723e491d021bcadb7341.stex"
+path="res://.import/web2.png-fd6600822fd10a7351a44cfe637b174f.stex"
 
 [deps]
 
-source_file="res://assets/web/webThreadTransparency.png"
-dest_files=[ "res://.import/webThreadTransparency.png-66f45560d95d723e491d021bcadb7341.stex" ]
+source_file="res://lixo/assets/web2.png"
+dest_files=[ "res://.import/web2.png-fd6600822fd10a7351a44cfe637b174f.stex" ]
 
 [params]
 
