@@ -10,10 +10,10 @@ var remainingSpeedStep = 50
 var move
 var previousAngle = 0.0
 var phase
-var angle
+var angle = 0
 
 var spiderOnWeb = true
-var spiderInArea = true
+var spiderInArea = false
 
 #old variables
 var speed = 300

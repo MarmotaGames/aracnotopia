@@ -1,6 +1,6 @@
 extends Area2D
 
-onready var spiderNode = get_node("../Spider")
+onready var spiderNode = get_node("/root/Player")
 
 export (Vector2) var spawn = Vector2(1900, 950)
 var gameover = false

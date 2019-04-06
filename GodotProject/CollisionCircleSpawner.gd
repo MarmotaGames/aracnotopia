@@ -1,6 +1,6 @@
 extends StaticBody2D
 
-onready var collider_scene = preload("res://test//Envoltorio.tscn")
+onready var collider_scene = preload("res://web//Envoltorio.tscn")
 onready var spider_node = get_node("../Player")
 var radius = 300.0
 var center

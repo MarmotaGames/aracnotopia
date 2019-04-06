@@ -4,7 +4,7 @@ onready var webNode
 onready var bottomNode
 onready var webPinJointNode
 onready var stonePinJointNode
-onready var web_scene = preload("res://web//Web.tscn")
+onready var web_scene = preload("res://lixo?//Web.tscn")
 onready var spiderCollisionNode = $SpiderCollisionShape
 
 export (int) var launchSpeed = 400

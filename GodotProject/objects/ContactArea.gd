@@ -33,12 +33,12 @@ func _on_StoneArea_area_entered(area):
 			spiderNode.spiderIsLaunchingWeb = false
 			if spiderNode.spiderIsFalling:
 				spiderNode.spiderIsFalling = false
-				
+
 			#webNode.positionSprite("down")
 			var webPosition2DTop = get_node("../../Web/Sprite/Position2DTop").get_global_position()
-			
+
 			webNode.positionSprite("up")
-			
+
 			webNode.set_gravity_scale(5)
 			
 func webTopInStone(webPosition2DTop):

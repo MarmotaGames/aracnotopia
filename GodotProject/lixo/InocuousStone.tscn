@@ -75,6 +75,4 @@ texture_rotation_degrees = 0.0
 invert_enable = false
 invert_border = 100.0
 
-[connection signal="area_entered" from="StoneArea" to="StoneArea" method="_on_StoneArea_area_entered"]
-
 

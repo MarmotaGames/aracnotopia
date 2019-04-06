@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://test/KinematicBallPlayer.gd" type="Script" id=1]
+[ext_resource path="res://player/KinematicBallPlayer.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/walk_cycle/01.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -14,7 +14,7 @@ custom_solver_bias = 0.0
 radius = 10.0
 height = 20.0
 
-[node name="Player" type="KinematicBody2D" index="0"]
+[node name="Player" type="KinematicBody2D"]
 
 input_pickable = false
 collision_layer = 1

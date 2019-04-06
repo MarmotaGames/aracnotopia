@@ -1,14 +1,14 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://objects/Plataforma.tscn" type="PackedScene" id=1]
-[ext_resource path="res://levels/newWebTest/Line2D.gd" type="Script" id=2]
-[ext_resource path="res://test/InocuousStone.tscn" type="PackedScene" id=3]
-[ext_resource path="res://test/CollisionCircleSpawer.tscn" type="PackedScene" id=4]
-[ext_resource path="res://test/KinematicBallPlayer.tscn" type="PackedScene" id=5]
-[ext_resource path="res://debug/dirKeysDebugger.tscn" type="PackedScene" id=6]
-[ext_resource path="res://debug/AngleDebugger.gd" type="Script" id=7]
+[ext_resource path="res://web/Line2D.gd" type="Script" id=2]
+[ext_resource path="res://objects/Stone.tscn" type="PackedScene" id=3]
+[ext_resource path="res://web/CollisionCircleSpawer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://player/KinematicBallPlayer.tscn" type="PackedScene" id=5]
+[ext_resource path="res://lixo/debug/dirKeysDebugger.tscn" type="PackedScene" id=6]
+[ext_resource path="res://lixo/debug/AngleDebugger.gd" type="Script" id=7]
 
-[node name="Node2D" type="Node2D" index="0"]
+[node name="Node2D" type="Node2D"]
 
 _sections_unfolded = [ "Transform" ]
 
@@ -58,19 +58,19 @@ script = ExtResource( 7 )
 
 [node name="Stone2" parent="." index="7" instance=ExtResource( 3 )]
 
-position = Vector2( 108.283, 515.18 )
+position = Vector2( 157.2, 590 )
 
 [node name="Stone3" parent="." index="8" instance=ExtResource( 3 )]
 
-position = Vector2( -144.054, 886.051 )
+position = Vector2( -169.8, 789 )
 
 [node name="Stone4" parent="." index="9" instance=ExtResource( 3 )]
 
-position = Vector2( 211.158, 1224.14 )
+position = Vector2( 90.2, 1080.8 )
 
 [node name="Stone5" parent="." index="10" instance=ExtResource( 3 )]
 
-position = Vector2( -194.778, 1663.43 )
+position = Vector2( 0.200012, 1322.8 )
 
 
 [editable path="Plataforma"]
