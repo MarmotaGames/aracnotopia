@@ -47,47 +47,26 @@ func _physics_process(delta):
 	move_and_slide(flyingSpeed + velocity)
 	move = get_slide_collision(0)
 	if move:
-		print(move.collider.rotation)
+		#print(move.collider.rotation)
 		normal = move.remainder
+
+	if spiderIsFalling or spiderOnWeb:
+		velocity.y = gravity
+	else:
+		velocity.y = 0
 
 	#start of the old code(spider movement)
 	if not spiderOnWeb:
 		direction = Vector2(0,0)
-		
-		update_direction()
-		getRotation()
 
-		if mustRotate:
-			getRotation()
-			mustRotate = false
-		evalRotation()
+		rotateSpider()
 
-		#Esse bloco elimina ambiguidades, pois a direcao Cima pode ser
-		#tanto 180 como -180
-		if angle == -179:
-			if front < -165 or front > 170:
-				self.rotation_degrees = -179
-				
-		#Rotaciona a aranha	
-		if front < (angle-5) or front > (angle+5):
-			isRotating = true
-			self.rotation_degrees += (step * rotationSpeed)
-			#$AnimatedSprite.playing = true
-		else:
-			self.rotation_degrees = angle
-			isRotating = false
-			
 		if 1 in dirKeys and not spiderIsFalling:
 			#Verifica se alguma das teclas direcionais está apertada e processa o movimento
 			move_and_slide(direction.normalized()*speed)
 
-		if spiderIsFalling:
-			direction.x = 0
-			direction.y = 1
-			velocity.y = gravity
-		else:
-			velocity.y = 0
 
+# seta a direction dependendo do input
 func update_direction():
 	if Input.is_action_pressed("ui_up") and not spiderIsFalling:
 		direction.y = -1
@@ -149,6 +128,7 @@ func processAttachOrDetachInput():
 			else:
 				spiderIsFalling = true
 
+# seta o angulo, dependendo da direcao
 func getRotation():
 	if direction.x == 0:
 		if direction.y == -1:
@@ -168,7 +148,6 @@ func getRotation():
 			#angle = 315
 			angle = -45
 			
-
 	if direction.x == -1:
 		if direction.y == -1:
 			angle = 135
@@ -177,6 +156,8 @@ func getRotation():
 		if direction.y == 1:
 			angle = 45
 
+# determina se a aranha deve rodar no sentido
+# horario ou anti-horario
 func evalRotation():
 	front = int(self.rotation_degrees)
 	
@@ -209,6 +190,30 @@ func evalRotation():
 				step = -1
 			else:
 				step = 1
+
+func rotateSpider():
+	update_direction()
+	getRotation()
+
+	if mustRotate:
+		getRotation()
+		mustRotate = false
+	evalRotation()
+
+	#Esse bloco elimina ambiguidades, pois a direcao Cima pode ser
+	#tanto 180 como -180
+	if angle == -179:
+		if front < -165 or front > 170:
+			self.rotation_degrees = -179
+			
+	#Rotaciona a aranha	
+	if front < (angle-5) or front > (angle+5):
+		isRotating = true
+		self.rotation_degrees += (step * rotationSpeed)
+		#$AnimatedSprite.playing = true
+	else:
+		self.rotation_degrees = angle
+		isRotating = false
 
 func processDropFromWebInput():
 	if Input.is_action_just_pressed("dropFromWeb") and spiderOnWeb:

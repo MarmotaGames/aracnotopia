@@ -41,6 +41,7 @@ func _process(delta):
 			create()
 			get_node("../Line2D").show() #the Line2D exhists at all times, but is only shown when needed
 			spider_node.spiderOnWeb = true
+			spider_node.rotation_degrees = 0
 
 		shouldCreate = false
 
