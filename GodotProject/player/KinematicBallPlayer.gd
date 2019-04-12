@@ -74,8 +74,7 @@ func _physics_process(delta):
 	else:
 		webSwing()
 
-	var camera = get_node("Camera2D")
-	camera.align()
+	get_node("Camera2D").align()
 
 
 # seta a direction dependendo do input
@@ -261,7 +260,7 @@ func calculateMotion():
 	#See at which phase of the "pendulum" the spider is
 	angle = get_node("../Line2D").webAngle
 
-	if abs(angle - previousAngle) == 0:
+	if abs(angle - previousAngle) < 0.0001:
 		previousAngle = angle
 		return("still")
 
@@ -276,8 +275,6 @@ func flightDecelerator():
 	var airFriction = 5
 	var gravityAcceleration = 20
 
-	#print(phase)
-	#print(flyingSpeed)
 	if phase == "goingRight":
 		if flyingSpeed.x > 0:
 			flyingSpeed.x -= airFriction
@@ -288,6 +285,8 @@ func flightDecelerator():
 			flyingSpeed.x += airFriction
 		elif flyingSpeed.x > 0:
 			flyingSpeed.x = 0
+	else:
+		flyingSpeed.x = 0
 
 	if flyingSpeed.y < 0:
 		flyingSpeed.y += gravityAcceleration
