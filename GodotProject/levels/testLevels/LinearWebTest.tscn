@@ -1,23 +1,31 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://objects/Plataforma.tscn" type="PackedScene" id=1]
-[ext_resource path="res://web/Line2D.gd" type="Script" id=2]
-[ext_resource path="res://objects/Stone.tscn" type="PackedScene" id=3]
-[ext_resource path="res://web/CollisionCircleSpawer.tscn" type="PackedScene" id=4]
-[ext_resource path="res://lixo/debug/dirKeysDebugger.tscn" type="PackedScene" id=5]
-[ext_resource path="res://lixo/debug/AngleDebugger.gd" type="Script" id=6]
-[ext_resource path="res://player/KinematicBallPlayer.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/background/Hd-Green-Forest.jpg" type="Texture" id=1]
+[ext_resource path="res://objects/Plataforma.tscn" type="PackedScene" id=2]
+[ext_resource path="res://web/Line2D.gd" type="Script" id=3]
+[ext_resource path="res://objects/Stone.tscn" type="PackedScene" id=4]
+[ext_resource path="res://web/CollisionCircleSpawer.tscn" type="PackedScene" id=5]
+[ext_resource path="res://lixo/debug/dirKeysDebugger.tscn" type="PackedScene" id=6]
+[ext_resource path="res://lixo/debug/AngleDebugger.gd" type="Script" id=7]
+[ext_resource path="res://player/KinematicBallPlayer.tscn" type="PackedScene" id=8]
 
-[node name="Node2D" type="Node2D" index="0"]
+[node name="Node2D" type="Node2D"]
 
 _sections_unfolded = [ "Transform" ]
 
-[node name="Plataforma" parent="." index="0" instance=ExtResource( 1 )]
+[node name="Hd-Green-Forest" type="Sprite" parent="." index="0"]
+
+position = Vector2( 112.608, 1220.95 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Plataforma" parent="." index="1" instance=ExtResource( 2 )]
 
 editor/display_folded = true
 position = Vector2( 11.1702, 271.268 )
 
-[node name="Line2D" type="Line2D" parent="." index="1"]
+[node name="Line2D" type="Line2D" parent="." index="2"]
 
 points = PoolVector2Array( 0, 0, 0, 0 )
 width = 4.0
@@ -25,9 +33,9 @@ default_color = Color( 0.4, 0.5, 1, 1 )
 texture_mode = 5
 sharp_limit = 2.0
 round_precision = 8
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." index="2"]
+[node name="StaticBody2D" type="StaticBody2D" parent="." index="3"]
 
 editor/display_folded = true
 input_pickable = false
@@ -40,38 +48,68 @@ bounce = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" index="0"]
 
-[node name="Stone" parent="." index="3" instance=ExtResource( 3 )]
+[node name="Stone" parent="." index="4" instance=ExtResource( 4 )]
 
-[node name="Node2D" parent="." index="4" instance=ExtResource( 4 )]
+[node name="Node2D" parent="." index="5" instance=ExtResource( 5 )]
 
 _sections_unfolded = [ "Transform" ]
 
-[node name="Debugger" parent="." index="5" instance=ExtResource( 5 )]
+[node name="Debugger" parent="." index="6" instance=ExtResource( 6 )]
 
 visible = false
-script = ExtResource( 6 )
+script = ExtResource( 7 )
 
-[node name="Stone2" parent="." index="6" instance=ExtResource( 3 )]
+[node name="Stone2" parent="." index="7" instance=ExtResource( 4 )]
 
 position = Vector2( 157.2, 590 )
 _sections_unfolded = [ "Collision", "Transform", "Z Index" ]
 
-[node name="Stone3" parent="." index="7" instance=ExtResource( 3 )]
+[node name="Stone3" parent="." index="8" instance=ExtResource( 4 )]
 
 position = Vector2( -169.8, 789 )
 _sections_unfolded = [ "Collision", "Transform", "Z Index" ]
 
-[node name="Stone4" parent="." index="8" instance=ExtResource( 3 )]
+[node name="Stone6" parent="." index="9" instance=ExtResource( 4 )]
+
+position = Vector2( 559.679, 35.5475 )
+_sections_unfolded = [ "Collision", "Transform", "Z Index" ]
+
+[node name="Stone7" parent="." index="10" instance=ExtResource( 4 )]
+
+position = Vector2( 1066.55, 35.5475 )
+_sections_unfolded = [ "Collision", "Transform", "Z Index" ]
+
+[node name="Stone8" parent="." index="11" instance=ExtResource( 4 )]
+
+position = Vector2( 1600.81, 35.5475 )
+_sections_unfolded = [ "Collision", "Transform", "Z Index" ]
+
+[node name="Stone9" parent="." index="12" instance=ExtResource( 4 )]
+
+position = Vector2( -611.597, 35.5475 )
+_sections_unfolded = [ "Collision", "Transform", "Z Index" ]
+
+[node name="Stone10" parent="." index="13" instance=ExtResource( 4 )]
+
+position = Vector2( -1238.33, 35.5475 )
+_sections_unfolded = [ "Collision", "Transform", "Z Index" ]
+
+[node name="Stone11" parent="." index="14" instance=ExtResource( 4 )]
+
+position = Vector2( -1762.32, 35.5475 )
+_sections_unfolded = [ "Collision", "Transform", "Z Index" ]
+
+[node name="Stone4" parent="." index="15" instance=ExtResource( 4 )]
 
 position = Vector2( 90.2, 1080.8 )
 _sections_unfolded = [ "Collision", "Transform", "Z Index" ]
 
-[node name="Stone5" parent="." index="9" instance=ExtResource( 3 )]
+[node name="Stone5" parent="." index="16" instance=ExtResource( 4 )]
 
 position = Vector2( 0.200012, 1322.8 )
 _sections_unfolded = [ "Collision", "Transform", "Z Index" ]
 
-[node name="Player" parent="." index="10" instance=ExtResource( 7 )]
+[node name="Player" parent="." index="17" instance=ExtResource( 8 )]
 
 position = Vector2( 8.60962, 82.319 )
 _sections_unfolded = [ "Transform" ]

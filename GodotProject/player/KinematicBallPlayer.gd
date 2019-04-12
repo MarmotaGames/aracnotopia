@@ -44,8 +44,10 @@ func _physics_process(delta):
 	processDropFromWebInput()
 	processLaunchWebInput()
 	update_direction()
+	flightDecelerator()
 
-	phase = calculateMotion()
+	if spiderOnWeb:
+		phase = calculateMotion()
 
 	move_and_slide(flyingSpeed + velocity)
 	move = get_slide_collision(0)
@@ -227,11 +229,13 @@ func processDropFromWebInput():
 		#LAUNCHING FROM WEB
 		var speedVector = calculateInstantSpeedVector()
 
-		var speedTest = 5
+		var speedTest = 3.5
 		flyingSpeed = speedVector*speedTest
 	
 		if phase == "goingLeft":
 			flyingSpeed = -flyingSpeed
+
+		spiderIsFalling = true
 
 func calculateInstantSpeedVector():
 	var x = get_node("../Line2D").points[0]
@@ -242,25 +246,18 @@ func calculateInstantSpeedVector():
 
 func webSwing():
 	var swingSpeed = 1000
-	if canSwing():
-		
-		# left
-		if dirKeys[2]:
-			move_and_slide(Vector2(-swingSpeed,0))
-		# right
-		elif dirKeys[3]:
-			move_and_slide(Vector2(swingSpeed,0))
-
-func canSwing():
-	previousAngle = angle
-	var webAngle = get_node("../Line2D").webAngle
-	return webAngle > 0.7 and webAngle < 2.3
+	# left
+	if dirKeys[2]:
+		move_and_slide(Vector2(-swingSpeed,0))
+	# right
+	elif dirKeys[3]:
+		move_and_slide(Vector2(swingSpeed,0))
 
 func calculateMotion():
 	#See at which phase of the "pendulum" the spider is
 	angle = get_node("../Line2D").webAngle
 
-	if abs(angle - previousAngle) < 0.01:
+	if abs(angle - previousAngle) == 0:
 		previousAngle = angle
 		return("still")
 
@@ -270,3 +267,25 @@ func calculateMotion():
 	else: #GOING RIGHT
 		previousAngle = angle
 		return("goingRight")
+
+func flightDecelerator():
+	var airFriction = 5
+	var gravityAcceleration = 20
+
+	#print(phase)
+	#print(flyingSpeed)
+	if phase == "goingRight":
+		if flyingSpeed.x > 0:
+			flyingSpeed.x -= airFriction
+		elif flyingSpeed.x < 0:
+			flyingSpeed.x = 0
+	elif phase == "goingLeft":
+		if flyingSpeed.x < 0:
+			flyingSpeed.x += airFriction
+		elif flyingSpeed.x > 0:
+			flyingSpeed.x = 0
+
+	if flyingSpeed.y < 0:
+		flyingSpeed.y += gravityAcceleration
+	elif flyingSpeed.y > 0:
+		flyingSpeed.y = 0
