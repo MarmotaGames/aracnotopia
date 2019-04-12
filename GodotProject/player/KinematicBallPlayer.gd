@@ -43,11 +43,12 @@ func _physics_process(delta):
 	processAttachOrDetachInput()
 	processDropFromWebInput()
 	processLaunchWebInput()
+	update_direction()
 
 	move_and_slide(flyingSpeed + velocity)
 	move = get_slide_collision(0)
 	if move:
-		#print(move.collider.rotation)
+		normal = move.get_remainder()
 		normal = move.remainder
 
 	if spiderIsFalling or spiderOnWeb:
@@ -61,12 +62,17 @@ func _physics_process(delta):
 
 		rotateSpider()
 
+		# anda
 		if 1 in dirKeys and not spiderIsFalling:
 			#Verifica se alguma das teclas direcionais está apertada e processa o movimento
 			move_and_slide(direction.normalized()*speed)
+	else:
+		webSwing()
 
 
 # seta a direction dependendo do input
+# tb seta a dirKeys que eh usada na 
+# movimentacao da spider
 func update_direction():
 	if Input.is_action_pressed("ui_up") and not spiderIsFalling:
 		direction.y = -1
@@ -192,7 +198,6 @@ func evalRotation():
 				step = 1
 
 func rotateSpider():
-	update_direction()
 	getRotation()
 
 	if mustRotate:
@@ -236,31 +241,27 @@ func processDropFromWebInput():
 		remainingSpeed = flyingSpeed
 		spiderOnWeb = false
 
-func calculateDropVelocity():
-	previousAngle = angle
-	if get_node("../Line2D").webAngle > 0.7 and get_node("../Line2D").webAngle < 2.3:
-		if Input.is_action_pressed("ui_right") and spiderOnWeb:
-			flyingSpeed=Vector2(ballSpeed*get_node("../Node2D").radius,0)
-		if Input.is_action_pressed("ui_left") and spiderOnWeb:
-			flyingSpeed=Vector2(-ballSpeed*get_node("../Node2D").radius,0)
-
-	if Input.is_action_just_released("ui_right") or Input.is_action_just_released("ui_left"):
-		remainingSpeed = flyingSpeed
+#func calculateInstantSpeedVector():
+func webSwing():
+	var swingSpeed = 1000
+	if canSwing():
 		
-	if remainingSpeed != Vector2(0,0):
-		if remainingSpeed.x > remainingSpeedStep:
-			remainingSpeed.x -= remainingSpeedStep
-		elif remainingSpeed.x < -remainingSpeedStep:
-			remainingSpeed.x += remainingSpeedStep
-		else:
-			remainingSpeed.x = 0
-			
-		if remainingSpeed.y < 0:
-			remainingSpeed.y += remainingSpeedStep
-		else:
-			remainingSpeed.y = 0
+		# left
+		if dirKeys[2]:
+			move_and_slide(Vector2(-swingSpeed,0))
+		# right
+		elif dirKeys[3]:
+			move_and_slide(Vector2(swingSpeed,0))
 
-		flyingSpeed = remainingSpeed
+func canSwing():
+	previousAngle = angle
+	var webAngle = get_node("../Line2D").webAngle
+	return webAngle > 0.7 and webAngle < 2.3
+
+		#if Input.is_action_pressed("ui_right") and spiderOnWeb:
+		#	flyingSpeed=Vector2(ballSpeed*get_node("../Node2D").radius,0)
+		#if Input.is_action_pressed("ui_left") and spiderOnWeb:
+		#	flyingSpeed=Vector2(-ballSpeed*get_node("../Node2D").radius,0)
 
 func calculateMotion():
 	#See at which phase of the "pendulum" the spider is
