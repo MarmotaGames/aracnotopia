@@ -63,7 +63,8 @@ func _physics_process(delta):
 	#start of the old code(spider movement)
 	if not spiderOnWeb:
 		direction = Vector2(0,0)
-
+		update_direction()
+		
 		rotateSpider()
 
 		# anda
@@ -72,6 +73,9 @@ func _physics_process(delta):
 			move_and_slide(direction.normalized()*speed)
 	else:
 		webSwing()
+
+	var camera = get_node("Camera2D")
+	camera.align()
 
 
 # seta a direction dependendo do input

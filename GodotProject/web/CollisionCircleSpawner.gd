@@ -18,7 +18,6 @@ func _ready():
 	center = get_node("../Stone").position
 	create()
 
-
 func _process(delta):
 	if spider_node.spiderOnWeb:
 		#Change lenght of web
@@ -45,7 +44,6 @@ func _process(delta):
 			spider_node.rotation_degrees = 0
 
 		shouldCreate = false
-
 
 func create():
 	var angle = 0
