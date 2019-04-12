@@ -29,7 +29,7 @@ func _process(delta):
 			radius -= web_step
 			reposition()
 		#Dettach from web
-		if Input.is_action_just_pressed("attachOrDetachFromArea"):
+		if Input.is_action_just_pressed("attachOrDetachFromArea") or Input.is_action_just_pressed("dropFromWeb"):
 			killCircle()
 			get_node("../Line2D").hide()
 			spider_node.spiderOnWeb = false

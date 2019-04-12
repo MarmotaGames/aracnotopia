@@ -45,6 +45,8 @@ func _physics_process(delta):
 	processLaunchWebInput()
 	update_direction()
 
+	phase = calculateMotion()
+
 	move_and_slide(flyingSpeed + velocity)
 	move = get_slide_collision(0)
 	if move:
@@ -223,25 +225,21 @@ func rotateSpider():
 func processDropFromWebInput():
 	if Input.is_action_just_pressed("dropFromWeb") and spiderOnWeb:
 		#LAUNCHING FROM WEB
-		calculateDropVelocity()
+		var speedVector = calculateInstantSpeedVector()
 
-		#verify in which phase of the pendulum the spider is at
-		phase = calculateMotion()
-		var launchAngle = move.collider.rotation
-		if phase == "leftGoingLeft" or phase == "rightGoingLeft": 
-			launchAngle += PI/2
-		if phase == "leftGoingRight" or phase == "rightGoingRight": 
-			launchAngle -= PI/2
+		var speedTest = 5
+		flyingSpeed = speedVector*speedTest
+	
+		if phase == "goingLeft":
+			flyingSpeed = -flyingSpeed
 
-		flyingSpeed = Vector2(cos(launchAngle), sin(launchAngle))*2500
-		
-		if phase == "still":
-			flyingSpeed = (Vector2(0,0))
-		#flyingSpeed.y *= -1
-		remainingSpeed = flyingSpeed
-		spiderOnWeb = false
+func calculateInstantSpeedVector():
+	var x = get_node("../Line2D").points[0]
+	var y = get_node("../Line2D").points[1]
 
-#func calculateInstantSpeedVector():
+	var lineVector = x-y
+	return lineVector.tangent()
+
 func webSwing():
 	var swingSpeed = 1000
 	if canSwing():
@@ -258,33 +256,17 @@ func canSwing():
 	var webAngle = get_node("../Line2D").webAngle
 	return webAngle > 0.7 and webAngle < 2.3
 
-		#if Input.is_action_pressed("ui_right") and spiderOnWeb:
-		#	flyingSpeed=Vector2(ballSpeed*get_node("../Node2D").radius,0)
-		#if Input.is_action_pressed("ui_left") and spiderOnWeb:
-		#	flyingSpeed=Vector2(-ballSpeed*get_node("../Node2D").radius,0)
-
 func calculateMotion():
 	#See at which phase of the "pendulum" the spider is
 	angle = get_node("../Line2D").webAngle
-	
+
 	if abs(angle - previousAngle) < 0.01:
+		previousAngle = angle
 		return("still")
 
 	if angle > previousAngle: #GOING LEFT
-		if angle > PI / 2:
-			return("leftGoingLeft")
-
-		elif angle < PI / 2:
-			return("rightGoingLeft")
-
-		else:
-			return("deadBottomGoingLeft")
+		previousAngle = angle
+		return("goingLeft")
 	else: #GOING RIGHT
-		if angle > PI / 2:
-			return("leftGoingRight")
-
-		elif angle < PI / 2:
-			return("rightGoingRight")
-
-		else:
-			return("deadBottomGoingRight")
+		previousAngle = angle
+		return("goingRight")
