@@ -5,6 +5,7 @@ func _ready():
 	#Spider spawns connected to first stone
 	self.points[1] = get_node("../Stone").get_global_position()	
 
+#comentario
 func _process(delta):
 	#Point 0 of the web is always the center of the spider
 	self.points[0] = get_node("../Player").get_global_position()	
