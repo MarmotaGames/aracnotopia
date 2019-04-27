@@ -273,7 +273,7 @@ func calculateMotion():
 
 func flightDecelerator():
 	var airFriction = 5
-	var gravityAcceleration = 50
+	var gravityAcceleration = 20
 
 	if phase == "goingRight":
 		if flyingSpeed.x > 0:
