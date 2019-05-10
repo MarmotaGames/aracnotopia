@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://player/Player_rigido.tscn" type="PackedScene" id=1]
+[ext_resource path="res://player/KinematicBallPlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/background/GreatWebBackground.jpg" type="Texture" id=2]
 [ext_resource path="res://levels/hub/UP.gd" type="Script" id=3]
 
@@ -13,9 +13,9 @@ extents = Vector2( 2.36207, 42.6093 )
 
 _sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="Spider" parent="." index="0" instance=ExtResource( 1 )]
+[node name="Player" parent="." index="0" instance=ExtResource( 1 )]
 
-position = Vector2( 1167.74, 595.859 )
+position = Vector2( 716.876, 317.238 )
 
 [node name="TheWebSprite" type="Sprite" parent="." index="1"]
 

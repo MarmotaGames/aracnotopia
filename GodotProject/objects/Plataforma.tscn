@@ -1,14 +1,15 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/objects/wood1.png" type="Texture" id=1]
-[ext_resource path="res://areas/ContactArea.gd" type="Script" id=2]
+[ext_resource path="res://objects/ContactArea.gd" type="Script" id=2]
+
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 256, 256 )
 
-[node name="Plataforma" type="Sprite"]
+[node name="Plataforma" type="Sprite" index="0"]
 
 position = Vector2( 503.389, 304.9 )
 scale = Vector2( 0.5, 0.5 )
@@ -22,6 +23,8 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+collision_layer = 16
+collision_mask = 16
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 2 )
