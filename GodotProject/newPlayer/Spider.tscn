@@ -2,13 +2,14 @@
 
 [ext_resource path="res://newPlayer/Spider.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/walk_cycle/01.png" type="Texture" id=2]
-[ext_resource path="res://newPlayer/StateManager.gd" type="Script" id=3]
+[ext_resource path="res://newPlayer/States/StateManager.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 13.3482
 height = 26.1151
 
 [node name="Spider" type="RigidBody2D"]
+mode = 3
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]

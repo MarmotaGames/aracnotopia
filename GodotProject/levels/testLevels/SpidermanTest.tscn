@@ -3,7 +3,8 @@
 [ext_resource path="res://assets/background/nature-background-images2.jpg" type="Texture" id=1]
 [ext_resource path="res://objects/Plataforma.tscn" type="PackedScene" id=2]
 [ext_resource path="res://objects/RoundStone.tscn" type="PackedScene" id=3]
-[ext_resource path="res://player/KinematicBallPlayer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://lixo/player/KinematicBallPlayer.tscn" type="PackedScene" id=4]
+
 
 [sub_resource type="RectangleShape2D" id=1]
 
