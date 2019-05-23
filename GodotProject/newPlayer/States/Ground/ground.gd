@@ -3,8 +3,9 @@ extends BaseState
 var speed = 200
 var direction = Vector2(0,0)
 
-func _ready():
-	owner.gravity_scale = 0
+func setup(player):
+	self.player = player
+#	player.gravity_scale = 0
 
 func _input(event):
 	direction = Vector2(0,0)
@@ -18,5 +19,8 @@ func _input(event):
 		direction.x = -1
 	if Input.is_action_pressed("ui_right"):
 		direction.x = 1
-
-	owner.set_linear_velocity(direction.normalized()*speed)
+		
+	player.set_linear_velocity(direction.normalized()*speed)
+	
+func _physics_process(delta):
+	player.applied_force = Vector2(0, -98*2)

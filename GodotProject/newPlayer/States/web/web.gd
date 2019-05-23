@@ -1,4 +1,4 @@
 extends BaseState
 
 func _ready():
-	owner.gravity_scale = 1
+	owner.gravity_scale = 2
