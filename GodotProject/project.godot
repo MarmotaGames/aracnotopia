@@ -13,15 +13,9 @@ _global_script_classes=[ {
 "class": "BaseState",
 "language": "GDScript",
 "path": "res://newPlayer/States/BaseState.gd"
-}, {
-"base": "BaseState",
-"class": "Ground",
-"language": "GDScript",
-"path": "res://newPlayer/States/Ground/ground.gd"
 } ]
 _global_script_class_icons={
-"BaseState": "",
-"Ground": ""
+"BaseState": ""
 }
 
 [application]

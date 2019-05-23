@@ -7,11 +7,14 @@
 [node name="webTest" type="Node2D"]
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 1.41992, 0 )
+position = Vector2( 1.41992, 0.739899 )
 texture = ExtResource( 1 )
 
 [node name="Platform" parent="." instance=ExtResource( 2 )]
-position = Vector2( 431.484, 264.617 )
+position = Vector2( 389.31, 451.072 )
+
+[node name="Platform2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 836.99, 103.488 )
 
 [node name="Spider" parent="." instance=ExtResource( 3 )]
-position = Vector2( 394.572, 212.84 )
+position = Vector2( 388.653, 448.869 )
