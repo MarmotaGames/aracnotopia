@@ -9,7 +9,7 @@
 [ext_resource path="res://lixo/debug/AngleDebugger.gd" type="Script" id=7]
 [ext_resource path="res://player/KinematicBallPlayer.tscn" type="PackedScene" id=8]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" index="0"]
 
 _sections_unfolded = [ "Transform" ]
 
@@ -49,6 +49,8 @@ bounce = 0.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" index="0"]
 
 [node name="Stone" parent="." index="4" instance=ExtResource( 4 )]
+
+position = Vector2( 463.593, 22.556 )
 
 [node name="Node2D" parent="." index="5" instance=ExtResource( 5 )]
 

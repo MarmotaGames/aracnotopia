@@ -141,10 +141,11 @@ func updateSpeed(dt):
 		var webVector = webAsVector()
 		var k = (webVector.x *velocity.x - webVector.y * velocity.y) / (webVector.x * webVector.x+webVector.y  * webVector.y );
 		k -= gravity.y * cos(get_node("../Line2D").webAngle) * dt
-		var dx1 = radius * -1 * cos(get_node("../Line2D").webAngle)
-		var dy1 = radius * -1 * sin(get_node("../Line2D").webAngle)
-		velocity.x = (dx1 - webVector.x) * dt
-		velocity.y = (dy1 - webVector.y) * dt
+		var newAngle = get_node("../Line2D").webAngle + k * dt - gravity.y * cos(get_node("../Line2D").webAngle ) *dt * dt / 2
+		var dx1 = radius * -1 * cos(newAngle)
+		var dy1 = radius * -1 * sin(newAngle)
+		velocity.x = (dx1 - webVector.x) * dt 
+		velocity.y = (dy1 - webVector.y) * dt 
 		#velocity = -1* gravity * cos(get_node("../Line2D").webAngle)
 
 func processAttachOrDetachInput():
