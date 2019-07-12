@@ -55,7 +55,7 @@ func _physics_process(delta):
 	processAttachOrDetachInput()
 	processDropFromWebInput()
 	processLaunchWebInput()
-	updateSpeed()
+	updateSpeed(delta)
 
 	#start of the old code(spider movement)
 	if not spiderOnWeb:
@@ -71,7 +71,7 @@ func _physics_process(delta):
 # seta a direction dependendo do input
 # tb seta a dirKeys que eh usada na 
 # movimentacao da spider
-func updateSpeed():
+func updateSpeed(dt):
 	if Input.is_action_pressed("ui_up"): 
 		dirKeys[0] = 1
 		if not spiderIsFalling:
@@ -134,11 +134,18 @@ func updateSpeed():
 	if Input.is_action_pressed("secretar"):
 		grudando = true
 		
-	if 1 in dirKeys and not spiderIsFalling:
+	if 1 in dirKeys and not (spiderIsFalling or spiderOnWeb):
 		velocity = direction.normalized()*speed
 		
 	if spiderOnWeb:
-		velocity = gravity * -1 * cos(get_node("../Line2D").webAngle)
+		var webVector = webAsVector()
+		var k = (webVector.x *velocity.x - webVector.y * velocity.y) / (webVector.x * webVector.x+webVector.y  * webVector.y );
+		k -= gravity.y * cos(get_node("../Line2D").webAngle) * dt
+		var dx1 = radius * -1 * cos(get_node("../Line2D").webAngle)
+		var dy1 = radius * -1 * sin(get_node("../Line2D").webAngle)
+		velocity.x = (dx1 - webVector.x) * dt
+		velocity.y = (dy1 - webVector.y) * dt
+		#velocity = -1* gravity * cos(get_node("../Line2D").webAngle)
 
 func processAttachOrDetachInput():
 	if Input.is_action_just_pressed("attachOrDetachFromArea"):
@@ -243,12 +250,12 @@ func processDropFromWebInput():
 	if Input.is_action_just_pressed("dropFromWeb") and spiderOnWeb:
 		spiderIsFalling = true
 
-func calculateInstantSpeedVector():
+func webAsVector():
 	var x = get_node("../Line2D").points[0]
 	var y = get_node("../Line2D").points[1]
 
 	var lineVector = x-y
-	return lineVector.tangent()
+	return lineVector
 		
 func attach():
 	get_node("../Line2D").points[1] = center

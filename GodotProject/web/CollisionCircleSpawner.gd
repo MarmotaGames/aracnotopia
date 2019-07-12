@@ -15,7 +15,7 @@ var radiusOffset = 14
 func _ready():
 	#Only for the test scene
 	#Spider spawns connected to first stone
-	center = get_node("../Stone").position
+	center = get_node("../Stone").get_global_position()
 	create()
 	spider_node.radius = center.distance_to(spider_node.get_global_position()) + radiusOffset
 
