@@ -17,6 +17,7 @@ func _ready():
 	#Spider spawns connected to first stone
 	center = get_node("../Stone").position
 	create()
+	spider_node.radius = center.distance_to(spider_node.get_global_position()) + radiusOffset
 
 func _process(delta):
 	if spider_node.spiderOnWeb:

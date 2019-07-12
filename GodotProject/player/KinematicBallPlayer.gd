@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 var flyingSpeed = Vector2(0,0)
 var velocity = Vector2(0,500)
-var gravity = 500
+var gravity = Vector2(0,500)
 var ballSpeed = 5
 var remainingSpeed = Vector2(0,0)
 var normal = 0
@@ -14,6 +14,14 @@ var angle = 0
 
 var spiderOnWeb = true
 var spiderInArea = false
+
+#NOVAS VARS
+var radius
+var center
+var radiusOffset = 14
+var maxLength = 800
+var minLength = 60
+var web_step = 5
 
 #old variables
 var speed = 300
@@ -28,6 +36,7 @@ var isRotating = false
 var dirKeys = [0, 0, 0, 0]
 var grudando = false
 
+
 func processLaunchWebInput():
 	if Input.is_action_just_pressed("launchWeb"):
 		var target = get_global_mouse_position()
@@ -36,43 +45,25 @@ func processLaunchWebInput():
 		var space_state = get_world_2d().direct_space_state
 		var result = space_state.intersect_ray(position,target, [self], collision_mask)
 		if result:
-			get_node("../Node2D").shouldCreate = true
-			get_node("../Node2D").center = result.position
+			#get_node("../Node2D").shouldCreate = true
+			#get_node("../Node2D").center = result.position
+			center = result.position
+			attach()
+
 
 func _physics_process(delta):
 	processAttachOrDetachInput()
 	processDropFromWebInput()
 	processLaunchWebInput()
-	update_direction()
-	flightDecelerator()
-
-	if spiderOnWeb:
-		phase = calculateMotion()
-
-	move_and_slide(flyingSpeed + velocity)
-	move = get_slide_collision(0)
-	if move:
-		normal = move.get_remainder()
-		normal = move.remainder
-
-	if spiderIsFalling or spiderOnWeb:
-		velocity.y = gravity
-	else:
-		velocity.y = 0
+	updateSpeed()
 
 	#start of the old code(spider movement)
 	if not spiderOnWeb:
 		direction = Vector2(0,0)
-		update_direction()
-		
 		rotateSpider()
 
-		# anda
-		if 1 in dirKeys and not spiderIsFalling:
-			#Verifica se alguma das teclas direcionais está apertada e processa o movimento
-			move_and_slide(direction.normalized()*speed)
-	else:
-		webSwing()
+	move_and_collide(velocity)
+	#print(get_node("../Line2D").webAngle)
 
 	get_node("Camera2D").align()
 
@@ -80,34 +71,49 @@ func _physics_process(delta):
 # seta a direction dependendo do input
 # tb seta a dirKeys que eh usada na 
 # movimentacao da spider
-func update_direction():
-	if Input.is_action_pressed("ui_up") and not spiderIsFalling:
-		direction.y = -1
+func updateSpeed():
+	if Input.is_action_pressed("ui_up"): 
 		dirKeys[0] = 1
-		if not dirKeys[2] and not dirKeys[3]:
-			direction.x = 0
-		#$AnimatedSprite.playing = true
+		if not spiderIsFalling:
+			direction.y = -1
+			if not dirKeys[2] and not dirKeys[3]:
+				direction.x = 0
+			#$AnimatedSprite.playing = true
+		if spiderOnWeb and radius > minLength:
+			radius -= web_step
 		
-	if Input.is_action_pressed("ui_down") and not spiderIsFalling:
-		direction.y = 1
+	if Input.is_action_pressed("ui_down"): 
 		dirKeys[1] = 1
-		if not dirKeys[2] and not dirKeys[3]:
-			direction.x = 0
-		#$AnimatedSprite.playing = true
+		if not spiderIsFalling:
+			direction.y = 1
+			if not dirKeys[2] and not dirKeys[3]:
+				direction.x = 0
+			#$AnimatedSprite.playing = true
+		if spiderOnWeb and radius < maxLength:
+			radius += web_step
 	
-	if Input.is_action_pressed("ui_left") and not spiderIsFalling:
-		direction.x = -1
+	if Input.is_action_pressed("ui_left"): 
 		dirKeys[2] = 1
-		if not dirKeys[0] and not dirKeys[1]:
-			direction.y = 0
-		#$AnimatedSprite.playing = true
+		if not spiderIsFalling:
+			direction.x = -1
+			
+			if not dirKeys[0] and not dirKeys[1]:
+				direction.y = 0
+			#$AnimatedSprite.playing = true
+		if spiderOnWeb:
+			#Dar impulso
+			pass
 	
-	if Input.is_action_pressed("ui_right") and not spiderIsFalling:
-		direction.x = 1
+	if Input.is_action_pressed("ui_right"):
 		dirKeys[3] = 1
-		if not dirKeys[0] and not dirKeys[1]:
-			direction.y = 0
-		#$AnimatedSprite.playing = true
+		if not spiderIsFalling:
+			direction.x = 1
+			if not dirKeys[0] and not dirKeys[1]:
+				direction.y = 0
+			#$AnimatedSprite.playing = true
+		if spiderOnWeb:
+			#Dar impulso
+			pass
 		
 	if Input.is_action_just_released("ui_up"):
 		dirKeys[0] = 0
@@ -127,6 +133,12 @@ func update_direction():
 	
 	if Input.is_action_pressed("secretar"):
 		grudando = true
+		
+	if 1 in dirKeys and not spiderIsFalling:
+		velocity = direction.normalized()*speed
+		
+	if spiderOnWeb:
+		velocity = gravity * -1 * cos(get_node("../Line2D").webAngle)
 
 func processAttachOrDetachInput():
 	if Input.is_action_just_pressed("attachOrDetachFromArea"):
@@ -229,15 +241,6 @@ func rotateSpider():
 
 func processDropFromWebInput():
 	if Input.is_action_just_pressed("dropFromWeb") and spiderOnWeb:
-		#LAUNCHING FROM WEB
-		var speedVector = calculateInstantSpeedVector()
-
-		var speedTest = 3.5
-		flyingSpeed = speedVector*speedTest
-	
-		if phase == "goingLeft":
-			flyingSpeed = -flyingSpeed
-
 		spiderIsFalling = true
 
 func calculateInstantSpeedVector():
@@ -246,49 +249,11 @@ func calculateInstantSpeedVector():
 
 	var lineVector = x-y
 	return lineVector.tangent()
-
-func webSwing():
-	var swingSpeed = 1000
-	# left
-	if dirKeys[2]:
-		move_and_slide(Vector2(-swingSpeed,0))
-	# right
-	elif dirKeys[3]:
-		move_and_slide(Vector2(swingSpeed,0))
-
-func calculateMotion():
-	#See at which phase of the "pendulum" the spider is
-	angle = get_node("../Line2D").webAngle
-
-	if abs(angle - previousAngle) < 0.0001:
-		previousAngle = angle
-		return("still")
-
-	if angle > previousAngle: #GOING LEFT
-		previousAngle = angle
-		return("goingLeft")
-	else: #GOING RIGHT
-		previousAngle = angle
-		return("goingRight")
-
-func flightDecelerator():
-	var airFriction = 5
-	var gravityAcceleration = 20
-
-	if phase == "goingRight":
-		if flyingSpeed.x > 0:
-			flyingSpeed.x -= airFriction
-		elif flyingSpeed.x < 0:
-			flyingSpeed.x = 0
-	elif phase == "goingLeft":
-		if flyingSpeed.x < 0:
-			flyingSpeed.x += airFriction
-		elif flyingSpeed.x > 0:
-			flyingSpeed.x = 0
-	else:
-		flyingSpeed.x = 0
-
-	if flyingSpeed.y < 0:
-		flyingSpeed.y += gravityAcceleration
-	elif flyingSpeed.y > 0:
-		flyingSpeed.y = 0
+		
+func attach():
+	get_node("../Line2D").points[1] = center
+	radius = center.distance_to(self.get_global_position()) + radiusOffset
+	get_node("../Line2D").show() #the Line2D exhists at all times, but is only shown when needed
+	spiderOnWeb = true
+	spiderIsFalling = false
+	rotation_degrees = 0
